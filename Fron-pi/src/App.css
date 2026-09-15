@@ -1,0 +1,13 @@
+.page-content {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+  flex: 1;
+}
+
+@media (max-width: 960px) {
+  .page-content {
+    padding: 0 20px;
+  }
+}
