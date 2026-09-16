@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import '../styles/Navbar.css'
+import './Navbar.css'
+import { Link } from 'react-router-dom'
 
 function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false)
@@ -14,13 +15,13 @@ function Navbar() {
     return (
         <header className="navbar">
             <div className="navbar__container">
-                <a href="" className="navbar__logo" aria-label="NexHub">
+                <Link to="/" className="navbar__logo" aria-label="NexHub">
                     <svg className="navbar__logo-icon" viewBox="0 0 32 32" aria-hidden="true">
                     </svg>
                     <span className="navbar__logo-text">
                         Nex<span className="navbar__logo-highlight">Hub</span>
                     </span>
-                </a>
+                </Link>
 
                 <button
                     className="navbar__toggle"
@@ -43,12 +44,12 @@ function Navbar() {
                     </ul>
 
                     <div className="navbar__actions">
-                        <a href="/login" className="navbar__login">
+                        <Link to="/login" className="navbar__login">
                             Entrar
-                        </a>
-                        <a href="/cadastro" className="navbar__cta">
+                        </Link>
+                        <Link to="/cadastro/startup" className="navbar__cta">
                             Cadastre-se grátis
-                        </a>
+                        </Link>
                     </div>
                 </nav>
             </div>
