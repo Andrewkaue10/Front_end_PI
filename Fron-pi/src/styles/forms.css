@@ -1,0 +1,126 @@
+.auth-form h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.auth-form__subtitle {
+    font-size: 14px;
+    color: var(--color-text-light);
+    margin-bottom: 32px;
+}
+
+.auth-form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.auth-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 24px;
+}
+
+.auth-form__field label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.auth-form__field input {
+    height: 48px;
+    border-radius: 10px;
+    border: 1.3px solid var(--color-border);
+    padding: 0 16px;
+    font-family: var(--font-base);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.auth-form__field input:focus {
+    border-color: var(--color-accent);
+}
+
+.auth-form__group {
+    margin-bottom: 24px;
+}
+
+.auth-form__group-label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.auth-form__checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+
+.auth-form__submit {
+    width: 100%;
+    height: 52px;
+    border-radius: 10px;
+    border: none;
+    background: var(--color-accent);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 24px;
+    transition: filter 0.15s;
+}
+
+.auth-form__submit:hover {
+    filter: brightness(0.95);
+}
+
+.auth-form__divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--color-text-light);
+    margin-bottom: 24px;
+}
+
+.auth-form__divider::before,
+.auth-form__divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+}
+
+.auth-form__social {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.auth-form__social button {
+    flex: 1;
+    height: 44px;
+    border-radius: 10px;
+    border: 1.3px solid var(--color-border);
+    background: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.auth-form__bottom-link {
+    text-align: center;
+    font-size: 13px;
+}
+
+.auth-form__bottom-link a {
+    color: var(--color-accent);
+    font-weight: 600;
+}

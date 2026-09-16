@@ -1,0 +1,32 @@
+.pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pill {
+    height: 34px;
+    border-radius: 8px;
+    border: 1.2px solid var(--color-border);
+    background: #ffffff;
+    padding: 9px 16px;
+    font-family: var(--font-base);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-light);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.pill:hover {
+    border-color: var(--color-accent);
+}
+
+.pill--active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #ffffff;
+}
