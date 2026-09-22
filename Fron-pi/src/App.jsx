@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
+import Feed from './pages/Feed/Feed'
 import Home from './pages/Home/Home'
 import SignupInvestor from './pages/SignupInvestor/SignupInvestor'
 import SignupStartup from './pages/SignupStartup/SignupStartup'
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/esqueci-senha" element={<ForgotPassword />} />
         <Route path="/redefinir-senha" element={<ResetPassword />} />
+        <Route path="/feed" element={<Feed />} />
         <Route path="/cadastro/investidor" element={<SignupInvestor />} />
         <Route path="/cadastro/startup" element={<SignupStartup />} />
       </Routes>

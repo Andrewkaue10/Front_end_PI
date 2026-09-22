@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import StepCard from '../../components/Stepcard/StepCard'
+import StepCard from '../../components/StepCard/StepCard'
 import './Home.css'
 
 const STEPS = [
