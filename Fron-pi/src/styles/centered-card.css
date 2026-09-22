@@ -1,0 +1,45 @@
+.centered-card-page {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f7;
+  padding: 40px 20px;
+}
+
+.centered-card {
+  width: 100%;
+  max-width: 468px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 48px 40px;
+  box-shadow: 0 1px 3px rgba(8, 6, 13, 0.08);
+  text-align: center;
+}
+
+.centered-card__title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.centered-card__subtitle {
+  font-size: 13px;
+  color: var(--color-text-light);
+  margin-top: 8px;
+}
+
+.centered-card__toggle {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0 32px;
+}
+
+.centered-card .auth-form__field {
+  text-align: left;
+}
+
+.centered-card__success {
+  font-size: 13px;
+  color: #1a8f4c;
+  font-weight: 600;
+}
