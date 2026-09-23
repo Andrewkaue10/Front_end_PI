@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Check } from 'lucide-react'
 import '../../styles/forms.css'
 import '../../styles/centered-card.css'
 import './ResetPassword.css'
@@ -83,11 +84,17 @@ function ResetPassword() {
                     </div>
 
                     <ul className="password-checklist">
-                        {REQUISITOS.map((req) => (
-                            <li key={req.id} className={req.test(senha) ? 'password-checklist__item--ok' : ''}>
-                                {req.test(senha) ? '✓' : '○'} {req.label}
-                            </li>
-                        ))}
+                        {REQUISITOS.map((req) => {
+                            const ok = req.test(senha)
+                            return (
+                                <li key={req.id} className={ok ? 'password-checklist__item--ok' : ''}>
+                                    <span className="password-checklist__icon">
+                                        {ok && <Check size={12} strokeWidth={3} />}
+                                    </span>
+                                    {req.label}
+                                </li>
+                            )
+                        })}
                     </ul>
 
                     {error && (
