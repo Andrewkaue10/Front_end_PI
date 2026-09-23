@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { formatPhone } from '../../utils/formatPhone'
 import AuthLayout from '../../components/AuthLayout/AuthLayout'
 import PillGroup from '../../components/PillGroup/PillGroup'
 import '../../styles/forms.css'
@@ -13,6 +14,7 @@ function SignupInvestor() {
     const [tipo, setTipo] = useState('Anjo')
     const [setores, setSetores] = useState(['SaaS'])
     const [ticket, setTicket] = useState('R$50k - 200k')
+    const [telefone, setTelefone] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -78,7 +80,16 @@ function SignupInvestor() {
 
                     <div className="auth-form__field">
                         <label htmlFor="telefone">Telefone</label>
-                        <input id="telefone" type="tel" placeholder="(00) 00000-0000" />
+                        <input
+                            id="telefone"
+                            name="telefone"
+                            type="tel"
+                            inputMode="numeric"
+                            placeholder="(00) 00000-0000"
+                            value={telefone}
+                            onChange={(e) => setTelefone(formatPhone(e.target.value))}
+                            required
+                        />
                     </div>
 
                     <label className="auth-form__checkbox">

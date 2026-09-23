@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
 import Feed from './pages/Feed/Feed'
 import Home from './pages/Home/Home'
@@ -9,9 +9,11 @@ import ResetPassword from './pages/ResetPassword/ResetPassword'
 import './App.css'
 
 function App() {
+  const location = useLocation()
+  const hideNavbar = ['/esqueci-senha', '/redefinir-senha'].includes(location.pathname)
   return (
     <>
-      <Navbar />
+      {!hideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/esqueci-senha" element={<ForgotPassword />} />
