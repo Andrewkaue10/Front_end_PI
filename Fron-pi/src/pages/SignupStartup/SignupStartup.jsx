@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Check } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { formatPhone } from '../../utils/formatPhone'
 import AuthLayout from '../../components/AuthLayout/AuthLayout'
@@ -97,10 +98,13 @@ function SignupStartup() {
                 </div>
 
                 <label className="auth-form__checkbox">
-                    <input type="checkbox" defaultChecked />
+                    <input type="checkbox" name="termos" defaultChecked />
+                    <span className="checkbox-box">
+                        <Check size={12} strokeWidth={3} />
+                    </span>
                     Concordo com os Termos de Uso e a Política de Privacidade
                 </label>
-
+                
                 <button type="submit" className="auth-form__submit">
                     Cadastrar minha startup →
                 </button>
