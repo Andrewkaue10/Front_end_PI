@@ -90,7 +90,11 @@ function ResetPassword() {
                         ))}
                     </ul>
 
-                    {error && <p className="auth-form__error">{error}</p>}
+                    {error && (
+                        <div className="password-alert" role="alert">
+                            {error}
+                        </div>
+                    )}
 
                     <button type="submit" className="auth-form__submit" disabled={loading}>
                         {loading ? 'Salvando...' : 'Salvar nova senha →'}

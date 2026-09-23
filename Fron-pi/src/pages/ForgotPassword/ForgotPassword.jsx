@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { formatPhone } from '../../utils/formatPhone'
 import PillGroup from '../../components/PillGroup/PillGroup'
 import '../../styles/forms.css'
 import '../../styles/centered-card.css'
@@ -11,6 +12,7 @@ function ForgotPassword() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const [enviado, setEnviado] = useState(false)
+    const [telefone, setTelefone] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -59,7 +61,16 @@ function ForgotPassword() {
                     ) : (
                         <div className="auth-form__field">
                             <label htmlFor="telefone">Telefone cadastrado</label>
-                            <input id="telefone" name="telefone" type="tel" placeholder="(00) 00000-0000" required />
+                            <input
+                                id="telefone"
+                                name="telefone"
+                                type="tel"
+                                inputMode="numeric"
+                                placeholder="(00) 00000-0000"
+                                value={telefone}
+                                onChange={(e) => setTelefone(formatPhone(e.target.value))}
+                                required
+                            />
                         </div>
                     )}
 
