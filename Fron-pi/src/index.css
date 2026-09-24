@@ -4,6 +4,7 @@
   --color-text-light: #3a3640;
   --color-border: #e5e4e7;
   --color-bg: #ffffff;
+  --color-accent-rgb: 255, 90, 54;
 
   --font-base: 'Inter', system-ui, sans-serif;
 }
@@ -52,4 +53,5 @@ h1, h2, h3, p {
 
 .theme-blue {
   --color-accent: #0052FF;
+  --color-accent-rgb: 0, 82, 255;
 }

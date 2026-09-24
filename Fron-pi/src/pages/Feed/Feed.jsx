@@ -9,6 +9,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import "./Feed.css";
+import PillGroup from '../../components/PillGroup/PillGroup'
 
 const STARTUPS = [
   {
@@ -74,18 +75,6 @@ const STARTUPS = [
 ];
 
 const CATEGORIES = ["Todos", "Fintech", "Healthtech", "SaaS", "IA", "Estágio MVP+"];
-
-function CategoryPill({ label, active, count, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`nx-pill${active ? " active" : ""}`}
-    >
-      {label}
-      {count !== undefined && <span className="nx-pill-count">({count})</span>}
-    </button>
-  );
-}
 
 function MatchBadge({ value }) {
   return (
@@ -227,14 +216,9 @@ export default function NexHubFeed() {
   }, [activeCategory, topQuery, feedQuery]);
 
   return (
-    <div className="nexhub">
+    <div className="nexhub theme-blue">
       {/* Sidebar */}
       <aside className="nx-sidebar">
-        <div className="nx-sidebar-brand">
-          <div className="nx-sidebar-logo" />
-          <span>NexHub</span>
-        </div>
-
         <nav className="nx-sidebar-nav">
           <SidebarItem icon={<Home size={18} />} label="Início" active />
           <SidebarItem icon={<Search size={18} />} label="Startups" />
@@ -278,15 +262,12 @@ export default function NexHubFeed() {
           </div>
 
           <div className="nx-pills">
-            {CATEGORIES.map((cat) => (
-              <CategoryPill
-                key={cat}
-                label={cat}
-                active={activeCategory === cat}
-                count={categoryCounts[cat]}
-                onClick={() => setActiveCategory(cat)}
-              />
-            ))}
+            <PillGroup
+              options={CATEGORIES}
+              value={activeCategory}
+              onChange={setActiveCategory}
+              counts={categoryCounts}
+            />
           </div>
 
           <div className="nx-card-list">
