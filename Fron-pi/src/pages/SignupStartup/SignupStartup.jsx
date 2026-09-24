@@ -109,13 +109,6 @@ function SignupStartup() {
                     Cadastrar minha startup →
                 </button>
 
-                <div className="auth-form__divider">ou continue com</div>
-
-                <div className="auth-form__social">
-                    <button type="button">Google</button>
-                    <button type="button">LinkedIn</button>
-                </div>
-
                 <p className="auth-form__bottom-link">
                     É um investidor? <Link to="/cadastro/investidor">Cadastre-se aqui</Link>
                 </p>
