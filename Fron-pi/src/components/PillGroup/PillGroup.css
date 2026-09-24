@@ -30,3 +30,8 @@
     border-color: var(--color-accent);
     color: #ffffff;
 }
+
+.pill__count {
+  margin-left: 4px;
+  opacity: 0.65;
+}
