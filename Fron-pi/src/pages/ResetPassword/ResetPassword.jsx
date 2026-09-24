@@ -98,7 +98,7 @@ function ResetPassword() {
                     </ul>
 
                     {error && (
-                        <div className="password-alert" role="alert">
+                        <div className="form-alert" role="alert">
                             {error}
                         </div>
                     )}
