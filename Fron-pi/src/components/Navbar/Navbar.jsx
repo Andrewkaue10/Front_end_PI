@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './Navbar.css'
 
-const APP_ROUTES = ['/feed'] // rotas de usuário logado
+const APP_ROUTES = ['/feed', '/painel'] // rotas de usuário logado
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -10,10 +10,10 @@ function Navbar() {
   const isAppView = APP_ROUTES.includes(location.pathname)
 
   const links = [
-    { label: 'Como funciona', href: '#como-funciona' },
-    { label: 'Para Startups', href: '#para-startups' },
-    { label: 'Para Investidores', href: '#para-investidores' },
-    { label: 'Sobre', href: '#sobre' },
+    { label: 'Como funciona', href: '/#como-funciona' },
+    { label: 'Para Startups', href: '/cadastro/startup' },
+    { label: 'Para Investidores', href: '/cadastro/investidor' },
+    { label: 'Uso e privacidade', href: '/termos' },
   ]
 
   return (

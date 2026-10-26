@@ -1,0 +1,120 @@
+.nx-workspace {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 24px;
+  color: #18243b;
+  font-family: Inter, system-ui, sans-serif;
+  line-height: 1.6;
+}
+.nx-workspace header,
+.nx-workspace section {
+  background: #fff;
+  border: 1px solid #dce3ef;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.nx-workspace nav {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.nx-workspace h1 {
+  font-size: 30px;
+}
+.nx-workspace h2 {
+  font-size: 23px;
+}
+.nx-workspace h3 {
+  font-size: 18px;
+}
+.nx-workspace p {
+  margin: 12px 0;
+}
+.nx-workspace article {
+  border-bottom: 1px solid #dce3ef;
+  padding: 20px 0;
+}
+.nx-workspace form {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+.nx-workspace label {
+  display: block;
+}
+.nx-workspace input:not([type="checkbox"]),
+.nx-workspace select,
+.nx-workspace textarea {
+  display: block;
+  width: 100%;
+  border: 1px solid #9baac0;
+  border-radius: 8px;
+  padding: 10px;
+  font: inherit;
+  box-sizing: border-box;
+}
+.nx-workspace textarea {
+  min-height: 100px;
+}
+.nx-workspace button {
+  padding: 9px 16px;
+  margin: 4px;
+  border-radius: 8px;
+  border: 1px solid #2451b7;
+  background: #2451b7;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+}
+.nx-workspace button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.nx-workspace a {
+  color: #2451b7;
+  text-decoration: underline;
+}
+.nx-workspace .nx-canvas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.nx-workspace .nx-form-row {
+  display: flex;
+  gap: 20px;
+}
+.nx-workspace .nx-alert {
+  background: #fff0ef;
+  padding: 16px;
+  color: #9b2424;
+}
+.nx-workspace small {
+  display: block;
+  color: #56657b;
+}
+.nx-workspace .nx-conversation {
+  padding: 20px;
+  background: #f4f7fd;
+  border-radius: 12px;
+}
+.nx-workspace fieldset {
+  padding: 15px;
+  border: 1px solid #dce3ef;
+}
+.nx-workspace :focus-visible {
+  outline: 3px solid #e5a326;
+  outline-offset: 3px;
+}
+@media (max-width: 700px) {
+  .nx-workspace {
+    padding: 12px;
+    margin: 12px auto;
+  }
+  .nx-workspace .nx-canvas {
+    grid-template-columns: 1fr;
+  }
+  .nx-workspace .nx-form-row {
+    display: block;
+  }
+}
