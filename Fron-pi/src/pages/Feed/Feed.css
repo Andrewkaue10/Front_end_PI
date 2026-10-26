@@ -43,7 +43,9 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
   text-align: left;
 }
 
@@ -374,7 +376,9 @@
   border: 1px solid transparent;
   background: var(--color-accent);
   color: #ffffff;
-  transition: filter 0.15s, background 0.15s;
+  transition:
+    filter 0.15s,
+    background 0.15s;
 }
 
 .nx-connect-btn:hover {
@@ -390,4 +394,77 @@
 .nx-connect-btn.connected:hover {
   background: #dcf2e4;
   filter: none;
+}
+/* Layout for the integrated feed on smaller screens. */
+.nx-card-title-row h2 {
+  font-size: 20px;
+  margin: 0;
+}
+.nx-card-list ul {
+  padding-left: 20px;
+  line-height: 1.6;
+}
+.nx-pills select {
+  padding: 10px;
+  border: 1px solid #ccd4e0;
+  border-radius: 8px;
+  background: white;
+}
+.nx-card-actions button:disabled {
+  opacity: 0.5;
+}
+.nx-card-actions button {
+  cursor: pointer;
+}
+.nx-metrics {
+  flex-wrap: wrap;
+}
+.nx-content > p {
+  margin: 16px 0;
+  line-height: 1.6;
+}
+@media (max-width: 760px) {
+  .nexhub {
+    display: block;
+  }
+  .nx-sidebar {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 12px;
+  }
+  .nx-sidebar-nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .nx-main {
+    margin-left: 0;
+    width: 100%;
+    min-width: 0;
+  }
+  .nx-content {
+    padding: 16px;
+  }
+  .nx-card {
+    padding: 16px;
+    gap: 12px;
+  }
+  .nx-card-avatar {
+    display: none;
+  }
+  .nx-card-body {
+    min-width: 0;
+  }
+  .nx-metrics {
+    gap: 15px;
+  }
+  .nx-card-actions {
+    flex-wrap: wrap;
+  }
+  .nx-content-header h1 {
+    font-size: 25px;
+  }
+  .nx-pills {
+    flex-wrap: wrap;
+  }
 }

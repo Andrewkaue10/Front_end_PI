@@ -7,7 +7,11 @@ import SignupStartup from './pages/SignupStartup/SignupStartup'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import ResetPassword from './pages/ResetPassword/ResetPassword'
 import './App.css'
-import Login from './pages/Login/login'
+import Login from './pages/Login/Login'
+
+import Workspace from './pages/Workspace/Workspace'
+
+import Terms from './pages/Terms'
 
 function App() {
   const location = useLocation()
@@ -16,11 +20,13 @@ function App() {
     <>
       {!hideNavbar && <Navbar />}
       <Routes>
+        <Route path="/termos" element={<Terms />} />
         <Route path="/" element={<Home />} />
         <Route path="/esqueci-senha" element={<ForgotPassword />} />
         <Route path="/redefinir-senha" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/feed" element={<Feed />} />
+        <Route path="/painel" element={<Workspace />} />
         <Route path="/cadastro/investidor" element={<SignupInvestor />} />
         <Route path="/cadastro/startup" element={<SignupStartup />} />
       </Routes>

@@ -47,7 +47,7 @@ function Home() {
         />
       </section>
 
-      <section className="home__how">
+      <section id="como-funciona" className="home__how">
         <h2>Como funciona</h2>
         <p>Três passos simples para transformar conexões em oportunidades reais</p>
         <div className="home__steps">

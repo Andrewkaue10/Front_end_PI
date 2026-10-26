@@ -1,71 +1,106 @@
-import { useState } from 'react'
-import { Check } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
-import { formatPhone } from '../../utils/formatPhone'
-import AuthLayout from '../../components/AuthLayout/AuthLayout'
-import PillGroup from '../../components/PillGroup/PillGroup'
-import '../../styles/forms.css'
-import './SignupInvestor.css'
+import { api, saveSession } from "../../lib/api";
+import { useState } from "react";
+import { Check } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { formatPhone } from "../../utils/formatPhone";
+import AuthLayout from "../../components/AuthLayout/AuthLayout";
+import PillGroup from "../../components/PillGroup/PillGroup";
+import "../../styles/forms.css";
+import "./SignupInvestor.css";
 
-const TIPOS = ['Anjo', 'VC', 'Family Office', 'Corporate']
-const SETORES = ['Fintech', 'Healthtech', 'Edtech', 'SaaS', 'IA', 'Mobilidade', 'E-commerce', 'Outros']
-const TICKETS = ['Até R$50k', 'R$50k - 200k', 'R$200k - 1M', 'Acima de R$1M']
+const TIPOS = ["Anjo", "VC", "Family Office", "Corporate"];
+const SETORES = [
+  "Fintech",
+  "Healthtech",
+  "Edtech",
+  "SaaS",
+  "IA",
+  "Mobilidade",
+  "E-commerce",
+  "Outros",
+];
+const TICKETS = ["Até R$50k", "R$50k - 200k", "R$200k - 1M", "Acima de R$1M"];
 
 const LABELS = {
-  nome: 'Nome completo',
-  email: 'E-mail profissional',
-  senha: 'Senha',
-  confirmarSenha: 'Confirmar senha',
-  telefone: 'Telefone',
-}
+  nome: "Nome completo",
+  email: "E-mail profissional",
+  senha: "Senha",
+  confirmarSenha: "Confirmar senha",
+  telefone: "Telefone",
+};
 
 function SignupInvestor() {
-  const [tipo, setTipo] = useState('Anjo')
-  const [setores, setSetores] = useState(['SaaS'])
-  const [ticket, setTicket] = useState('R$50k - 200k')
-  const [telefone, setTelefone] = useState('')
-  const [error, setError] = useState(null)
-  const navigate = useNavigate()
+  const [role, setRole] = useState("INVESTOR");
+  const [tipo, setTipo] = useState("Anjo");
+  const [setores, setSetores] = useState(["SaaS"]);
+  const [ticket, setTicket] = useState("R$50k - 200k");
+  const [telefone, setTelefone] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setError(null)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
 
-    const form = new FormData(e.target)
+    const form = new FormData(e.target);
     const campos = {
-      nome: form.get('nome'),
-      email: form.get('email'),
-      senha: form.get('senha'),
-      confirmarSenha: form.get('confirmarSenha'),
-      telefone: form.get('telefone'),
-    }
+      nome: form.get("nome"),
+      email: form.get("email"),
+      senha: form.get("senha"),
+      confirmarSenha: form.get("confirmarSenha"),
+      telefone: form.get("telefone"),
+    };
 
     const faltando = Object.entries(campos)
       .filter(([, valor]) => !valor || !valor.trim())
-      .map(([campo]) => LABELS[campo])
+      .map(([campo]) => LABELS[campo]);
 
-    if (!tipo) faltando.push('Tipo de investidor')
-    if (setores.length === 0) faltando.push('Setores de interesse')
-    if (!ticket) faltando.push('Ticket médio de investimento')
+    if (!tipo) faltando.push("Tipo de investidor");
+    if (setores.length === 0) faltando.push("Setores de interesse");
+    if (!ticket) faltando.push("Ticket médio de investimento");
 
     if (faltando.length > 0) {
-      setError(`Preencha: ${faltando.join(', ')}.`)
-      return
+      setError(`Preencha: ${faltando.join(", ")}.`);
+      return;
     }
 
     if (campos.senha !== campos.confirmarSenha) {
-      setError('As senhas não coincidem.')
-      return
+      setError("As senhas não coincidem.");
+      return;
     }
 
-    if (!form.get('termos')) {
-      setError('Você precisa concordar com os Termos de Uso.')
-      return
+    if (!form.get("termos")) {
+      setError("Você precisa concordar com os Termos de Uso.");
+      return;
     }
 
-    // Integrar com o back
-    navigate('/feed')
-  }
+    if (loading) return;
+    setLoading(true);
+    try {
+      const result = await api("/auth/register", {
+        method: "POST",
+        body: {
+          ...campos,
+          role,
+          setores,
+          ...(role !== "MENTOR" ? { tipo, ticket } : {}),
+          fundo: form.get("fundo") || "",
+          specialties: form.getAll("specialties"),
+          ...(role !== "INVESTOR"
+            ? { availability: Number(form.get("availability")) }
+            : {}),
+          termos: true,
+        },
+      });
+      saveSession(result.access_token);
+      navigate("/painel");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="theme-investor">
@@ -77,36 +112,102 @@ function SignupInvestor() {
         topLinkHref="/login"
       >
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
-          <h1>Crie sua conta de investidor</h1>
+          <h1>Crie sua conta de investidor ou mentor</h1>
+          <label>
+            Atuação
+            <select value={role} onChange={(e) => setRole(e.target.value)}>
+              <option value="INVESTOR">Investidor</option>
+              <option value="MENTOR">Mentor</option>
+              <option value="BOTH">Investidor e mentor</option>
+            </select>
+          </label>
+          {role !== "INVESTOR" && (
+            <fieldset>
+              <legend>Mentoria</legend>
+              {[
+                "Estratégia",
+                "Tecnologia",
+                "Marketing",
+                "Finanças",
+                "Captação",
+                "Operações",
+              ].map((n) => (
+                <label key={n}>
+                  <input type="checkbox" name="specialties" value={n} />
+                  {n}
+                </label>
+              ))}
+              <label>
+                Disponibilidade mensal em horas
+                <input
+                  type="number"
+                  name="availability"
+                  min="1"
+                  max="160"
+                  required
+                />
+              </label>
+            </fieldset>
+          )}
           <p className="auth-form__subtitle">
-            Preencha os dados abaixo para começar a receber oportunidades selecionadas para você.
+            Preencha os dados abaixo para começar a receber oportunidades
+            selecionadas para você.
           </p>
 
           <div className="auth-form__row">
             <div className="auth-form__field">
               <label htmlFor="nome">Nome completo</label>
-              <input id="nome" name="nome" type="text" placeholder="Ex: Ana Souza" required />
+              <input
+                id="nome"
+                name="nome"
+                type="text"
+                placeholder="Ex: Ana Souza"
+                required
+              />
             </div>
             <div className="auth-form__field">
               <label htmlFor="email">E-mail profissional</label>
-              <input id="email" name="email" type="email" placeholder="voce@empresa.com" required />
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="voce@empresa.com"
+                required
+              />
             </div>
           </div>
 
           <div className="auth-form__row">
             <div className="auth-form__field">
               <label htmlFor="senha">Senha</label>
-              <input id="senha" name="senha" type="password" placeholder="Mínimo 8 caracteres" required />
+              <input
+                id="senha"
+                name="senha"
+                type="password"
+                placeholder="Mínimo 8 caracteres"
+                required
+              />
             </div>
             <div className="auth-form__field">
               <label htmlFor="confirmar-senha">Confirmar senha</label>
-              <input id="confirmar-senha" name="confirmarSenha" type="password" placeholder="Repita a senha" required />
+              <input
+                id="confirmar-senha"
+                name="confirmarSenha"
+                type="password"
+                placeholder="Repita a senha"
+                required
+              />
             </div>
           </div>
 
           <div className="auth-form__field">
             <label htmlFor="fundo">Nome do fundo / empresa (opcional)</label>
-            <input id="fundo" name="fundo" type="text" placeholder="Ex: Vórtice Capital" />
+            <input
+              id="fundo"
+              name="fundo"
+              type="text"
+              placeholder="Ex: Vórtice Capital"
+            />
           </div>
 
           <div className="auth-form__group">
@@ -116,11 +217,18 @@ function SignupInvestor() {
 
           <div className="auth-form__group">
             <span className="auth-form__group-label">Setores de interesse</span>
-            <PillGroup options={SETORES} value={setores} onChange={setSetores} multiple />
+            <PillGroup
+              options={SETORES}
+              value={setores}
+              onChange={setSetores}
+              multiple
+            />
           </div>
 
           <div className="auth-form__group">
-            <span className="auth-form__group-label">Ticket médio de investimento</span>
+            <span className="auth-form__group-label">
+              Ticket médio de investimento
+            </span>
             <PillGroup options={TICKETS} value={ticket} onChange={setTicket} />
           </div>
 
@@ -138,12 +246,17 @@ function SignupInvestor() {
             />
           </div>
 
+          <p>
+            <Link to="/termos" target="_blank">
+              Ler informações de uso e privacidade
+            </Link>
+          </p>
           <label className="auth-form__checkbox">
-            <input type="checkbox" name="termos" defaultChecked />
+            <input type="checkbox" name="termos" />
             <span className="checkbox-box">
               <Check size={12} strokeWidth={3} />
             </span>
-            Concordo com os Termos de Uso e a Política de Privacidade
+            Li as informações de uso e privacidade desta demonstração.
           </label>
 
           {error && (
@@ -152,7 +265,11 @@ function SignupInvestor() {
             </div>
           )}
 
-          <button type="submit" className="auth-form__submit">
+          <button
+            disabled={loading}
+            type="submit"
+            className="auth-form__submit"
+          >
             Criar conta de investidor →
           </button>
 
@@ -162,7 +279,7 @@ function SignupInvestor() {
         </form>
       </AuthLayout>
     </div>
-  )
+  );
 }
 
-export default SignupInvestor
+export default SignupInvestor;
