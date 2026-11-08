@@ -6,6 +6,14 @@ import SignupInvestor from './pages/SignupInvestor/SignupInvestor'
 import SignupStartup from './pages/SignupStartup/SignupStartup'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import ResetPassword from './pages/ResetPassword/ResetPassword'
+import Notification from './pages/Notification/Notification'
+import Editais from './pages/Editais/Editais'
+import Mentores from './pages/Mentores/Mentores'
+import investors from './pages/investors/investors'
+import Mensagens from './pages/Mensagens/Mensagens'
+import Favorites from './pages/Favorites/Favorites'
+
+
 import './App.css'
 import Login from './pages/Login/Login'
 
@@ -29,6 +37,7 @@ function App() {
         <Route path="/painel" element={<Workspace />} />
         <Route path="/cadastro/investidor" element={<SignupInvestor />} />
         <Route path="/cadastro/startup" element={<SignupStartup />} />
+        <Route path="/notificações/startup" element={<Notification />} />
       </Routes>
     </>
   )
