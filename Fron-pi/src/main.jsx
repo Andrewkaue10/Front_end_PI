@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 
-import App from "./pages/Favorites/Favorites.jsx";
+import App from "./pages/ALIA/ALIA.jsx";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

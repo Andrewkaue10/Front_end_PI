@@ -12,6 +12,11 @@ import Mentores from './pages/Mentores/Mentores'
 import investors from './pages/investors/investors'
 import Mensagens from './pages/Mensagens/Mensagens'
 import Favorites from './pages/Favorites/Favorites'
+import Portiffolio from './pages/Portfolio/Portfolio'
+import Settings from '.pages/Settings/Settings'
+import Qualification from '.pages/Qualification/Qualification'
+import ALIA from '.pages/ALIA/ALIA'
+
 
 
 import './App.css'
