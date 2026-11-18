@@ -1,0 +1,8 @@
+# Node and build output
+**/node_modules/
+**/dist/
+
+# Local environment files; keep only safe examples in Git
+**/.env
+**/.env.*
+!**/.env.example

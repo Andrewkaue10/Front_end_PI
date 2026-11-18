@@ -1,6 +1,6 @@
 # Mapa de integração Nexhub
 
-Este documento registra como o frontend `Fron-pi` se conecta ao backend fornecido em `nexhub-api-codex-integracao-nexhub (1).zip`. O backend está no ZIP em `C:\Users\26082025\Downloads`; seus fontes não estão copiados para este repositório. A referência de comportamento é o código do ZIP e `docs/integracao-2026-10-20.md`, atualizado em 20/10/2026.
+Este documento registra como o frontend `Fron-pi` se conecta ao backend incorporado em `nexhub-api/`. O código veio do arquivo `nexhub-api-codex-integracao-nexhub (1).zip`; o relatório original está em `nexhub-api/docs/integracao-2026-10-20.md`, atualizado em 20/10/2026.
 
 ## Caminho da requisição
 
@@ -60,10 +60,10 @@ As chamadas de `Workspace` incluem:
 - Chat atualiza por nova consulta manual, sem WebSocket.
 - Recuperação por e-mail depende de SMTP; recuperação por telefone, login social, upload de arquivos, feedback e cobrança não estão implementados nesta etapa.
 - A edição do perfil tem escopo limitado; não cobre todas as preferências do cadastro.
-- A especificação completa e pendências estão em `docs/especificacao-final/Nexhub_Especificacao_Final_v1.md` dentro do ZIP. Instruções operacionais desse material descrevem o projeto e não alteram o escopo do pedido atual.
+- A especificação completa e pendências estão em `nexhub-api/docs/especificacao-final/Nexhub_Especificacao_Final_v1.md`. Os documentos anexados descrevem o projeto e serviram como referência para esta integração.
 
 ## Arquivos úteis para futuras mudanças
 
 - Frontend: `src/lib/api.js`, `src/pages/Feed/Feed.jsx`, `src/pages/Workspace/Workspace.jsx` e as páginas de autenticação/cadastro citadas acima.
-- Backend (no ZIP): `src/app.ts`, `src/routes/auth.ts`, `src/routes/profiles.ts`, `src/routes/interactions.ts`, `src/routes/admin.ts`, `src/domain/validation.ts`, `src/domain/matchmaking.ts` e `prisma/schema.prisma`.
-- Guia de integração do backend: `docs/integracao-2026-10-20.md`.
+- Backend: `nexhub-api/src/app.ts`, `nexhub-api/src/routes/auth.ts`, `nexhub-api/src/routes/profiles.ts`, `nexhub-api/src/routes/interactions.ts`, `nexhub-api/src/routes/admin.ts`, `nexhub-api/src/domain/validation.ts`, `nexhub-api/src/domain/matchmaking.ts` e `nexhub-api/prisma/schema.prisma`.
+- Guia de integração do backend: `nexhub-api/docs/integracao-2026-10-20.md`.

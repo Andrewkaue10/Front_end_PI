@@ -1,94 +1,60 @@
-# Front-end React
+# Nexhub
 
-Projeto desenvolvido utilizando **React** para construção de uma aplicação web moderna, responsiva e organizada.
+Repositório com o frontend React/Vite e a API Express/TypeScript da Nexhub.
 
-## Sobre o projeto
-
-Este repositório contém o front-end da aplicação, responsável pela interface e interação com o usuário.
-
-O projeto foi desenvolvido com foco em:
-
-* Interface simples e intuitiva
-* Responsividade
-* Componentização
-* Organização do código
-* Integração com APIs
-* Boas práticas de desenvolvimento
-
-## Tecnologias utilizadas
-
-* **React**
-* **JavaScript / TypeScript**
-* **HTML5**
-* **CSS3**
-* **Git e GitHub**
-* **Node.js / npm**
-
-## Estrutura do projeto
+## Estrutura
 
 ```text
-src/
-├── assets/        # Imagens, ícones e outros arquivos
-├── components/    # Componentes reutilizáveis
-├── pages/         # Páginas da aplicação
-├── services/      # Integrações e chamadas de API
-├── styles/        # Estilos
-├── App.jsx        # Componente principal
-└── main.jsx       # Inicialização da aplicação
+Fron-pi/       Frontend React
+nexhub-api/    API Express, Prisma e migrações PostgreSQL
 ```
 
-## Como executar o projeto
+O frontend chama a API HTTP. O backend usa Prisma para acessar o schema privado `nexhub` no Supabase; as tabelas não são acessadas diretamente pelo navegador.
 
-### 1. Clone o repositório
+## Executar localmente
 
-```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
+### 1. Configurar a API
+
+No PowerShell, abra um terminal na pasta do repositório:
+
+```powershell
+cd nexhub-api
+npm ci
+Copy-Item .env.example .env
 ```
 
-### 2. Acesse a pasta
+Edite `nexhub-api/.env` localmente. Preencha `DATABASE_URL`, `DATABASE_CA_PATH` e `JWT_SECRET`; configure SMTP apenas se quiser habilitar a recuperação real por e-mail. Não envie `.env` ao Git.
 
-```bash
-cd seu-repositorio
-```
+Com o banco de desenvolvimento configurado, gere o Prisma Client, aplique a migration incluída e inicie a API:
 
-### 3. Instale as dependências
-
-```bash
-npm install
-```
-
-### 4. Execute o projeto
-
-```bash
+```powershell
+npm run db:generate
+npm run db:migrate
 npm run dev
 ```
 
-Após isso, acesse o endereço informado pelo terminal, normalmente:
+A API fica em `http://localhost:3333/api`; a verificação de saúde fica em `http://localhost:3333/health`.
 
-```text
-http://localhost:5173
+### 2. Iniciar o frontend
+
+Em outro terminal, na raiz do repositório:
+
+```powershell
+cd Fron-pi
+npm ci
+Copy-Item .env.example .env
+npm run dev
 ```
 
-## Funcionalidades
+O frontend usa `VITE_API_URL=http://localhost:3333/api` por padrão. Ajuste `Fron-pi/.env` se a API estiver em outro endereço. A origem do frontend deve estar incluída em `FRONTEND_ORIGIN` no backend para as chamadas via navegador.
 
-* [x] Interface web
-* [x] Componentes reutilizáveis
-* [x] Layout responsivo
-* [x] Navegação entre páginas
-* [ ] Integração com backend
-* [ ] Autenticação de usuários
+## Segurança e dados
 
-## Desenvolvimento
-
-Este projeto faz parte dos estudos e projetos práticos de desenvolvimento front-end, com foco no aprendizado de **React**, organização de aplicações e desenvolvimento de interfaces modernas.
+- Credenciais de banco, certificado TLS e `JWT_SECRET` ficam somente no backend.
+- O backend e o frontend têm arquivos `.env.example` sem credenciais reais. Os arquivos `.env` são locais e ignorados pelo Git.
+- Use uma base de desenvolvimento para migrations, seed e testes de integração. O seed cria dados fictícios.
+- O guia detalhado da comunicação entre telas e endpoints está em [Fron-pi/docs/INTEGRACAO_BACKEND.md](Fron-pi/docs/INTEGRACAO_BACKEND.md); a documentação da API está em [nexhub-api/README.md](nexhub-api/README.md).
 
 ## Autores
 
-**Andrew Kauê**
-
-Desenvolvedor Front-end
-
-**João Gabriel**
-
-Desenvolvedor Front-end
-[GitHub](https://github.com/AndrewKaue10)
+Andrew Kauê e João Gabriel.

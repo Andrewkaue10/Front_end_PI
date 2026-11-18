@@ -1,0 +1,22 @@
+@base = http://localhost:3333/api
+# Use apenas credenciais fictícias locais; não salve senha/token reais no Git.
+@demoPassword = PREENCHA_LOCALMENTE
+
+### Login real
+# @name login
+POST {{base}}/auth/login
+Content-Type: application/json
+
+{"email":"investidor@nexhub.example","senha":"{{demoPassword}}"}
+
+### Perfil próprio
+GET {{base}}/auth/me
+Authorization: Bearer {{login.response.body.access_token}}
+
+### Recomendações
+GET {{base}}/recommendations
+Authorization: Bearer {{login.response.body.access_token}}
+
+### Startups
+GET {{base}}/startups?category=Todos&page=1&limit=20
+Authorization: Bearer {{login.response.body.access_token}}
