@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Reveal from "../../components/Reveal/Reveal";
 import "./Marketing.css";
 
 const pages = {
@@ -240,7 +241,7 @@ export default function Marketing({ page }) {
   const data = pages[page] || pages.how;
   return (
     <main className="marketing">
-      <header className="marketing-hero">
+      <Reveal as="header" className="marketing-hero">
         <span className="eyebrow">{data.eyebrow}</span>
         <h1>{data.title}</h1>
         <p>{data.lead}</p>
@@ -255,26 +256,26 @@ export default function Marketing({ page }) {
             Entrar
           </Link>
         </div>
-      </header>
+      </Reveal>
       {data.sections.map((section) => (
-        <section className="marketing-section" key={section.title}>
+        <Reveal as="section" className="marketing-section" key={section.title}>
           <span className="eyebrow">{section.eyebrow}</span>
           <h2>{section.title}</h2>
           {section.text && <p className="section-copy">{section.text}</p>}
           {section.cards && (
             <div className="marketing-cards">
-              {section.cards.map(([icon, title, copy]) => (
-                <article className="marketing-card" key={title}>
+              {section.cards.map(([icon, title, copy], index) => (
+                <Reveal as="article" className="marketing-card" key={title} delay={index * 70}>
                   <span>{icon}</span>
                   <h3>{title}</h3>
                   <p>{copy}</p>
-                </article>
+                </Reveal>
               ))}
             </div>
           )}
-        </section>
+        </Reveal>
       ))}
-      <section className="marketing-cta">
+      <Reveal as="section" className="marketing-cta">
         <h2>Pronto para começar?</h2>
         <p>Crie seu perfil gratuito e descubra novas conexões.</p>
         <Link className="marketing-button" to="/cadastro/startup">
@@ -283,7 +284,7 @@ export default function Marketing({ page }) {
         <Link className="marketing-button secondary" to="/cadastro/investidor">
           Sou investidor
         </Link>
-      </section>
+      </Reveal>
     </main>
   );
 }
