@@ -1,4 +1,17 @@
 :root {
+  /* NexHub design tokens */
+  --color-brand: #FF5A36;
+  --color-brand-soft: #FFEDE8;
+  --color-brand-deep: #A32864;
+  --color-ink: #0C2944;
+  --color-ink-secondary: #102C47;
+  --color-on-ink-muted: #D6DEEA;
+  --color-text-muted: #727D91;
+  --color-surface-muted: #F7F8FB;
+  --color-white: #FFFFFF;
+  --color-alia: #7138EE;
+  --color-alia-soft: #F0E8FF;
+
   --color-accent: #FF5A36;
   --color-text: #08060d;
   --color-text-light: #3a3640;

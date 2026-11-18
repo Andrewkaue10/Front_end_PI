@@ -10,10 +10,11 @@ function Navbar() {
   const isAppView = APP_ROUTES.includes(location.pathname)
 
   const links = [
-    { label: 'Como funciona', href: '/#como-funciona' },
-    { label: 'Para Startups', href: '/cadastro/startup' },
-    { label: 'Para Investidores', href: '/cadastro/investidor' },
-    { label: 'Uso e privacidade', href: '/termos' },
+    { label: 'Como funciona', href: '/como-funciona' },
+    { label: 'Para Startups', href: '/para-startups' },
+    { label: 'Para Investidores', href: '/para-investidores' },
+    { label: 'A.L.I.A', href: '/alia' },
+    { label: 'Sobre', href: '/sobre' },
   ]
 
   return (
@@ -43,7 +44,7 @@ function Navbar() {
           <ul className="navbar__links">
             {links.map((link) => (
               <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
+                <Link to={link.href} onClick={() => setMenuOpen(false)}>{link.label}</Link>
               </li>
             ))}
           </ul>

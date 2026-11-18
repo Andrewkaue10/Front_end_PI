@@ -1,0 +1,134 @@
+.marketing {
+  color: var(--color-ink);
+}
+.marketing-hero {
+  background: var(--color-surface-muted);
+  text-align: center;
+  padding: 100px 24px 110px;
+}
+.marketing-hero h1 {
+  font-size: clamp(2.3rem, 5vw, 4.2rem);
+  line-height: 1.08;
+  margin: 22px auto;
+  max-width: 1000px;
+}
+.marketing em {
+  font-style: normal;
+  color: var(--color-brand);
+}
+.marketing-hero > p,
+.section-copy {
+  max-width: 760px;
+  margin: 0 auto;
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+.eyebrow {
+  display: inline-block;
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+}
+.marketing-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 28px;
+}
+.marketing-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-brand);
+  border-radius: 9px;
+  padding: 14px 24px;
+  background: var(--color-brand);
+  color: white;
+  font-weight: 700;
+}
+.marketing-button.secondary {
+  background: white;
+  color: var(--color-ink-secondary);
+  border-color: var(--color-ink-secondary);
+}
+.marketing-section {
+  padding: 88px max(24px, calc((100% - 1120px) / 2));
+  text-align: center;
+}
+.marketing-section:nth-of-type(even) {
+  background: var(--color-surface-muted);
+}
+.marketing-section h2,
+.marketing-cta h2 {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  margin: 18px auto 36px;
+  max-width: 900px;
+}
+.marketing-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  text-align: left;
+}
+.marketing-card {
+  padding: 26px;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: white;
+  min-height: 170px;
+}
+.marketing-card > span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--color-brand-soft);
+  color: var(--color-brand);
+  font-size: 1.25rem;
+}
+.marketing-card h3 {
+  margin: 16px 0 8px;
+}
+.marketing-card p {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+.marketing-cta {
+  text-align: center;
+  padding: 75px 24px;
+  background: linear-gradient(
+    110deg,
+    var(--color-brand),
+    var(--color-brand-deep)
+  );
+  color: white;
+}
+.marketing-cta h2 {
+  margin-bottom: 12px;
+}
+.marketing-cta p {
+  margin-bottom: 24px;
+}
+.marketing-cta .secondary {
+  margin-left: 10px;
+}
+@media (max-width: 650px) {
+  .marketing-hero {
+    padding: 70px 22px;
+  }
+  .marketing-actions {
+    flex-wrap: wrap;
+  }
+  .marketing-section {
+    padding: 64px 22px;
+  }
+  .marketing-cta .secondary {
+    margin: 10px 0 0;
+  }
+}
