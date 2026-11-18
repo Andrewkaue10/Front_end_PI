@@ -61,6 +61,18 @@
   max-width: 440px;
 }
 
+.login-page .auth-form__forgot {
+  align-self: flex-end;
+  color: var(--color-accent);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-page .auth-form__forgot:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 900px) {
   .login-page {
     grid-template-columns: 1fr;

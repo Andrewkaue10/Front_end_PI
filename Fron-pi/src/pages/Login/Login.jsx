@@ -83,12 +83,7 @@ function Login() {
             </div>
 
             <div className="auth-form__field">
-              <div className="auth-form__field-header">
-                <label htmlFor="senha">Senha</label>
-                <Link to="/esqueci-senha" className="auth-form__forgot">
-                  Esqueceu a senha?
-                </Link>
-              </div>
+              <label htmlFor="senha">Senha</label>
               <input
                 id="senha"
                 name="senha"
@@ -96,6 +91,9 @@ function Login() {
                 placeholder="Digite sua senha"
                 required
               />
+              <Link to="/esqueci-senha" className="auth-form__forgot">
+                Esqueceu a senha?
+              </Link>
             </div>
 
             <label className="auth-form__checkbox">

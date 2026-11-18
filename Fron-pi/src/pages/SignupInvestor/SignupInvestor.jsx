@@ -113,39 +113,85 @@ function SignupInvestor() {
       >
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
           <h1>Crie sua conta de investidor ou mentor</h1>
-          <label>
-            Atuação
-            <select value={role} onChange={(e) => setRole(e.target.value)}>
-              <option value="INVESTOR">Investidor</option>
-              <option value="MENTOR">Mentor</option>
-              <option value="BOTH">Investidor e mentor</option>
-            </select>
-          </label>
-          {role !== "INVESTOR" && (
-            <fieldset>
-              <legend>Mentoria</legend>
+          <fieldset className="signup-role-picker">
+            <legend>Como você quer atuar?</legend>
+            <div className="signup-role-picker__options">
               {[
-                "Estratégia",
-                "Tecnologia",
-                "Marketing",
-                "Finanças",
-                "Captação",
-                "Operações",
-              ].map((n) => (
-                <label key={n}>
-                  <input type="checkbox" name="specialties" value={n} />
-                  {n}
+                ["INVESTOR", "Investidor", "Encontrar startups para investir"],
+                ["MENTOR", "Mentor", "Compartilhar experiência"],
+                ["BOTH", "Ambos", "Investir e também orientar"],
+              ].map(([value, title, description]) => (
+                <label
+                  className={`signup-role-option ${role === value ? "is-selected" : ""}`}
+                  key={value}
+                >
+                  <input
+                    type="radio"
+                    name="role-choice"
+                    value={value}
+                    checked={role === value}
+                    onChange={() => setRole(value)}
+                  />
+                  <span
+                    className="signup-role-option__indicator"
+                    aria-hidden="true"
+                  />
+                  <span className="signup-role-option__copy">
+                    <strong>{title}</strong>
+                    <small>{description}</small>
+                  </span>
                 </label>
               ))}
-              <label>
-                Disponibilidade mensal em horas
-                <input
-                  type="number"
-                  name="availability"
-                  min="1"
-                  max="160"
-                  required
-                />
+            </div>
+          </fieldset>
+          {role !== "INVESTOR" && (
+            <fieldset className="signup-mentorship">
+              <legend>Mentoria</legend>
+              <p className="signup-mentorship__hint">
+                Escolha as áreas em que você pode contribuir.
+              </p>
+              <div className="signup-specialties">
+                {[
+                  "Estratégia",
+                  "Tecnologia",
+                  "Marketing",
+                  "Finanças",
+                  "Captação",
+                  "Operações",
+                ].map((specialty) => (
+                  <label className="signup-specialty" key={specialty}>
+                    <input
+                      type="checkbox"
+                      name="specialties"
+                      value={specialty}
+                    />
+                    <span
+                      className="signup-specialty__check"
+                      aria-hidden="true"
+                    >
+                      ✓
+                    </span>
+                    <span>{specialty}</span>
+                  </label>
+                ))}
+              </div>
+              <label className="signup-availability" htmlFor="availability">
+                <span>
+                  <strong>Disponibilidade mensal</strong>
+                  <small>Quantas horas você pode dedicar?</small>
+                </span>
+                <span className="signup-availability__input">
+                  <input
+                    id="availability"
+                    type="number"
+                    name="availability"
+                    min="1"
+                    max="160"
+                    placeholder="Ex.: 8"
+                    required
+                  />
+                  <small>horas/mês</small>
+                </span>
               </label>
             </fieldset>
           )}

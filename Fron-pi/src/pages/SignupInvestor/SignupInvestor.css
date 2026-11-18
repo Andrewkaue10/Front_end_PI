@@ -1,3 +1,250 @@
 .theme-investor {
   --color-accent: #0052ff;
+  --color-accent-rgb: 0, 82, 255;
+}
+
+.signup-role-picker {
+  min-width: 0;
+  margin: 0 0 20px;
+  padding: 0;
+  border: 0;
+}
+
+.signup-role-picker legend {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.signup-role-picker__options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.signup-role-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 82px;
+  padding: 13px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-white);
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.signup-role-option:hover {
+  border-color: var(--color-accent);
+}
+
+.signup-role-option.is-selected {
+  border-color: var(--color-accent);
+  background: rgba(var(--color-accent-rgb), 0.06);
+  box-shadow: 0 0 0 2px rgba(var(--color-accent-rgb), 0.12);
+}
+
+.signup-role-option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.signup-role-option:focus-within {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.signup-role-option__indicator {
+  display: block;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 50%;
+}
+
+.signup-role-option.is-selected .signup-role-option__indicator {
+  border: 5px solid var(--color-accent);
+}
+
+.signup-role-option__copy {
+  display: grid;
+  gap: 4px;
+}
+
+.signup-role-option__copy strong {
+  font-size: 13px;
+}
+
+.signup-role-option__copy small {
+  color: var(--color-text-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.theme-investor .auth-form h1 {
+  margin-bottom: 18px;
+}
+
+.theme-investor .auth-form__subtitle {
+  margin-top: 8px;
+}
+
+.signup-mentorship {
+  min-width: 0;
+  margin: 0 0 24px;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-surface-muted);
+}
+
+.signup-mentorship legend {
+  padding: 0 6px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.signup-mentorship__hint {
+  margin: 0 0 14px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.signup-specialties {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.signup-specialty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-white);
+  color: var(--color-ink);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.signup-specialty:hover,
+.signup-specialty:has(input:checked) {
+  border-color: var(--color-accent);
+  background: rgba(var(--color-accent-rgb), 0.07);
+}
+
+.signup-specialty input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.signup-specialty:focus-within {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.signup-specialty__check {
+  display: grid;
+  place-items: center;
+  flex: 0 0 17px;
+  width: 17px;
+  height: 17px;
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  color: transparent;
+  font-size: 11px;
+}
+
+.signup-specialty:has(input:checked) .signup-specialty__check {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-white);
+}
+
+.signup-availability {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.signup-availability > span:first-child,
+.signup-availability__input {
+  display: grid;
+  gap: 4px;
+}
+
+.signup-availability strong {
+  font-size: 12px;
+}
+
+.signup-availability small {
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.signup-availability__input {
+  grid-template-columns: 90px auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.signup-availability__input input {
+  width: 90px;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: var(--color-white);
+  font: inherit;
+}
+
+.signup-availability__input input:focus {
+  border-color: var(--color-accent);
+  outline: 2px solid rgba(var(--color-accent-rgb), 0.15);
+}
+
+@media (max-width: 600px) {
+  .signup-role-picker__options {
+    grid-template-columns: 1fr;
+  }
+
+  .signup-role-option {
+    min-height: 0;
+  }
+
+  .signup-specialties {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .signup-mentorship {
+    padding: 15px;
+  }
+
+  .signup-availability {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
