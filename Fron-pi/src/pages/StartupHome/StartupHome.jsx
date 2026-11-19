@@ -33,7 +33,7 @@ function initials(name) {
     .slice(0, 2)
     .map((part) => part[0])
     .join("")
-    .toUpper();
+    .toUpperCase();
 }
 
 function visibleList(values) {
@@ -215,8 +215,7 @@ export default function StartupHome() {
           </Link>
           <Link to="/painel#perfil">
             <BriefcaseBusiness size={16} />
-            <span>Publicações</span>
-            <small>Perfil</small>
+            <span>Perfil da startup</span>
           </Link>
           <Link to="/painel#avisos">
             <Bell size={16} />
@@ -225,16 +224,15 @@ export default function StartupHome() {
               <b>{notifications.filter((item) => !item.read).length}</b>
             )}
           </Link>
-          <Link to="/painel">
+          <Link to="/startup/editais">
             <CalendarDays size={16} />
             <span>Editais</span>
-            <small>Indisponível</small>
           </Link>
-          <Link to="#mentores">
+          <Link to="/startup/mentores">
             <Sparkles size={16} />
             <span>Mentores</span>
           </Link>
-          <Link to="#investidores">
+          <Link to="/startup/investidores">
             <Users size={16} />
             <span>Investidores</span>
           </Link>

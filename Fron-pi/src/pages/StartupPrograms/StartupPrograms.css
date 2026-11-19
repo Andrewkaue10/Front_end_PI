@@ -1,0 +1,98 @@
+.startup-programs__toolbar {
+  align-items: flex-start;
+  flex-direction: column;
+}
+.startup-programs__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+.startup-programs__empty {
+  border: 1px solid var(--startup-line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 24px;
+  color: var(--startup-muted);
+}
+.startup-programs__empty h2 {
+  margin: 0 0 6px;
+  color: var(--startup-ink);
+  font-size: 12px;
+}
+.startup-programs__empty p {
+  margin: 0;
+  font-size: 10px;
+}
+.startup-program-card {
+  background: #fff;
+  border: 1px solid var(--startup-line);
+  border-radius: 10px;
+  padding: 16px;
+}
+.startup-program-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.startup-program-card__top > div {
+  display: flex;
+  gap: 6px;
+}
+.startup-program-card__top span {
+  border-radius: 999px;
+  background: #f4f7fb;
+  color: #69758a;
+  padding: 5px 8px;
+  font-size: 8px;
+}
+.startup-program-card__top .startup-program-card__kind {
+  background: #fff0ec;
+  color: var(--startup-accent);
+}
+.startup-program-card__status.open {
+  background: #edf9f3 !important;
+  color: #098d50 !important;
+}
+.startup-program-card h2 {
+  margin: 10px 0 2px;
+  font-size: 12px;
+}
+.startup-program-card__organization {
+  margin: 0;
+  color: var(--startup-muted);
+  font-size: 9px;
+}
+.startup-program-card dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+.startup-program-card dt {
+  color: #9aa4b4;
+  font-size: 8px;
+}
+.startup-program-card dd {
+  margin: 2px 0 0;
+  font-size: 9px;
+}
+.startup-program-card__requirements {
+  font-size: 9px;
+}
+.startup-program-card__requirements ul {
+  margin: 6px 0 0;
+  padding-left: 18px;
+}
+.startup-profile-card__actions button.secondary {
+  background: #fff;
+  border: 1px solid var(--startup-line);
+  color: #69758a;
+}
+@media (max-width: 520px) {
+  .startup-program-card dl {
+    grid-template-columns: 1fr;
+  }
+  .startup-profile-card__actions {
+    flex-wrap: wrap;
+  }
+}

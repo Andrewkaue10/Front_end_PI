@@ -6,6 +6,7 @@ import { authRoutes } from "./routes/auth";
 import { profiles } from "./routes/profiles";
 import { interactions } from "./routes/interactions";
 import { admin } from "./routes/admin";
+import { programs } from "./routes/programs";
 import { authenticateJWT } from "./lib/security";
 import { errorHandler } from "./lib/errors";
 import {
@@ -54,7 +55,7 @@ app.get("/api/catalog", (_req, res) =>
   }),
 );
 app.use("/api/auth", authRoutes);
-app.use("/api", authenticateJWT, profiles, interactions);
+app.use("/api", authenticateJWT, profiles, interactions, programs);
 app.use("/api/admin", admin);
 
 app.get("/health", (req, res) => {

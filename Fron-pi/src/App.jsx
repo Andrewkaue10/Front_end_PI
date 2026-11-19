@@ -14,17 +14,22 @@ import Workspace from "./pages/Workspace/Workspace";
 import Terms from "./pages/Terms";
 import Marketing from "./pages/Marketing/Marketing";
 import StartupHome from "./pages/StartupHome/StartupHome";
+import StartupShell from "./components/StartupShell/StartupShell";
+import StartupInvestors from "./pages/StartupInvestors/StartupInvestors";
+import StartupMentors from "./pages/StartupMentors/StartupMentors";
+import StartupPrograms from "./pages/StartupPrograms/StartupPrograms";
 
 function App() {
   const location = useLocation();
-  const hideNavbar = [
-    "/esqueci-senha",
-    "/redefinir-senha",
-    "/login",
-    "/feed",
-    "/startup",
-    "/painel",
-  ].includes(location.pathname);
+  const hideNavbar =
+    [
+      "/esqueci-senha",
+      "/redefinir-senha",
+      "/login",
+      "/feed",
+      "/startup",
+      "/painel",
+    ].includes(location.pathname) || location.pathname.startsWith("/startup/");
   return (
     <>
       {!hideNavbar && <Navbar />}
@@ -44,6 +49,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/feed" element={<Feed />} />
         <Route path="/startup" element={<StartupHome />} />
+        <Route path="/startup" element={<StartupShell />}>
+          <Route path="investidores" element={<StartupInvestors />} />
+          <Route path="investidores/:id" element={<StartupInvestors />} />
+          <Route path="mentores" element={<StartupMentors />} />
+          <Route path="mentores/:id" element={<StartupMentors />} />
+          <Route path="editais" element={<StartupPrograms />} />
+        </Route>
         <Route path="/painel" element={<Workspace />} />
         <Route path="/cadastro/investidor" element={<SignupInvestor />} />
         <Route path="/cadastro/startup" element={<SignupStartup />} />

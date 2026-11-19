@@ -36,7 +36,7 @@ function initials(name) {
     .slice(0, 2)
     .map((part) => part[0])
     .join("")
-    .toUpper();
+    .toUpperCase();
 }
 
 export default function Feed() {

@@ -143,14 +143,61 @@ profiles.get("/startups", async (req, res) => {
 });
 profiles.get("/investors", async (req, res) => {
   const { page, limit } = paging.parse(req.query);
-  const rows = await db.investor.findMany({
-    where: { status: "APPROVED", owner: { active: true, isDemo: false } },
-    include: { owner: { select: { role: true, isDemo: true } } },
-    skip: (page - 1) * limit,
-    take: limit,
-    orderBy: [{ createdAt: "desc" }, { id: "asc" }],
-  });
-  res.json({ items: rows.map((i) => investorCard(i)), page, limit });
+  const q = z
+    .string()
+    .trim()
+    .max(120)
+    .parse(req.query.q || "");
+  const role = z
+    .enum(["TODOS", "INVESTOR", "MENTOR", "BOTH"])
+    .parse(req.query.role || "TODOS");
+  const specialty = z
+    .string()
+    .trim()
+    .max(40)
+    .parse(req.query.specialty || "");
+  const interest = z
+    .string()
+    .trim()
+    .max(40)
+    .parse(req.query.interest || "");
+  const stage = z
+    .string()
+    .trim()
+    .max(40)
+    .parse(req.query.stage || "");
+  const where: any = {
+    status: "APPROVED",
+    owner: {
+      active: true,
+      isDemo: false,
+      ...(role === "TODOS" ? {} : { role }),
+    },
+    ...(q
+      ? {
+          OR: [
+            { name: { contains: q, mode: "insensitive" } },
+            { company: { contains: q, mode: "insensitive" } },
+            { bio: { contains: q, mode: "insensitive" } },
+            { type: { contains: q, mode: "insensitive" } },
+          ],
+        }
+      : {}),
+    ...(specialty ? { specialties: { has: specialty } } : {}),
+    ...(interest ? { interests: { has: interest } } : {}),
+    ...(stage ? { stages: { has: stage } } : {}),
+  };
+  const [rows, total] = await db.$transaction([
+    db.investor.findMany({
+      where,
+      include: { owner: { select: { role: true, isDemo: true } } },
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: [{ createdAt: "desc" }, { id: "asc" }],
+    }),
+    db.investor.count({ where }),
+  ]);
+  res.json({ items: rows.map((i) => investorCard(i)), total, page, limit });
 });
 profiles.get("/recommendations", async (req, res) => {
   const { page, limit } = paging.parse(req.query);

@@ -106,6 +106,68 @@ admin.get("/metrics", async (_req, res) => {
       "Reuniões atualmente confirmadas ou concluídas; canceladas excluídas.",
   });
 });
+const programInput = z.object({
+  title: z.string().trim().min(2).max(160),
+  organization: z.string().trim().min(2).max(160),
+  modality: z.string().trim().min(2).max(80),
+  region: z.string().trim().max(120).default(""),
+  category: z.string().trim().max(80).default(""),
+  stage: z.string().trim().max(80).default(""),
+  benefit: z.string().trim().max(160).default(""),
+  duration: z.string().trim().max(80).default(""),
+  description: z.string().trim().max(4000).default(""),
+  requirements: z.array(z.string().trim().min(1).max(300)).max(30).default([]),
+  applicationsOpenAt: z.iso.datetime({ offset: true }),
+  applicationsCloseAt: z.iso.datetime({ offset: true }),
+  timezone: z.string().trim().min(1).max(80).default("America/Fortaleza"),
+  active: z.boolean().default(true),
+});
+
+admin.post("/programs", async (req, res) => {
+  const value = programInput.parse(req.body);
+  if (new Date(value.applicationsCloseAt) <= new Date(value.applicationsOpenAt))
+    throw new HttpError(
+      400,
+      "O prazo de encerramento deve ser posterior à abertura.",
+    );
+  const program = await db.program.create({
+    data: {
+      ...value,
+      applicationsOpenAt: new Date(value.applicationsOpenAt),
+      applicationsCloseAt: new Date(value.applicationsCloseAt),
+      creatorId: req.user!.userId,
+    },
+  });
+  res.status(201).json(program);
+});
+
+admin.patch("/programs/:id", async (req, res) => {
+  const id = uuid.parse(req.params.id);
+  const value = programInput.partial().parse(req.body);
+  const current = await db.program.findUnique({ where: { id } });
+  if (!current) throw new HttpError(404, "Edital ou programa não encontrado.");
+  const open = value.applicationsOpenAt
+    ? new Date(value.applicationsOpenAt)
+    : current.applicationsOpenAt;
+  const close = value.applicationsCloseAt
+    ? new Date(value.applicationsCloseAt)
+    : current.applicationsCloseAt;
+  if (close <= open)
+    throw new HttpError(
+      400,
+      "O prazo de encerramento deve ser posterior à abertura.",
+    );
+  const program = await db.program.update({
+    where: { id },
+    data: {
+      ...value,
+      ...(value.applicationsOpenAt ? { applicationsOpenAt: open } : {}),
+      ...(value.applicationsCloseAt ? { applicationsCloseAt: close } : {}),
+    },
+  });
+  res.json(program);
+});
+
 admin.get("/audit", async (req, res) => {
   const { page, limit } = paging.parse(req.query);
   res.json({
