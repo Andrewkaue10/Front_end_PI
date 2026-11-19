@@ -16,9 +16,13 @@ import Marketing from "./pages/Marketing/Marketing";
 
 function App() {
   const location = useLocation();
-  const hideNavbar = ["/esqueci-senha", "/redefinir-senha", "/login"].includes(
-    location.pathname,
-  );
+  const hideNavbar = [
+    "/esqueci-senha",
+    "/redefinir-senha",
+    "/login",
+    "/feed",
+    "/painel",
+  ].includes(location.pathname);
   return (
     <>
       {!hideNavbar && <Navbar />}

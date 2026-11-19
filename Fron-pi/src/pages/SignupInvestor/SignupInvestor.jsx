@@ -94,7 +94,7 @@ function SignupInvestor() {
         },
       });
       saveSession(result.access_token);
-      navigate("/painel");
+      navigate("/feed");
     } catch (err) {
       setError(err.message);
     } finally {

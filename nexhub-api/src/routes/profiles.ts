@@ -94,7 +94,7 @@ profiles.get("/startups", async (req, res) => {
   });
   const where: any = {
     status: "APPROVED",
-    owner: { active: true },
+    owner: { active: true, isDemo: false },
     ...(q
       ? {
           OR: [
@@ -144,7 +144,7 @@ profiles.get("/startups", async (req, res) => {
 profiles.get("/investors", async (req, res) => {
   const { page, limit } = paging.parse(req.query);
   const rows = await db.investor.findMany({
-    where: { status: "APPROVED", owner: { active: true } },
+    where: { status: "APPROVED", owner: { active: true, isDemo: false } },
     include: { owner: { select: { role: true, isDemo: true } } },
     skip: (page - 1) * limit,
     take: limit,
@@ -168,7 +168,7 @@ profiles.get("/recommendations", async (req, res) => {
     const rows = await db.investor.findMany({
       where: {
         status: "APPROVED",
-        owner: { active: true },
+        owner: { active: true, isDemo: false },
         connections: {
           none: {
             startupId: own.startup.id,
@@ -193,7 +193,7 @@ profiles.get("/recommendations", async (req, res) => {
     const rows = await db.startup.findMany({
       where: {
         status: "APPROVED",
-        owner: { active: true },
+        owner: { active: true, isDemo: false },
         connections: {
           none: {
             investorId: own.investor.id,
@@ -239,6 +239,7 @@ profiles.get("/startups/:id", async (req, res) => {
   if (
     !s ||
     !s.owner.active ||
+    s.owner.isDemo ||
     (s.ownerId !== req.user!.userId &&
       req.user!.role !== "ADMIN" &&
       s.status !== "APPROVED")
@@ -266,6 +267,7 @@ profiles.get("/investors/:id", async (req, res) => {
   if (
     !i ||
     !i.owner.active ||
+    i.owner.isDemo ||
     (i.ownerId !== req.user!.userId &&
       req.user!.role !== "ADMIN" &&
       i.status !== "APPROVED")
@@ -294,7 +296,7 @@ profiles.put("/favorites/:id", professional, async (req, res) => {
   const id = uuid.parse(req.params.id);
   if (
     !(await db.startup.findFirst({
-      where: { id, status: "APPROVED", owner: { active: true } },
+      where: { id, status: "APPROVED", owner: { active: true, isDemo: false } },
     }))
   )
     throw new HttpError(404, "Perfil indisponível.");
