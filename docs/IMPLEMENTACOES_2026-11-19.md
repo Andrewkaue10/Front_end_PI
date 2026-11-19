@@ -116,17 +116,26 @@ Arquivo:
 
 - `Fron-pi/src/pages/Shared/SharedMessages.jsx`
 
-Usa exclusivamente:
+Usa:
 
 - `GET /connections`;
 - `GET /connections/:id/messages`;
 - `POST /connections/:id/messages`;
 - `GET /meetings`;
-- `POST /connections/:id/meetings`.
+- `POST /connections/:id/meetings`;
+- `POST /connections/:id/read` para registrar leitura;
+- `GET/POST /connections/:id/proposals` e `PATCH /meeting-proposals/:id` para
+  propostas alternativas de horário.
 
 Permite envio somente em conexao aceita e proposta de reuniao somente em conexao
-aceita. Os estados exibem status reais da API. Nao existem no cliente simulacoes de
-presenca, preview da ultima mensagem, mensagens nao lidas, anexos, video ou realtime.
+aceita. O backend valida participação antes de registrar leitura e gerir propostas.
+Uma proposta pode ser aceita pela contraparte ou cancelada pelo proponente. Os
+endpoints de propostas estão disponíveis na API, mas ainda não estão conectados a
+controles na tela `/mensagens`.
+
+Limites: mensagens não têm anexos, presença, preview não lido, vídeo ou realtime.
+Aceitar proposta altera seu status, mas ainda não cria automaticamente uma reunião
+na agenda padrão.
 
 ### Notificacoes
 
@@ -138,11 +147,14 @@ Arquivo:
 
 - `Fron-pi/src/pages/Shared/SharedNotifications.jsx`
 
-Usa `GET /notifications` e `PATCH /notifications/:id`. Tipos conhecidos recebem
+Usa `GET /notifications`, `PATCH /notifications/:id` e
+`PATCH /notifications/read-all`. Tipos conhecidos recebem
 rotulos seguros; tipo desconhecido usa texto neutro. Datas e estado de leitura sao
 exibidos conforme os registros persistidos.
 
-Nao existe marcacao global de todas como lidas nesta versao.
+Preferências de categoria/canal podem ser consultadas e persistidas em
+`GET/PATCH /preferences/notifications`. A preferência de e-mail não confirma envio:
+o envio depende de SMTP e de integração do mecanismo de notificações.
 
 ### Configuracoes
 
@@ -174,8 +186,21 @@ Perfil profissional:
 - `stages`.
 
 A interface avisa que salvar altera o status do perfil publico para `PENDING`.
-Nome, e-mail, telefone, senha autenticada, dispositivo e preferencias nao disponiveis
-na API nao sao representados como controles persistentes.
+
+Também foram implementados:
+
+- `PATCH /account` atualiza nome e telefone; o endpoint aceita e-mail, mas não há
+  verificação do novo endereço e, por isso, a interface não expõe sua alteração.
+- `POST /account/password` valida a senha atual, grava a nova senha e invalida os
+  tokens existentes incrementando `tokenVersion`.
+- `POST /account/deletion` cria solicitação com prazo de 30 dias e
+  `DELETE /account/deletion` cancela uma solicitação pendente.
+- `GET/PATCH /preferences/notifications` armazena opções de canal/categoria.
+- `GET/PATCH /preferences/ai` armazena consentimentos/preferências do usuário.
+
+A preferência A.L.I.A. ainda não controla processamento de IA. A exclusão ainda não
+é executada automaticamente: falta um worker/rotina agendada e política final de
+retenção de dados.
 
 A recuperacao de senha continua disponivel pela rota existente de esqueci senha,
 dependendo de SMTP configurado.
@@ -210,9 +235,15 @@ Arquivo:
 
 - `Fron-pi/src/pages/Investor/InvestorPortfolio.jsx`
 
-Permanece em estado vazio/indisponivel. O schema nao possui investimentos, aportes,
-participacao societaria, documentos ou metricas financeiras. Favoritos e conexoes nao
-sao apresentados como investimentos.
+O schema possui investimentos e atualizações. `GET /api/portfolio?page=&limit=`
+consulta registros do investidor autenticado. `POST /api/admin/investments` cria ou
+atualiza investimento real por par investidor/startup; `POST
+/api/admin/investments/:id/updates` registra uma atualização textual. O frontend
+exibe investimentos reais, ou um estado vazio se não houver registros.
+
+O cadastro e atualizações financeiras só são possíveis via operações administrativas
+nesta entrega. Documentos têm apenas metadados; upload/download e acesso da startup
+ao próprio investimento ainda não foram implementados.
 
 ### Minhas qualificacoes
 
@@ -251,6 +282,27 @@ Links antigos foram encaminhados para telas reais sempre que possivel:
   `/investidor/qualificacoes`.
 
 StartupShell e AreaShell mantem navegacao responsiva e os temas visualmente separados.
+
+## Migrações e recursos ainda não ligados
+
+A migração `nexhub-api/prisma/migrations/202611190002_account_portfolio_features/migration.sql`
+adiciona tabelas para investimentos, documentos (metadados), atualizações, leitura de
+mensagens, propostas de reunião, sessões, 2FA, preferências de notificação, preferências
+A.L.I.A., exclusão agendada e assinaturas.
+
+Nem todos os modelos já têm endpoints ou fluxo de produto:
+
+- `AccountSession` e `TwoFactorAuth` não estão ligados ao login; faltam gestão de
+  sessão, revogação por dispositivo, criptografia e fluxo de códigos 2FA.
+- `Subscription` não ativa planos; planos/pagamentos estão adiados até integração
+  com gateway de pagamento.
+- Documentos/anexos requerem serviço de armazenamento, validação, upload e download
+  autenticados.
+- `emailEnabled` é apenas uma preferência persistida; faltam envio e integração SMTP
+  para notificações por e-mail.
+- A exclusão da conta não é executada automaticamente.
+- Preferências A.L.I.A. não ligam processamento de IA.
+- Mensagens continuam sem WebSocket/SSE e não indicam presença.
 
 ## Verificacoes
 

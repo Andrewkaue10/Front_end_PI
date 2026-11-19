@@ -67,6 +67,9 @@ export default function SharedMessages() {
       .then(([messageData, connectionData]) => {
         if (!alive) return;
         setMessages(messageData.items || []);
+        api(`/connections/${selectedId}/read`, { method: "POST" }).catch(
+          () => {},
+        );
         const selected = (connectionData.items || []).find(
           (item) => item.id === selectedId,
         );

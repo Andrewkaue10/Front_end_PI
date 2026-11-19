@@ -34,6 +34,24 @@ enum MeetingStatus {
   COMPLETED
   @@schema("nexhub")
 }
+enum InvestmentStatus {
+  NEGOTIATING
+  COMPLETED
+  CANCELLED
+  @@schema("nexhub")
+}
+enum AccountDeletionStatus {
+  REQUESTED
+  CANCELLED
+  COMPLETED
+  @@schema("nexhub")
+}
+enum SessionStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+  @@schema("nexhub")
+}
 model User {
   id String @id @default(uuid()) @db.Uuid
   email String @unique
@@ -53,6 +71,16 @@ model User {
   messages Message[]
   notifications Notification[]
   resetTokens ResetToken[]
+  accountSessions AccountSession[]
+  twoFactor TwoFactorAuth?
+  notificationPreferences NotificationPreference?
+  aiPreference AiPreference?
+  deletionRequest AccountDeletionRequest?
+  portfolioUpdates PortfolioUpdate[]
+  messageReads MessageRead[]
+  meetingProposals MeetingProposal[]
+  attachmentUploads MessageAttachment[]
+  subscription Subscription?
   @@schema("nexhub")
 }
 model Startup {
@@ -85,6 +113,7 @@ model Startup {
   updatedAt DateTime @updatedAt
   favorites Favorite[]
   connections Connection[]
+  investments Investment[]
   @@index([status, createdAt])
   @@schema("nexhub")
 }
@@ -110,6 +139,7 @@ model Investor {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   connections Connection[]
+  investments Investment[]
   @@index([status, createdAt])
   @@schema("nexhub")
 }
@@ -137,6 +167,7 @@ model Connection {
   updatedAt DateTime @updatedAt
   messages Message[]
   meetings Meeting[]
+  meetingProposals MeetingProposal[]
   @@unique([startupId, investorId])
   @@schema("nexhub")
 }
@@ -149,6 +180,8 @@ model Message {
   clientId String @db.Uuid
   text String
   createdAt DateTime @default(now())
+  reads MessageRead[]
+  attachments MessageAttachment[]
   @@unique([senderId, clientId])
   @@index([connectionId, createdAt])
   @@schema("nexhub")
@@ -239,6 +272,161 @@ model ProgramAlert {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@id([startupId, programId])
+  @@schema("nexhub")
+}
+model Investment {
+  id String @id @default(uuid()) @db.Uuid
+  investorId String @db.Uuid
+  startupId String @db.Uuid
+  investor Investor @relation(fields: [investorId], references: [id], onDelete: Cascade)
+  startup Startup @relation(fields: [startupId], references: [id], onDelete: Cascade)
+  amount Decimal @db.Decimal(16,2)
+  currency String @default("BRL")
+  equityPercent Decimal? @db.Decimal(7,4)
+  status InvestmentStatus @default(NEGOTIATING)
+  investedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  updates PortfolioUpdate[]
+  documents InvestmentDocument[]
+  @@unique([investorId, startupId])
+  @@index([investorId, status])
+  @@index([startupId, status])
+  @@schema("nexhub")
+}
+model InvestmentDocument {
+  id String @id @default(uuid()) @db.Uuid
+  investmentId String @db.Uuid
+  investment Investment @relation(fields: [investmentId], references: [id], onDelete: Cascade)
+  storageKey String
+  fileName String
+  mimeType String
+  sizeBytes Int
+  createdAt DateTime @default(now())
+  @@index([investmentId, createdAt])
+  @@schema("nexhub")
+}
+model PortfolioUpdate {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  investmentId String @db.Uuid
+  investment Investment @relation(fields: [investmentId], references: [id], onDelete: Cascade)
+  title String
+  updateText String
+  createdAt DateTime @default(now())
+  @@index([investmentId, createdAt])
+  @@schema("nexhub")
+}
+model MessageRead {
+  messageId String @db.Uuid
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  readAt DateTime @default(now())
+  @@id([messageId, userId])
+  @@index([userId, readAt])
+  @@schema("nexhub")
+}
+model MessageAttachment {
+  id String @id @default(uuid()) @db.Uuid
+  messageId String @db.Uuid
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  uploaderId String @db.Uuid
+  uploader User @relation(fields: [uploaderId], references: [id], onDelete: Cascade)
+  storageKey String
+  fileName String
+  mimeType String
+  sizeBytes Int
+  createdAt DateTime @default(now())
+  @@index([messageId, createdAt])
+  @@schema("nexhub")
+}
+model MeetingProposal {
+  id String @id @default(uuid()) @db.Uuid
+  connectionId String @db.Uuid
+  connection Connection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  proposerId String @db.Uuid
+  proposer User @relation(fields: [proposerId], references: [id], onDelete: Cascade)
+  title String
+  startsAt DateTime
+  endsAt DateTime
+  timezone String
+  location String
+  status MeetingStatus @default(PROPOSED)
+  createdAt DateTime @default(now())
+  @@index([connectionId, startsAt])
+  @@schema("nexhub")
+}
+model AccountSession {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String @unique
+  deviceName String @default("")
+  ipAddress String @default("")
+  status SessionStatus @default(ACTIVE)
+  expiresAt DateTime
+  lastSeenAt DateTime @default(now())
+  createdAt DateTime @default(now())
+  @@index([userId, status, expiresAt])
+  @@schema("nexhub")
+}
+model TwoFactorAuth {
+  userId String @id @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  secretEncrypted String
+  recoveryCodesHash Json @default("[]")
+  enabledAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@schema("nexhub")
+}
+model NotificationPreference {
+  userId String @id @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  appEnabled Boolean @default(true)
+  emailEnabled Boolean @default(false)
+  connectionEnabled Boolean @default(true)
+  meetingEnabled Boolean @default(true)
+  opportunityEnabled Boolean @default(true)
+  updatedAt DateTime @updatedAt
+  @@schema("nexhub")
+}
+model AiPreference {
+  userId String @id @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  enabled Boolean @default(false)
+  profileAnalysisEnabled Boolean @default(false)
+  updatedAt DateTime @updatedAt
+  @@schema("nexhub")
+}
+model AccountDeletionRequest {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @unique @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status AccountDeletionStatus @default(REQUESTED)
+  reason String @default("")
+  requestedAt DateTime @default(now())
+  scheduledFor DateTime
+  completedAt DateTime?
+  @@index([status, scheduledFor])
+  @@schema("nexhub")
+}
+model Subscription {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @unique @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planCode String
+  status String @default("INACTIVE")
+  provider String @default("")
+  providerSubscriptionId String @default("")
+  currentPeriodStart DateTime?
+  currentPeriodEnd DateTime?
+  cancelAtPeriodEnd Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([status, currentPeriodEnd])
   @@schema("nexhub")
 }
 model AuditLog {

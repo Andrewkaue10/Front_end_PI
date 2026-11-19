@@ -168,6 +168,68 @@ admin.patch("/programs/:id", async (req, res) => {
   res.json(program);
 });
 
+admin.post("/investments", async (req, res) => {
+  const value = z
+    .object({
+      investorId: uuid,
+      startupId: uuid,
+      amount: z.coerce.number().positive().max(9999999999999999),
+      currency: z.string().trim().length(3).default("BRL"),
+      equityPercent: z.coerce.number().min(0).max(100).optional(),
+      status: z.enum(["NEGOTIATING", "COMPLETED", "CANCELLED"]).default("NEGOTIATING"),
+      investedAt: z.iso.datetime({ offset: true }).optional(),
+    })
+    .strict()
+    .parse(req.body);
+  const investment = await db.investment.upsert({
+    where: {
+      investorId_startupId: {
+        investorId: value.investorId,
+        startupId: value.startupId,
+      },
+    },
+    create: {
+      investorId: value.investorId,
+      startupId: value.startupId,
+      amount: value.amount,
+      currency: value.currency,
+      equityPercent: value.equityPercent,
+      status: value.status,
+      investedAt: value.investedAt ? new Date(value.investedAt) : null,
+    },
+    update: {
+      amount: value.amount,
+      currency: value.currency,
+      equityPercent: value.equityPercent,
+      status: value.status,
+      investedAt: value.investedAt ? new Date(value.investedAt) : null,
+    },
+  });
+  res.status(201).json(investment);
+});
+
+admin.post("/investments/:id/updates", async (req, res) => {
+  const id = uuid.parse(req.params.id);
+  const value = z
+    .object({
+      title: z.string().trim().min(2).max(160),
+      updateText: z.string().trim().min(2).max(4000),
+    })
+    .strict()
+    .parse(req.body);
+  const investment = await db.investment.findUnique({ where: { id } });
+  if (!investment) throw new HttpError(404, "Investimento não encontrado.");
+  const update = await db.portfolioUpdate.create({
+    data: {
+      userId: req.user!.userId,
+      investmentId: id,
+      title: value.title,
+      updateText: value.updateText,
+    },
+  });
+  res.status(201).json(update);
+});
+
 admin.get("/audit", async (req, res) => {
   const { page, limit } = paging.parse(req.query);
   res.json({

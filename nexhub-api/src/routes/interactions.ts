@@ -404,6 +404,14 @@ interactions.get("/notifications", async (req, res) => {
     limit,
   });
 });
+interactions.patch("/notifications/read-all", async (req, res) => {
+  await db.notification.updateMany({
+    where: { userId: req.user!.userId, read: false },
+    data: { read: true },
+  });
+  res.status(204).end();
+});
+
 interactions.patch("/notifications/:id", async (req, res) => {
   const changed = await db.notification.updateMany({
     where: { id: uuid.parse(req.params.id), userId: req.user!.userId },
@@ -411,4 +419,142 @@ interactions.patch("/notifications/:id", async (req, res) => {
   });
   if (!changed.count) throw new HttpError(404, "Notificação indisponível.");
   res.status(204).end();
+});
+
+interactions.post("/connections/:id/read", async (req, res) => {
+  const id = uuid.parse(req.params.id);
+  const userId = req.user!.userId;
+  await connectionFor(db, id, userId);
+  const messages = await db.message.findMany({
+    where: { connectionId: id },
+    select: { id: true },
+  });
+  await db.messageRead.createMany({
+    data: messages.map((message) => ({
+      messageId: message.id,
+      userId,
+    })),
+    skipDuplicates: true,
+  });
+  res.status(204).end();
+});
+
+interactions.post("/connections/:id/proposals", async (req, res) => {
+  const id = uuid.parse(req.params.id);
+  const userId = req.user!.userId;
+  const value = z
+    .object({
+      title: z.string().trim().min(3).max(120),
+      startsAt: z.iso.datetime({ offset: true }),
+      duration: z.enum(["15", "30", "45", "60", "90"]).transform(Number),
+      timezone: z
+        .string()
+        .refine((timezone) => {
+          try {
+            new Intl.DateTimeFormat("pt-BR", { timeZone: timezone });
+            return true;
+          } catch {
+            return false;
+          }
+        })
+        .default("America/Fortaleza"),
+      location: z.string().trim().min(5).max(2048),
+    })
+    .parse(req.body);
+  const startsAt = new Date(value.startsAt);
+  if (startsAt <= new Date())
+    throw new HttpError(400, "Escolha uma data futura.");
+  const proposal = await db.$transaction(
+    async (tx) => {
+      const connection = await connectionFor(tx, id, userId, true);
+      const created = await tx.meetingProposal.create({
+        data: {
+          connectionId: id,
+          proposerId: userId,
+          title: value.title,
+          startsAt,
+          endsAt: new Date(+startsAt + value.duration * 60000),
+          timezone: value.timezone,
+          location: value.location,
+        },
+      });
+      await notify(
+        tx,
+        connection.startup.ownerId === userId
+          ? connection.investor.ownerId
+          : connection.startup.ownerId,
+        "MEETING_PROPOSED",
+        created.id,
+      );
+      return created;
+    },
+    { isolationLevel: "Serializable" },
+  );
+  res.status(201).json(proposal);
+});
+
+interactions.get("/connections/:id/proposals", async (req, res) => {
+  const id = uuid.parse(req.params.id);
+  await connectionFor(db, id, req.user!.userId);
+  const { page, limit } = paging.parse(req.query);
+  res.json({
+    items: await db.meetingProposal.findMany({
+      where: { connectionId: id },
+      orderBy: { createdAt: "desc" },
+      skip: (page - 1) * limit,
+      take: limit,
+    }),
+    page,
+    limit,
+  });
+});
+
+interactions.patch("/meeting-proposals/:id", async (req, res) => {
+  const id = uuid.parse(req.params.id);
+  const userId = req.user!.userId;
+  const value = z
+    .object({ action: z.enum(["accept", "cancel"]) })
+    .parse(req.body);
+  const proposal = await db.$transaction(
+    async (tx) => {
+      const record = await tx.meetingProposal.findUnique({
+        where: { id },
+        include: {
+          connection: {
+            include: {
+              startup: { include: { owner: true } },
+              investor: { include: { owner: true } },
+            },
+          },
+        },
+      });
+      if (!record) throw new HttpError(404, "Proposta indisponível.");
+      const member =
+        record.connection.startup.ownerId === userId ||
+        record.connection.investor.ownerId === userId;
+      if (!member) throw new HttpError(403, "Você não participa desta proposta.");
+      if (record.status !== "PROPOSED")
+        throw new HttpError(409, "Proposta já respondida.");
+      if (value.action === "accept" && record.proposerId === userId)
+        throw new HttpError(403, "Somente a contraparte pode aceitar.");
+      const status = value.action === "accept" ? "CONFIRMED" : "CANCELLED";
+      const changed = await tx.meetingProposal.update({
+        where: { id },
+        data: { status },
+      });
+      await notify(
+        tx,
+        record.proposerId === userId
+          ? record.connection.startup.ownerId === userId
+            ? record.connection.investor.ownerId
+            : record.connection.startup.ownerId
+          : record.proposerId,
+        "MEETING_" + status,
+        id,
+      );
+      return changed;
+    },
+    { isolationLevel: "Serializable" },
+  );
+  res.json(proposal);
 });

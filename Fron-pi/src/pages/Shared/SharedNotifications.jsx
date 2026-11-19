@@ -57,6 +57,22 @@ export default function SharedNotifications() {
     }
   }
 
+  async function markAllRead() {
+    if (busyId) return;
+    setBusyId("all");
+    setError("");
+    try {
+      await api("/notifications/read-all", { method: "PATCH" });
+      setItems((current) =>
+        current.map((item) => ({ ...item, read: true })),
+      );
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setBusyId("");
+    }
+  }
+
   const visible = items.filter(
     (item) =>
       filter === "TODAS" || (filter === "NAO_LIDAS" ? !item.read : item.read),
@@ -78,6 +94,13 @@ export default function SharedNotifications() {
           className="shared-notifications__toolbar"
           aria-label="Filtro de notificações"
         >
+          <button
+            className="area-button secondary"
+            disabled={busyId === "all" || !items.some((item) => !item.read)}
+            onClick={markAllRead}
+          >
+            {busyId === "all" ? "Marcando…" : "Marcar todas como lidas"}
+          </button>
           {["TODAS", "NAO_LIDAS", "LIDAS"].map((value) => (
             <button
               key={value}

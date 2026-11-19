@@ -48,6 +48,31 @@ perfil de startup autenticado.
 O catálogo não cria dados fictícios. Com o banco vazio, a API retorna uma lista
 real vazia e o frontend mostra estado vazio.
 
+## Conta, preferências e colaboração
+
+Rotas autenticadas:
+
+- `PATCH /api/account` atualiza nome, telefone e opcionalmente e-mail.
+- `POST /api/account/password` altera senha usando senha atual e invalida tokens.
+- `GET/PATCH /api/preferences/notifications` consulta e salva preferências.
+- `GET/PATCH /api/preferences/ai` consulta e salva consentimentos/preferências.
+- `POST/DELETE /api/account/deletion` solicita exclusão futura ou cancela pedido.
+- `PATCH /api/notifications/read-all` marca notificações do usuário como lidas.
+- `POST /api/connections/:id/read` registra leitura das mensagens da conexão.
+- `GET/POST /api/connections/:id/proposals` consulta/cria propostas de reunião.
+- `PATCH /api/meeting-proposals/:id` aceita ou cancela proposta.
+- `GET /api/portfolio?page=&limit=` lista investimentos do profissional autenticado.
+
+Rotas administrativas:
+
+- `POST /api/admin/investments` cria/atualiza investimento real por investidor/startup.
+- `POST /api/admin/investments/:id/updates` registra atualização de portfólio.
+
+As rotas não habilitam automaticamente envio de e-mail, processamento A.L.I.A.,
+execução de exclusão agendada, sessões por dispositivo, 2FA, anexos ou pagamentos.
+Veja [a documentação consolidada](../docs/IMPLEMENTACOES_2026-11-19.md) para contratos,
+restrições e dependências.
+
 ## Guia da equipe
 
 Leia [o relatório e roteiro de demonstração](docs/integracao-2026-10-20.md).
