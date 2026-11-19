@@ -18,6 +18,12 @@ import StartupShell from "./components/StartupShell/StartupShell";
 import StartupInvestors from "./pages/StartupInvestors/StartupInvestors";
 import StartupMentors from "./pages/StartupMentors/StartupMentors";
 import StartupPrograms from "./pages/StartupPrograms/StartupPrograms";
+import SharedMessages from "./pages/Shared/SharedMessages";
+import SharedNotifications from "./pages/Shared/SharedNotifications";
+import SharedSettings from "./pages/Shared/SharedSettings";
+import InvestorFavorites from "./pages/Investor/InvestorFavorites";
+import InvestorPortfolio from "./pages/Investor/InvestorPortfolio";
+import InvestorQualifications from "./pages/Investor/InvestorQualifications";
 
 function App() {
   const location = useLocation();
@@ -29,7 +35,12 @@ function App() {
       "/feed",
       "/startup",
       "/painel",
-    ].includes(location.pathname) || location.pathname.startsWith("/startup/");
+      "/mensagens",
+      "/notificacoes",
+      "/configuracoes",
+    ].includes(location.pathname) ||
+    location.pathname.startsWith("/startup/") ||
+    location.pathname.startsWith("/investidor/");
   return (
     <>
       {!hideNavbar && <Navbar />}
@@ -56,6 +67,15 @@ function App() {
           <Route path="mentores/:id" element={<StartupMentors />} />
           <Route path="editais" element={<StartupPrograms />} />
         </Route>
+        <Route path="/mensagens" element={<SharedMessages />} />
+        <Route path="/notificacoes" element={<SharedNotifications />} />
+        <Route path="/configuracoes" element={<SharedSettings />} />
+        <Route path="/investidor/favoritos" element={<InvestorFavorites />} />
+        <Route path="/investidor/portfolio" element={<InvestorPortfolio />} />
+        <Route
+          path="/investidor/qualificacoes"
+          element={<InvestorQualifications />}
+        />
         <Route path="/painel" element={<Workspace />} />
         <Route path="/cadastro/investidor" element={<SignupInvestor />} />
         <Route path="/cadastro/startup" element={<SignupStartup />} />

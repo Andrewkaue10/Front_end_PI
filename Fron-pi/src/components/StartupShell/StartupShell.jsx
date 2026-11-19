@@ -4,7 +4,6 @@ import {
   Bell,
   BriefcaseBusiness,
   CalendarDays,
-  Heart,
   Home,
   Mail,
   Settings,
@@ -86,8 +85,8 @@ export default function StartupShell() {
         </Link>
         <nav className="startup-shell__top" aria-label="Navegação principal">
           <Link to="/startup">Início</Link>
-          <Link to="/painel">Perfil</Link>
-          <Link to="/painel#conexoes">Rede</Link>
+          <Link to="/configuracoes">Perfil</Link>
+          <Link to="/mensagens">Rede</Link>
         </nav>
       </header>
       <aside className="startup-shell__sidebar">
@@ -96,11 +95,11 @@ export default function StartupShell() {
             <Home size={16} />
             <span>Início</span>
           </Link>
-          <Link to="/painel#perfil">
+          <Link to="/configuracoes">
             <BriefcaseBusiness size={16} />
-            <span>Publicações</span>
+            <span>Perfil da startup</span>
           </Link>
-          <Link to="/painel#avisos">
+          <Link to="/notificacoes">
             <Bell size={16} />
             <span>Notificações</span>
           </Link>
@@ -125,15 +124,11 @@ export default function StartupShell() {
             <Users size={16} />
             <span>Investidores</span>
           </Link>
-          <Link to="/painel#conexoes">
+          <Link to="/mensagens">
             <Mail size={16} />
             <span>Mensagens</span>
           </Link>
-          <Link to="/painel#perfil">
-            <Heart size={16} />
-            <span>Perfil da startup</span>
-          </Link>
-          <Link to="/painel#perfil">
+          <Link to="/configuracoes">
             <Settings size={16} />
             <span>Configurações</span>
           </Link>

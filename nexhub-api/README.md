@@ -24,6 +24,30 @@ Os testes integrados usam o banco configurado, criam contas temporárias com dom
 `integration.test` e removem exclusivamente essas contas ao finalizar. Use uma base
 de desenvolvimento, não uma base real de produção.
 
+## Endpoints de programas
+
+A partir da implementação de 19/11/2026, a API oferece persistência de editais e
+programas:
+
+- `GET /api/programs?page=&limit=&q=&category=&stage=&region=&status=&sort=`
+- `GET /api/programs/:id`
+- `GET /api/my/programs`
+- `PUT /api/programs/:id/save`
+- `DELETE /api/programs/:id/save`
+- `POST /api/programs/:id/applications`
+- `PUT /api/programs/:id/alert`
+- `DELETE /api/programs/:id/alert`
+- `POST /api/admin/programs`
+- `PATCH /api/admin/programs/:id`
+
+Os modelos persistentes estão em
+`prisma/migrations/202611190001_programs/migration.sql`. A criação e alteração
+administrativa exige papel `ADMIN`; salvar, inscrever e configurar alerta exige
+perfil de startup autenticado.
+
+O catálogo não cria dados fictícios. Com o banco vazio, a API retorna uma lista
+real vazia e o frontend mostra estado vazio.
+
 ## Guia da equipe
 
 Leia [o relatório e roteiro de demonstração](docs/integracao-2026-10-20.md).

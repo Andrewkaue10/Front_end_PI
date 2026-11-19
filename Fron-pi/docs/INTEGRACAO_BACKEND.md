@@ -35,6 +35,13 @@ O navegador acessa a API Express. O frontend não deve conectar diretamente ao P
 | `pages/ResetPassword/ResetPassword.jsx` | `POST /auth/reset-password` | Consome token de uso único e troca a senha. |
 | `pages/Feed/Feed.jsx` | `GET /auth/me`, `GET /startups`, `GET /investors`, `GET /recommendations`, `PUT/DELETE /favorites/:id`, `POST /auth/logout` | Lista perfis aprovados, busca/filtros, recomendações, favoritos e revogação da sessão. |
 | `pages/Workspace/Workspace.jsx` | `/auth/me`, `/profile`, `/connections`, `/meetings`, `/notifications`, `/admin/*`, detalhes `/startups/:id` e `/investors/:id` | Perfil próprio, convites, mensagens, agenda, avisos e moderação. |
+| `pages/StartupInvestors`, `StartupMentors`, `StartupPrograms` | `/investors`, `/recommendations`, `/connections`, `/meetings`, `/programs` | Descoberta da startup, mentoria, editais, inscricoes e alertas. |
+| `pages/Shared/SharedMessages.jsx` | `/connections`, `/connections/:id/messages`, `/meetings` | Mensagens e reuniões compartilhadas entre startup e perfis profissionais. |
+| `pages/Shared/SharedNotifications.jsx` | `/notifications`, `/notifications/:id` | Consulta e leitura individual de notificações reais. |
+| `pages/Shared/SharedSettings.jsx` | `/auth/me`, `/profile` | Configuração adaptada ao papel e edição limitada do perfil. |
+| `pages/Investor/InvestorFavorites.jsx` | `/startups?favorites=true`, `/favorites/:id` | Favoritos exclusivos do perfil profissional. |
+| `pages/Investor/InvestorPortfolio.jsx` | Nenhum endpoint disponível | Estado honesto enquanto não existir API de investimento. |
+| `pages/Investor/InvestorQualifications.jsx` | `/auth/me` | Dados reais de qualificacoes do perfil profissional. |
 
 As chamadas de `Workspace` incluem:
 

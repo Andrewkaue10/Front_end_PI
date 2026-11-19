@@ -54,6 +54,7 @@ O frontend usa `VITE_API_URL=http://localhost:3333/api` por padrão. Ajuste `Fro
 - O backend e o frontend têm arquivos `.env.example` sem credenciais reais. Os arquivos `.env` são locais e ignorados pelo Git.
 - Use uma base de desenvolvimento para migrations, seed e testes de integração. O seed cria dados fictícios.
 - O guia detalhado da comunicação entre telas e endpoints está em [Fron-pi/docs/INTEGRACAO_BACKEND.md](Fron-pi/docs/INTEGRACAO_BACKEND.md); a documentação da API está em [nexhub-api/README.md](nexhub-api/README.md).
+- As implementacoes das areas STARTUP e investidor estao em [docs/IMPLEMENTACOES_2026-11-19.md](docs/IMPLEMENTACOES_2026-11-19.md).
 
 ## Autores
 

@@ -78,13 +78,11 @@ authRoutes.post("/register", async (req, res) => {
     }
     return account;
   });
-  res
-    .status(201)
-    .json({
-      user: publicUser(user),
-      access_token: issueToken(user),
-      message: "Cadastro salvo. Complete o perfil para análise.",
-    });
+  res.status(201).json({
+    user: publicUser(user),
+    access_token: issueToken(user),
+    message: "Cadastro salvo. Complete o perfil para análise.",
+  });
 });
 // Keep a constant cost for unknown accounts as well as invalid passwords.
 const dummyHash = bcrypt.hashSync("invalid-login-placeholder", 12);

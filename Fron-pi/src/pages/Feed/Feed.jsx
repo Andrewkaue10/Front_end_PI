@@ -233,7 +233,7 @@ export default function Feed() {
           <Link to="/feed" onClick={() => setMode("recommended")}>
             Rede
           </Link>
-          <Link to="/painel">Mensagens</Link>
+          <Link to="/mensagens">Mensagens</Link>
         </nav>
       </header>
 
@@ -257,36 +257,30 @@ export default function Feed() {
             <Star size={16} />
             <span>A.L.I.A</span>
           </Link>
-          <Link to="/painel#avisos">
+          <Link to="/notificacoes">
             <Bell size={16} />
             <span>Notificações</span>
             {notifications.length > 0 && (
               <b>{notifications.filter((n) => !n.read).length}</b>
             )}
           </Link>
-          <button
-            className={mode === "favorites" ? "active" : ""}
-            onClick={() => setMode("favorites")}
-          >
+          <Link to="/investidor/favoritos">
             <Heart size={16} />
             <span>Favoritos</span>
-          </button>
-          <Link to="/painel#conexoes">
+          </Link>
+          <Link to="/mensagens">
             <Mail size={16} />
             <span>Mensagens</span>
           </Link>
-          <Link
-            to="/painel"
-            title="O portfólio ainda não possui uma seção própria"
-          >
+          <Link to="/investidor/portfolio">
             <WalletCards size={16} />
             <span>Portfólio</span>
           </Link>
-          <Link to="/painel#perfil">
+          <Link to="/investidor/qualificacoes">
             <BriefcaseBusiness size={16} />
             <span>Minhas qualificações</span>
           </Link>
-          <Link to="/painel#perfil">
+          <Link to="/configuracoes">
             <Settings size={16} />
             <span>Configurações</span>
           </Link>

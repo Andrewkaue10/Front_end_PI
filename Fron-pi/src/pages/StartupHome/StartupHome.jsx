@@ -202,8 +202,8 @@ export default function StartupHome() {
             Início
           </Link>
           <Link to="/painel">Perfil</Link>
-          <Link to="/painel#conexoes">Rede</Link>
-          <Link to="/painel#avisos">Mensagens</Link>
+          <Link to="/mensagens">Rede</Link>
+          <Link to="/mensagens">Mensagens</Link>
         </nav>
       </header>
 
@@ -217,7 +217,7 @@ export default function StartupHome() {
             <BriefcaseBusiness size={16} />
             <span>Perfil da startup</span>
           </Link>
-          <Link to="/painel#avisos">
+          <Link to="/notificacoes">
             <Bell size={16} />
             <span>Notificações</span>
             {notifications.filter((item) => !item.read).length > 0 && (
@@ -236,11 +236,11 @@ export default function StartupHome() {
             <Users size={16} />
             <span>Investidores</span>
           </Link>
-          <Link to="/painel#conexoes">
+          <Link to="/mensagens">
             <Mail size={16} />
             <span>Mensagens</span>
           </Link>
-          <Link to="/painel#perfil">
+          <Link to="/configuracoes">
             <Heart size={16} />
             <span>Perfil da startup</span>
           </Link>
