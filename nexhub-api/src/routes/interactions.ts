@@ -81,7 +81,9 @@ interactions.post("/connections", async (req, res) => {
         s.status !== "APPROVED" ||
         i.status !== "APPROVED" ||
         !s.owner.active ||
-        !i.owner.active
+        !i.owner.active ||
+        s.owner.isDemo ||
+        i.owner.isDemo
       )
         throw new HttpError(
           409,

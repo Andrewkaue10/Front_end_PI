@@ -13,6 +13,7 @@ import Workspace from "./pages/Workspace/Workspace";
 
 import Terms from "./pages/Terms";
 import Marketing from "./pages/Marketing/Marketing";
+import StartupHome from "./pages/StartupHome/StartupHome";
 
 function App() {
   const location = useLocation();
@@ -21,6 +22,7 @@ function App() {
     "/redefinir-senha",
     "/login",
     "/feed",
+    "/startup",
     "/painel",
   ].includes(location.pathname);
   return (
@@ -41,6 +43,7 @@ function App() {
         <Route path="/redefinir-senha" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/feed" element={<Feed />} />
+        <Route path="/startup" element={<StartupHome />} />
         <Route path="/painel" element={<Workspace />} />
         <Route path="/cadastro/investidor" element={<SignupInvestor />} />
         <Route path="/cadastro/startup" element={<SignupStartup />} />

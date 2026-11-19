@@ -59,7 +59,13 @@ export default function Feed() {
       return;
     }
     api("/auth/me")
-      .then(setMe)
+      .then((current) => {
+        if (current.role === "STARTUP") {
+          navigate("/startup", { replace: true });
+          return;
+        }
+        setMe(current);
+      })
       .catch((e) => setError(e.message));
   }, [navigate]);
 

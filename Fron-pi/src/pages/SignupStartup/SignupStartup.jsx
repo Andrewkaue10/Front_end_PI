@@ -91,7 +91,7 @@ function SignupStartup() {
         },
       });
       saveSession(result.access_token);
-      navigate("/painel");
+      navigate("/startup");
     } catch (err) {
       setError(err.message);
     } finally {

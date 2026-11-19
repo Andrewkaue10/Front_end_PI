@@ -36,7 +36,14 @@ function Login() {
         body: { email, senha, manterConectado: remember },
       });
       saveSession(result.access_token, remember);
-      navigate("/feed");
+      const role = result.user?.role;
+      navigate(
+        role === "STARTUP"
+          ? "/startup"
+          : role === "INVESTOR" || role === "MENTOR" || role === "BOTH"
+            ? "/feed"
+            : "/painel",
+      );
     } catch (err) {
       setError(err.message);
     } finally {
