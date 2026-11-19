@@ -265,7 +265,12 @@ export default function Marketing({ page }) {
           {section.cards && (
             <div className="marketing-cards">
               {section.cards.map(([icon, title, copy], index) => (
-                <Reveal as="article" className="marketing-card" key={title} delay={index * 70}>
+                <Reveal
+                  as="article"
+                  className="marketing-card"
+                  key={title}
+                  delay={index * 70}
+                >
                   <span>{icon}</span>
                   <h3>{title}</h3>
                   <p>{copy}</p>

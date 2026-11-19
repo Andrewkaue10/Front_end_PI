@@ -1,26 +1,26 @@
 :root {
   /* NexHub design tokens */
-  --color-brand: #FF5A36;
-  --color-brand-soft: #FFEDE8;
-  --color-brand-deep: #A32864;
-  --color-investor: #0052FF;
-  --color-ink: #0C2944;
-  --color-ink-secondary: #102C47;
-  --color-on-ink-muted: #D6DEEA;
-  --color-text-muted: #727D91;
-  --color-surface-muted: #F7F8FB;
-  --color-white: #FFFFFF;
-  --color-alia: #7138EE;
-  --color-alia-soft: #F0E8FF;
+  --color-brand: #ff5a36;
+  --color-brand-soft: #ffede8;
+  --color-brand-deep: #a32864;
+  --color-investor: #0052ff;
+  --color-ink: #0c2944;
+  --color-ink-secondary: #102c47;
+  --color-on-ink-muted: #d6deea;
+  --color-text-muted: #727d91;
+  --color-surface-muted: #f7f8fb;
+  --color-white: #ffffff;
+  --color-alia: #7138ee;
+  --color-alia-soft: #f0e8ff;
 
-  --color-accent: #FF5A36;
+  --color-accent: #ff5a36;
   --color-text: #08060d;
   --color-text-light: #3a3640;
   --color-border: #e5e4e7;
   --color-bg: #ffffff;
   --color-accent-rgb: 255, 90, 54;
 
-  --font-base: 'Inter', system-ui, sans-serif;
+  --font-base: "Inter", system-ui, sans-serif;
 }
 
 * {
@@ -61,11 +61,14 @@ ul {
   padding: 0;
 }
 
-h1, h2, h3, p {
+h1,
+h2,
+h3,
+p {
   margin: 0;
 }
 
 .theme-blue {
-  --color-accent: #0052FF;
+  --color-accent: #0052ff;
   --color-accent-rgb: 0, 82, 255;
 }

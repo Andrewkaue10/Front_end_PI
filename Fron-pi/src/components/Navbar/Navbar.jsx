@@ -1,29 +1,31 @@
-import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import './Navbar.css'
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import "./Navbar.css";
 
-const APP_ROUTES = ['/feed', '/painel'] // rotas de usuário logado
+const APP_ROUTES = ["/feed", "/painel"]; // rotas de usuário logado
 
 function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const location = useLocation()
-  const isAppView = APP_ROUTES.includes(location.pathname)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const isAppView = APP_ROUTES.includes(location.pathname);
 
   const links = [
-    { label: 'Como funciona', href: '/como-funciona' },
-    { label: 'Para Startups', href: '/para-startups' },
-    { label: 'Para Investidores', href: '/para-investidores' },
-    { label: 'A.L.I.A', href: '/alia' },
-    { label: 'Sobre', href: '/sobre' },
-  ]
+    { label: "Como funciona", href: "/como-funciona" },
+    { label: "Para Startups", href: "/para-startups" },
+    { label: "Para Investidores", href: "/para-investidores" },
+    { label: "A.L.I.A", href: "/alia" },
+    { label: "Sobre", href: "/sobre" },
+  ];
 
   return (
     <header className="navbar">
       <div className="navbar__container">
         <Link to="/" className="navbar__logo" aria-label="NexHub">
-          <svg className="navbar__logo-icon" viewBox="0 0 32 32" aria-hidden="true">
-
-          </svg>
+          <svg
+            className="navbar__logo-icon"
+            viewBox="0 0 32 32"
+            aria-hidden="true"
+          ></svg>
           <span className="navbar__logo-text">
             Nex<span className="navbar__logo-highlight">Hub</span>
           </span>
@@ -40,11 +42,13 @@ function Navbar() {
           <span />
         </button>
 
-        <nav className={`navbar__nav ${menuOpen ? 'navbar__nav--open' : ''}`}>
+        <nav className={`navbar__nav ${menuOpen ? "navbar__nav--open" : ""}`}>
           <ul className="navbar__links">
             {links.map((link) => (
               <li key={link.href}>
-                <Link to={link.href} onClick={() => setMenuOpen(false)}>{link.label}</Link>
+                <Link to={link.href} onClick={() => setMenuOpen(false)}>
+                  {link.label}
+                </Link>
               </li>
             ))}
           </ul>
@@ -62,7 +66,7 @@ function Navbar() {
         </nav>
       </div>
     </header>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

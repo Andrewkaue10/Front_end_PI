@@ -106,9 +106,7 @@ export default function StartupHome() {
               .toLowerCase()
               .includes(search));
         setInvestors((investorData.items || []).filter(filter));
-        setRecommendations(
-          (recommendationData.items || []).filter(filter),
-        );
+        setRecommendations((recommendationData.items || []).filter(filter));
         setNotifications(notificationData.items || []);
       } catch (e) {
         if (alive) {
@@ -181,8 +179,14 @@ export default function StartupHome() {
   return (
     <div className="startup-home">
       <header className="startup-header">
-        <Link className="startup-brand" to="/startup" aria-label="NexHub início">
-          <span>NEX</span><em>hub</em><i aria-hidden="true">✦</i>
+        <Link
+          className="startup-brand"
+          to="/startup"
+          aria-label="NexHub início"
+        >
+          <span>NEX</span>
+          <em>hub</em>
+          <i aria-hidden="true">✦</i>
         </Link>
         <label className="startup-global-search">
           <Search size={15} />
@@ -194,7 +198,9 @@ export default function StartupHome() {
           />
         </label>
         <nav className="startup-top-nav" aria-label="Navegação principal">
-          <Link className="active" to="/startup">Início</Link>
+          <Link className="active" to="/startup">
+            Início
+          </Link>
           <Link to="/painel">Perfil</Link>
           <Link to="/painel#conexoes">Rede</Link>
           <Link to="/painel#avisos">Mensagens</Link>
@@ -203,84 +209,165 @@ export default function StartupHome() {
 
       <aside className="startup-sidebar">
         <nav aria-label="Área da startup">
-          <Link className="active" to="/startup"><Home size={16} /><span>Início</span></Link>
-          <Link to="/painel#perfil"><BriefcaseBusiness size={16} /><span>Publicações</span><small>Perfil</small></Link>
-          <Link to="/painel#avisos"><Bell size={16} /><span>Notificações</span>{notifications.filter((item) => !item.read).length > 0 && <b>{notifications.filter((item) => !item.read).length}</b>}</Link>
-          <Link to="/painel"><CalendarDays size={16} /><span>Editais</span><small>Indisponível</small></Link>
-          <Link to="#mentores"><Sparkles size={16} /><span>Mentores</span></Link>
-          <Link to="#investidores"><Users size={16} /><span>Investidores</span></Link>
-          <Link to="/painel#conexoes"><Mail size={16} /><span>Mensagens</span></Link>
-          <Link to="/painel#perfil"><Heart size={16} /><span>Perfil da startup</span></Link>
-          <Link to="/painel#perfil"><Settings size={16} /><span>Configurações</span></Link>
+          <Link className="active" to="/startup">
+            <Home size={16} />
+            <span>Início</span>
+          </Link>
+          <Link to="/painel#perfil">
+            <BriefcaseBusiness size={16} />
+            <span>Publicações</span>
+            <small>Perfil</small>
+          </Link>
+          <Link to="/painel#avisos">
+            <Bell size={16} />
+            <span>Notificações</span>
+            {notifications.filter((item) => !item.read).length > 0 && (
+              <b>{notifications.filter((item) => !item.read).length}</b>
+            )}
+          </Link>
+          <Link to="/painel">
+            <CalendarDays size={16} />
+            <span>Editais</span>
+            <small>Indisponível</small>
+          </Link>
+          <Link to="#mentores">
+            <Sparkles size={16} />
+            <span>Mentores</span>
+          </Link>
+          <Link to="#investidores">
+            <Users size={16} />
+            <span>Investidores</span>
+          </Link>
+          <Link to="/painel#conexoes">
+            <Mail size={16} />
+            <span>Mensagens</span>
+          </Link>
+          <Link to="/painel#perfil">
+            <Heart size={16} />
+            <span>Perfil da startup</span>
+          </Link>
+          <Link to="/painel#perfil">
+            <Settings size={16} />
+            <span>Configurações</span>
+          </Link>
         </nav>
         <div className="startup-account">
           <span>{initials(startup?.name || me.name)}</span>
-          <div><strong>{startup?.name || me.name}</strong><small>Startup</small></div>
-          <button onClick={logout} aria-label="Sair"><LogOut size={15} /></button>
+          <div>
+            <strong>{startup?.name || me.name}</strong>
+            <small>Startup</small>
+          </div>
+          <button onClick={logout} aria-label="Sair">
+            <LogOut size={15} />
+          </button>
         </div>
       </aside>
 
       <main className="startup-main">
         <section className="startup-greeting">
           <div>
-            <h1>Olá, {startup?.name || me.name} <span aria-hidden="true">👋</span></h1>
+            <h1>
+              Olá, {startup?.name || me.name} <span aria-hidden="true">👋</span>
+            </h1>
             <p>Acompanhe oportunidades alinhadas ao seu perfil.</p>
           </div>
         </section>
 
         {profileStatus === "PENDING" && (
           <div className="startup-status" role="status">
-            Seu perfil está aguardando análise. As recomendações ficam disponíveis após a aprovação.
+            Seu perfil está aguardando análise. As recomendações ficam
+            disponíveis após a aprovação.
             <Link to="/painel#perfil">Editar perfil</Link>
           </div>
         )}
         {profileStatus === "REJECTED" && (
           <div className="startup-status" role="status">
-            Seu perfil foi reprovado. Revise os dados antes de solicitar uma nova análise.
+            Seu perfil foi reprovado. Revise os dados antes de solicitar uma
+            nova análise.
             <Link to="/painel#perfil">Editar perfil</Link>
           </div>
         )}
-        {error && <p className="startup-alert" role="alert">{error}</p>}
-        {notice && <p className="startup-notice" role="status">{notice}</p>}
+        {error && (
+          <p className="startup-alert" role="alert">
+            {error}
+          </p>
+        )}
+        {notice && (
+          <p className="startup-notice" role="status">
+            {notice}
+          </p>
+        )}
 
         {startup?.pitchUrl && startup?.materialsPublic && (
           <section className="startup-pitch">
             <div className="startup-section-heading">
-              <div><h2>Minha apresentação</h2><p>Material público do perfil</p></div>
+              <div>
+                <h2>Minha apresentação</h2>
+                <p>Material público do perfil</p>
+              </div>
             </div>
-            <a href={startup.pitchUrl} target="_blank" rel="noreferrer">Abrir apresentação</a>
+            <a href={startup.pitchUrl} target="_blank" rel="noreferrer">
+              Abrir apresentação
+            </a>
           </section>
         )}
 
         <section id="investidores" className="startup-matches">
           <div className="startup-section-heading">
-            <div><h2>Investidores com match</h2><p>Recomendações calculadas pelo perfil aprovado.</p></div>
+            <div>
+              <h2>Investidores com match</h2>
+              <p>Recomendações calculadas pelo perfil aprovado.</p>
+            </div>
             <Link to="/painel#conexoes">Ver mais →</Link>
           </div>
           {loading ? (
-            <p className="startup-state" role="status">Carregando recomendações…</p>
+            <p className="startup-state" role="status">
+              Carregando recomendações…
+            </p>
           ) : matchedProfiles.length === 0 ? (
-            <p className="startup-state">Nenhuma recomendação real disponível no momento.</p>
+            <p className="startup-state">
+              Nenhuma recomendação real disponível no momento.
+            </p>
           ) : (
             <div className="startup-card-grid">
               {matchedProfiles.slice(0, 6).map((item) => (
                 <article className="professional-card" key={item.id}>
                   <div className="professional-card__top">
-                    <span className="professional-avatar">{initials(item.name)}</span>
-                    <div><h3>{item.name}</h3><p>{item.company || item.type || "Tipo não informado"}</p></div>
+                    <span className="professional-avatar">
+                      {initials(item.name)}
+                    </span>
+                    <div>
+                      <h3>{item.name}</h3>
+                      <p>{item.company || item.type || "Tipo não informado"}</p>
+                    </div>
                     {item.match != null && <strong>{item.match}% match</strong>}
                   </div>
-                  <p className="professional-bio">{item.bio || "Descrição não informada"}</p>
+                  <p className="professional-bio">
+                    {item.bio || "Descrição não informada"}
+                  </p>
                   <dl className="professional-details">
-                    <div><dt>Interesses</dt><dd>{visibleList(item.interests)}</dd></div>
-                    <div><dt>Estágios</dt><dd>{visibleList(item.stages)}</dd></div>
-                    <div><dt>Ticket</dt><dd>{item.ticketRange || "Não informado"}</dd></div>
+                    <div>
+                      <dt>Interesses</dt>
+                      <dd>{visibleList(item.interests)}</dd>
+                    </div>
+                    <div>
+                      <dt>Estágios</dt>
+                      <dd>{visibleList(item.stages)}</dd>
+                    </div>
+                    <div>
+                      <dt>Ticket</dt>
+                      <dd>{item.ticketRange || "Não informado"}</dd>
+                    </div>
                   </dl>
                   {item.matchDetails?.reasons?.length > 0 && (
-                    <p className="match-reasons">{item.matchDetails.reasons.join(" · ")}</p>
+                    <p className="match-reasons">
+                      {item.matchDetails.reasons.join(" · ")}
+                    </p>
                   )}
                   <div className="professional-actions">
-                    <Link to={`/painel?kind=investors&id=${item.id}`}>Ver perfil</Link>
+                    <Link to={`/painel?kind=investors&id=${item.id}`}>
+                      Ver perfil
+                    </Link>
                     <button
                       disabled={busyId === item.id}
                       onClick={() => connect(item, "INVESTMENT")}
@@ -296,24 +383,43 @@ export default function StartupHome() {
 
         <section id="mentores" className="startup-mentors">
           <div className="startup-section-heading">
-            <div><h2>Fale com mentores</h2><p>Perfis reais recomendados para mentoria.</p></div>
+            <div>
+              <h2>Fale com mentores</h2>
+              <p>Perfis reais recomendados para mentoria.</p>
+            </div>
             <Link to="/painel#conexoes">Ver mais →</Link>
           </div>
           {mentors.length === 0 ? (
-            <p className="startup-state">Nenhum mentor disponível com recomendação ativa.</p>
+            <p className="startup-state">
+              Nenhum mentor disponível com recomendação ativa.
+            </p>
           ) : (
             <div className="mentor-grid">
               {mentors.slice(0, 6).map((item) => (
                 <article className="mentor-card" key={item.id}>
-                  <span className="professional-avatar">{initials(item.name)}</span>
+                  <span className="professional-avatar">
+                    {initials(item.name)}
+                  </span>
                   <h3>{item.name}</h3>
                   <p>{item.bio || "Descrição não informada"}</p>
                   <dl className="professional-details">
-                    <div><dt>Especialidades</dt><dd>{visibleList(item.specialties)}</dd></div>
-                    <div><dt>Disponibilidade</dt><dd>{item.availability != null ? `${item.availability} h/mês` : "Não informada"}</dd></div>
+                    <div>
+                      <dt>Especialidades</dt>
+                      <dd>{visibleList(item.specialties)}</dd>
+                    </div>
+                    <div>
+                      <dt>Disponibilidade</dt>
+                      <dd>
+                        {item.availability != null
+                          ? `${item.availability} h/mês`
+                          : "Não informada"}
+                      </dd>
+                    </div>
                   </dl>
                   <div className="professional-actions">
-                    <Link to={`/painel?kind=investors&id=${item.id}`}>Ver perfil</Link>
+                    <Link to={`/painel?kind=investors&id=${item.id}`}>
+                      Ver perfil
+                    </Link>
                     <button
                       disabled={busyId === item.id}
                       onClick={() => connect(item, "MENTORSHIP")}
@@ -330,15 +436,30 @@ export default function StartupHome() {
 
       <aside className="startup-context">
         <section>
-          <div className="startup-context-heading"><h2>Notificações</h2><Link to="/painel#avisos">Ver todas</Link></div>
+          <div className="startup-context-heading">
+            <h2>Notificações</h2>
+            <Link to="/painel#avisos">Ver todas</Link>
+          </div>
           {notifications.length === 0 ? (
             <p className="startup-context-empty">Nenhuma notificação.</p>
           ) : (
             <div className="startup-notification-list">
               {notifications.slice(0, 5).map((notification) => (
                 <div className="startup-notification" key={notification.id}>
-                  <span><Bell size={12} /></span>
-                  <p><strong>{notificationLabels[notification.type] || "Nova atualização"}</strong><small>{new Date(notification.createdAt).toLocaleDateString("pt-BR")}</small></p>
+                  <span>
+                    <Bell size={12} />
+                  </span>
+                  <p>
+                    <strong>
+                      {notificationLabels[notification.type] ||
+                        "Nova atualização"}
+                    </strong>
+                    <small>
+                      {new Date(notification.createdAt).toLocaleDateString(
+                        "pt-BR",
+                      )}
+                    </small>
+                  </p>
                 </div>
               ))}
             </div>
@@ -346,26 +467,60 @@ export default function StartupHome() {
         </section>
 
         <section>
-          <div className="startup-context-heading"><h2>Perfil da startup</h2><Link to="/painel#perfil">Editar</Link></div>
+          <div className="startup-context-heading">
+            <h2>Perfil da startup</h2>
+            <Link to="/painel#perfil">Editar</Link>
+          </div>
           <dl className="startup-profile-details">
-            <div><dt>Nome</dt><dd>{startup?.name || "Não informado"}</dd></div>
-            <div><dt>Setores</dt><dd>{visibleList(startup?.sectors)}</dd></div>
-            <div><dt>Estágio</dt><dd>{startup?.stage || "Não informado"}</dd></div>
-            {startup?.fundingRange && <div><dt>Faixa de captação</dt><dd>{startup.fundingRange}</dd></div>}
-            {startup?.pitchUrl && !startup?.materialsPublic && <div><dt>Apresentação</dt><dd>Privada até aprovação da conexão</dd></div>}
+            <div>
+              <dt>Nome</dt>
+              <dd>{startup?.name || "Não informado"}</dd>
+            </div>
+            <div>
+              <dt>Setores</dt>
+              <dd>{visibleList(startup?.sectors)}</dd>
+            </div>
+            <div>
+              <dt>Estágio</dt>
+              <dd>{startup?.stage || "Não informado"}</dd>
+            </div>
+            {startup?.fundingRange && (
+              <div>
+                <dt>Faixa de captação</dt>
+                <dd>{startup.fundingRange}</dd>
+              </div>
+            )}
+            {startup?.pitchUrl && !startup?.materialsPublic && (
+              <div>
+                <dt>Apresentação</dt>
+                <dd>Privada até aprovação da conexão</dd>
+              </div>
+            )}
           </dl>
         </section>
 
         <section>
-          <div className="startup-context-heading"><h2>Investidores</h2><Link to="#investidores">Ver todos</Link></div>
+          <div className="startup-context-heading">
+            <h2>Investidores</h2>
+            <Link to="#investidores">Ver todos</Link>
+          </div>
           {investors.length === 0 ? (
-            <p className="startup-context-empty">Nenhum investidor disponível.</p>
+            <p className="startup-context-empty">
+              Nenhum investidor disponível.
+            </p>
           ) : (
             <div className="startup-investor-list">
               {investors.slice(0, 5).map((item) => (
                 <Link to={`/painel?kind=investors&id=${item.id}`} key={item.id}>
-                  <span className="professional-avatar small">{initials(item.name)}</span>
-                  <span><strong>{item.name}</strong><small>{item.company || item.type || "Perfil profissional"}</small></span>
+                  <span className="professional-avatar small">
+                    {initials(item.name)}
+                  </span>
+                  <span>
+                    <strong>{item.name}</strong>
+                    <small>
+                      {item.company || item.type || "Perfil profissional"}
+                    </small>
+                  </span>
                 </Link>
               ))}
             </div>

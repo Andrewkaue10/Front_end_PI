@@ -36,7 +36,7 @@ function initials(name) {
     .slice(0, 2)
     .map((part) => part[0])
     .join("")
-    .toUpper()
+    .toUpper();
 }
 
 export default function Feed() {
@@ -79,8 +79,11 @@ export default function Feed() {
       setError("");
       try {
         if (me.role === "STARTUP") {
-          const data = await api(`/investors?page=${page}&limit=12&q=${encodeURIComponent(q)}`);
-          if (alive) setItems((data.items || []).filter((item) => !item.isDemo));
+          const data = await api(
+            `/investors?page=${page}&limit=12&q=${encodeURIComponent(q)}`,
+          );
+          if (alive)
+            setItems((data.items || []).filter((item) => !item.isDemo));
         } else if (isProfessional) {
           const params = new URLSearchParams({
             q,
@@ -88,7 +91,8 @@ export default function Feed() {
             limit: "12",
             ...(mode === "favorites" ? { favorites: "true" } : {}),
           });
-          const path = mode === "recommended" ? "/recommendations" : "/startups";
+          const path =
+            mode === "recommended" ? "/recommendations" : "/startups";
           const data = await api(`${path}?${params}`);
           const [recData, favData, notifData] = await Promise.all([
             api("/recommendations?page=1&limit=6").catch(() => ({ items: [] })),
@@ -97,7 +101,9 @@ export default function Feed() {
           ]);
           if (alive) {
             setItems((data.items || []).filter((item) => !item.isDemo));
-            setRecommendations((recData.items || []).filter((item) => !item.isDemo));
+            setRecommendations(
+              (recData.items || []).filter((item) => !item.isDemo),
+            );
             setFavorites((favData.items || []).filter((item) => !item.isDemo));
             setNotifications(notifData.items || []);
           }
@@ -127,12 +133,16 @@ export default function Feed() {
       });
       setItems((current) =>
         current.map((entry) =>
-          entry.id === item.id ? { ...entry, favorited: !entry.favorited } : entry,
+          entry.id === item.id
+            ? { ...entry, favorited: !entry.favorited }
+            : entry,
         ),
       );
       setRecommendations((current) =>
         current.map((entry) =>
-          entry.id === item.id ? { ...entry, favorited: !entry.favorited } : entry,
+          entry.id === item.id
+            ? { ...entry, favorited: !entry.favorited }
+            : entry,
         ),
       );
       if (mode === "favorites") {
@@ -162,14 +172,20 @@ export default function Feed() {
           <Link to="/painel">Minha área</Link>
         </header>
         {error && <p role="alert">{error}</p>}
-        {loading ? <p role="status">Carregando perfis…</p> : (
+        {loading ? (
+          <p role="status">Carregando perfis…</p>
+        ) : (
           <div className="nx-card-list">
-            {items.length === 0 && <p>Nenhum investidor ou mentor encontrado.</p>}
+            {items.length === 0 && (
+              <p>Nenhum investidor ou mentor encontrado.</p>
+            )}
             {items.map((item) => (
               <article className="nx-card" key={item.id}>
                 <h2>{item.name}</h2>
                 <p>{item.bio || "Descrição não informada"}</p>
-                <Link to={`/painel?kind=investors&id=${item.id}`}>Ver perfil e conectar</Link>
+                <Link to={`/painel?kind=investors&id=${item.id}`}>
+                  Ver perfil e conectar
+                </Link>
               </article>
             ))}
           </div>
@@ -193,54 +209,106 @@ export default function Feed() {
     <div className="investor-home">
       <header className="investor-header">
         <Link className="investor-brand" to="/feed" aria-label="NexHub início">
-          <span>NEX</span><em>hub</em><i aria-hidden="true">✦</i>
+          <span>NEX</span>
+          <em>hub</em>
+          <i aria-hidden="true">✦</i>
         </Link>
         <label className="investor-global-search">
           <Search size={16} />
           <span className="sr-only">Buscar no sistema</span>
           <input
             value={q}
-            onChange={(e) => { setQ(e.target.value); setPage(1); }}
+            onChange={(e) => {
+              setQ(e.target.value);
+              setPage(1);
+            }}
             placeholder="Buscar startups, investidores, mentores..."
           />
         </label>
         <nav className="investor-top-nav" aria-label="Navegação principal">
-          <Link className="active" to="/feed">Início</Link>
+          <Link className="active" to="/feed">
+            Início
+          </Link>
           <Link to="/para-investidores">Explorar</Link>
-          <Link to="/feed" onClick={() => setMode("recommended")}>Rede</Link>
+          <Link to="/feed" onClick={() => setMode("recommended")}>
+            Rede
+          </Link>
           <Link to="/painel">Mensagens</Link>
         </nav>
       </header>
 
       <aside className="investor-sidebar">
         <nav aria-label="Área do investidor">
-          <button className={mode === "all" ? "active" : ""} onClick={() => setMode("all")}>
-            <Home size={16} /><span>Início</span>
+          <button
+            className={mode === "all" ? "active" : ""}
+            onClick={() => setMode("all")}
+          >
+            <Home size={16} />
+            <span>Início</span>
           </button>
-          <button className={mode === "recommended" ? "active" : ""} onClick={() => setMode("recommended")}>
-            <Users size={16} /><span>Matches</span>
+          <button
+            className={mode === "recommended" ? "active" : ""}
+            onClick={() => setMode("recommended")}
+          >
+            <Users size={16} />
+            <span>Matches</span>
           </button>
-          <Link to="/alia"><Star size={16} /><span>A.L.I.A</span></Link>
-          <Link to="/painel#avisos"><Bell size={16} /><span>Notificações</span>{notifications.length > 0 && <b>{notifications.filter((n) => !n.read).length}</b>}</Link>
-          <button className={mode === "favorites" ? "active" : ""} onClick={() => setMode("favorites")}>
-            <Heart size={16} /><span>Favoritos</span>
+          <Link to="/alia">
+            <Star size={16} />
+            <span>A.L.I.A</span>
+          </Link>
+          <Link to="/painel#avisos">
+            <Bell size={16} />
+            <span>Notificações</span>
+            {notifications.length > 0 && (
+              <b>{notifications.filter((n) => !n.read).length}</b>
+            )}
+          </Link>
+          <button
+            className={mode === "favorites" ? "active" : ""}
+            onClick={() => setMode("favorites")}
+          >
+            <Heart size={16} />
+            <span>Favoritos</span>
           </button>
-          <Link to="/painel#conexoes"><Mail size={16} /><span>Mensagens</span></Link>
-          <Link to="/painel" title="O portfólio ainda não possui uma seção própria"><WalletCards size={16} /><span>Portfólio</span></Link>
-          <Link to="/painel#perfil"><BriefcaseBusiness size={16} /><span>Minhas qualificações</span></Link>
-          <Link to="/painel#perfil"><Settings size={16} /><span>Configurações</span></Link>
+          <Link to="/painel#conexoes">
+            <Mail size={16} />
+            <span>Mensagens</span>
+          </Link>
+          <Link
+            to="/painel"
+            title="O portfólio ainda não possui uma seção própria"
+          >
+            <WalletCards size={16} />
+            <span>Portfólio</span>
+          </Link>
+          <Link to="/painel#perfil">
+            <BriefcaseBusiness size={16} />
+            <span>Minhas qualificações</span>
+          </Link>
+          <Link to="/painel#perfil">
+            <Settings size={16} />
+            <span>Configurações</span>
+          </Link>
         </nav>
         <div className="investor-account">
           <span>{initials(me?.name)}</span>
-          <div><strong>{me?.name || "Usuário"}</strong><small>{profile?.type || "Investidor"}</small></div>
-          <button onClick={logout} aria-label="Sair"><LogOut size={15} /></button>
+          <div>
+            <strong>{me?.name || "Usuário"}</strong>
+            <small>{profile?.type || "Investidor"}</small>
+          </div>
+          <button onClick={logout} aria-label="Sair">
+            <LogOut size={15} />
+          </button>
         </div>
       </aside>
 
       <main className="investor-main">
         <section className="investor-greeting">
           <div>
-            <h1>Olá, {firstName(me?.name)} <span aria-hidden="true">👋</span></h1>
+            <h1>
+              Olá, {firstName(me?.name)} <span aria-hidden="true">👋</span>
+            </h1>
             <p>Veja o que aconteceu desde sua última visita.</p>
           </div>
           <label className="investor-context-search">
@@ -248,7 +316,10 @@ export default function Feed() {
             <span className="sr-only">Buscar startups</span>
             <input
               value={q}
-              onChange={(e) => { setQ(e.target.value); setPage(1); }}
+              onChange={(e) => {
+                setQ(e.target.value);
+                setPage(1);
+              }}
               placeholder="Pesquisar startups..."
             />
           </label>
@@ -265,45 +336,108 @@ export default function Feed() {
 
         <section className="investor-suggestions">
           <div className="investor-section-heading">
-            <div><h2>{mode === "favorites" ? "Favoritos" : mode === "recommended" ? "Matches recomendados" : "Sugestões para você"}</h2><p>Oportunidades calculadas a partir do seu perfil.</p></div>
-            {mode === "all" && <button onClick={() => setMode("recommended")}>Ver mais →</button>}
+            <div>
+              <h2>
+                {mode === "favorites"
+                  ? "Favoritos"
+                  : mode === "recommended"
+                    ? "Matches recomendados"
+                    : "Sugestões para você"}
+              </h2>
+              <p>Oportunidades calculadas a partir do seu perfil.</p>
+            </div>
+            {mode === "all" && (
+              <button onClick={() => setMode("recommended")}>Ver mais →</button>
+            )}
           </div>
 
           {loading ? (
-            <p className="investor-state" role="status">Carregando startups…</p>
+            <p className="investor-state" role="status">
+              Carregando startups…
+            </p>
           ) : error ? (
-            <p className="investor-state" role="alert">{error}</p>
+            <p className="investor-state" role="alert">
+              {error}
+            </p>
           ) : items.length === 0 ? (
-            <p className="investor-state">Nenhuma startup real disponível no momento.</p>
+            <p className="investor-state">
+              Nenhuma startup real disponível no momento.
+            </p>
           ) : (
             <div className="investor-card-grid">
               {items.slice(0, 6).map((item) => (
                 <article className="startup-card" key={item.id}>
                   <div className="startup-card__top">
-                    <span className="startup-avatar" style={{ background: item.color || "#2451b7" }}>{item.initials || initials(item.name)}</span>
-                    <div><h3>{item.name}</h3><p>{item.category || (item.sectors || []).join(", ") || "Setor não informado"}</p></div>
+                    <span
+                      className="startup-avatar"
+                      style={{ background: item.color || "#2451b7" }}
+                    >
+                      {item.initials || initials(item.name)}
+                    </span>
+                    <div>
+                      <h3>{item.name}</h3>
+                      <p>
+                        {item.category ||
+                          (item.sectors || []).join(", ") ||
+                          "Setor não informado"}
+                      </p>
+                    </div>
                     <button
                       className={`startup-favorite ${item.favorited ? "is-favorite" : ""}`}
                       onClick={() => favorite(item)}
                       disabled={busyId === item.id}
-                      aria-label={item.favorited ? `Remover ${item.name} dos favoritos` : `Favoritar ${item.name}`}
+                      aria-label={
+                        item.favorited
+                          ? `Remover ${item.name} dos favoritos`
+                          : `Favoritar ${item.name}`
+                      }
                     >
-                      <Heart size={16} fill={item.favorited ? "currentColor" : "none"} />
+                      <Heart
+                        size={16}
+                        fill={item.favorited ? "currentColor" : "none"}
+                      />
                     </button>
                   </div>
-                  <p className="startup-description">{item.description || "Descrição não informada"}</p>
+                  <p className="startup-description">
+                    {item.description || "Descrição não informada"}
+                  </p>
                   <div className="startup-tags">
                     {item.stage && <span>{item.stage}</span>}
-                    {(item.tags || item.sectors || []).slice(0, 3).map((tag) => <span key={tag}>{tag}</span>)}
+                    {(item.tags || item.sectors || [])
+                      .slice(0, 3)
+                      .map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
                   </div>
                   <div className="startup-metrics">
-                    {item.ask && <div><strong>{item.ask}</strong><small>Captação</small></div>}
-                    {item.growth && <div><strong>{item.growth}</strong><small>Crescimento</small></div>}
-                    {item.valuation && <div><strong>{item.valuation}</strong><small>Valuation</small></div>}
+                    {item.ask && (
+                      <div>
+                        <strong>{item.ask}</strong>
+                        <small>Captação</small>
+                      </div>
+                    )}
+                    {item.growth && (
+                      <div>
+                        <strong>{item.growth}</strong>
+                        <small>Crescimento</small>
+                      </div>
+                    )}
+                    {item.valuation && (
+                      <div>
+                        <strong>{item.valuation}</strong>
+                        <small>Valuation</small>
+                      </div>
+                    )}
                   </div>
                   <div className="startup-card__footer">
-                    {item.match != null && <strong className="match-score">{item.match}% match</strong>}
-                    <Link to={`/painel?kind=startups&id=${item.id}`}>Ver perfil →</Link>
+                    {item.match != null && (
+                      <strong className="match-score">
+                        {item.match}% match
+                      </strong>
+                    )}
+                    <Link to={`/painel?kind=startups&id=${item.id}`}>
+                      Ver perfil →
+                    </Link>
                   </div>
                 </article>
               ))}
@@ -313,17 +447,37 @@ export default function Feed() {
 
         <section className="investor-recommended">
           <div className="investor-section-heading">
-            <div><h2>Startups recomendadas</h2><p>Baseado nas regras de recomendação disponíveis.</p></div>
+            <div>
+              <h2>Startups recomendadas</h2>
+              <p>Baseado nas regras de recomendação disponíveis.</p>
+            </div>
           </div>
           {recommendations.length === 0 ? (
             <p className="investor-state">Nenhuma recomendação disponível.</p>
           ) : (
             <div className="recommended-list">
               {recommendations.slice(0, 5).map((item, index) => (
-                <Link to={`/painel?kind=startups&id=${item.id}`} className="recommended-row" key={item.id}>
+                <Link
+                  to={`/painel?kind=startups&id=${item.id}`}
+                  className="recommended-row"
+                  key={item.id}
+                >
                   <b>{index + 1}</b>
-                  <span className="startup-avatar small" style={{ background: item.color || "#2451b7" }}>{item.initials || initials(item.name)}</span>
-                  <span className="recommended-name"><strong>{item.name}</strong><small>{item.category || (item.sectors || []).join(", ") || "Setor não informado"} · {item.stage || "Estágio não informado"}</small></span>
+                  <span
+                    className="startup-avatar small"
+                    style={{ background: item.color || "#2451b7" }}
+                  >
+                    {item.initials || initials(item.name)}
+                  </span>
+                  <span className="recommended-name">
+                    <strong>{item.name}</strong>
+                    <small>
+                      {item.category ||
+                        (item.sectors || []).join(", ") ||
+                        "Setor não informado"}{" "}
+                      · {item.stage || "Estágio não informado"}
+                    </small>
+                  </span>
                   {item.match != null && <em>{item.match}% match</em>}
                 </Link>
               ))}
@@ -334,13 +488,30 @@ export default function Feed() {
 
       <aside className="investor-context">
         <section>
-          <div className="context-heading"><h2>Notificações</h2><Link to="/painel#avisos">Ver todas</Link></div>
-          {notifications.length === 0 ? <p className="context-empty">Nenhuma notificação.</p> : (
+          <div className="context-heading">
+            <h2>Notificações</h2>
+            <Link to="/painel#avisos">Ver todas</Link>
+          </div>
+          {notifications.length === 0 ? (
+            <p className="context-empty">Nenhuma notificação.</p>
+          ) : (
             <div className="notification-list">
               {notifications.slice(0, 5).map((notification) => (
                 <div className="notification-row" key={notification.id}>
-                  <span><Bell size={13} /></span>
-                  <p><strong>{notificationLabels[notification.type] || "Nova atualização"}</strong><small>{new Date(notification.createdAt).toLocaleDateString("pt-BR")}</small></p>
+                  <span>
+                    <Bell size={13} />
+                  </span>
+                  <p>
+                    <strong>
+                      {notificationLabels[notification.type] ||
+                        "Nova atualização"}
+                    </strong>
+                    <small>
+                      {new Date(notification.createdAt).toLocaleDateString(
+                        "pt-BR",
+                      )}
+                    </small>
+                  </p>
                 </div>
               ))}
             </div>
@@ -348,29 +519,83 @@ export default function Feed() {
         </section>
 
         <section>
-          <div className="context-heading"><h2>Minhas qualificações</h2><Link to="/painel#perfil">Editar</Link></div>
+          <div className="context-heading">
+            <h2>Minhas qualificações</h2>
+            <Link to="/painel#perfil">Editar</Link>
+          </div>
           {qualifications.length === 0 ? (
             <p className="context-empty">Nenhuma qualificação informada.</p>
           ) : (
             <dl className="qualifications">
-              {profile?.type && <div><dt>Tipo</dt><dd>{profile.type}</dd></div>}
-              {profile?.interests?.length > 0 && <div><dt>Interesses</dt><dd>{profile.interests.join(", ")}</dd></div>}
-              {profile?.stages?.length > 0 && <div><dt>Estágios</dt><dd>{profile.stages.join(", ")}</dd></div>}
-              {profile?.ticketRange && <div><dt>Ticket</dt><dd>{profile.ticketRange}</dd></div>}
-              {profile?.specialties?.length > 0 && <div><dt>Especialidades</dt><dd>{profile.specialties.join(", ")}</dd></div>}
-              {profile?.availability != null && <div><dt>Disponibilidade</dt><dd>{profile.availability} h/mês</dd></div>}
+              {profile?.type && (
+                <div>
+                  <dt>Tipo</dt>
+                  <dd>{profile.type}</dd>
+                </div>
+              )}
+              {profile?.interests?.length > 0 && (
+                <div>
+                  <dt>Interesses</dt>
+                  <dd>{profile.interests.join(", ")}</dd>
+                </div>
+              )}
+              {profile?.stages?.length > 0 && (
+                <div>
+                  <dt>Estágios</dt>
+                  <dd>{profile.stages.join(", ")}</dd>
+                </div>
+              )}
+              {profile?.ticketRange && (
+                <div>
+                  <dt>Ticket</dt>
+                  <dd>{profile.ticketRange}</dd>
+                </div>
+              )}
+              {profile?.specialties?.length > 0 && (
+                <div>
+                  <dt>Especialidades</dt>
+                  <dd>{profile.specialties.join(", ")}</dd>
+                </div>
+              )}
+              {profile?.availability != null && (
+                <div>
+                  <dt>Disponibilidade</dt>
+                  <dd>{profile.availability} h/mês</dd>
+                </div>
+              )}
             </dl>
           )}
         </section>
 
         <section>
-          <div className="context-heading"><h2>Favoritos</h2><button onClick={() => setMode("favorites")}>Ver todos</button></div>
-          {favorites.length === 0 ? <p className="context-empty">Nenhum favorito.</p> : (
+          <div className="context-heading">
+            <h2>Favoritos</h2>
+            <button onClick={() => setMode("favorites")}>Ver todos</button>
+          </div>
+          {favorites.length === 0 ? (
+            <p className="context-empty">Nenhum favorito.</p>
+          ) : (
             <div className="favorite-list">
               {favorites.slice(0, 5).map((item) => (
-                <Link to={`/painel?kind=startups&id=${item.id}`} className="favorite-row" key={item.id}>
-                  <span className="startup-avatar small" style={{ background: item.color || "#2451b7" }}>{item.initials || initials(item.name)}</span>
-                  <span><strong>{item.name}</strong><small>{item.category || (item.sectors || []).join(", ") || "Setor não informado"}</small></span>
+                <Link
+                  to={`/painel?kind=startups&id=${item.id}`}
+                  className="favorite-row"
+                  key={item.id}
+                >
+                  <span
+                    className="startup-avatar small"
+                    style={{ background: item.color || "#2451b7" }}
+                  >
+                    {item.initials || initials(item.name)}
+                  </span>
+                  <span>
+                    <strong>{item.name}</strong>
+                    <small>
+                      {item.category ||
+                        (item.sectors || []).join(", ") ||
+                        "Setor não informado"}
+                    </small>
+                  </span>
                   <Heart size={14} fill="currentColor" />
                 </Link>
               ))}
