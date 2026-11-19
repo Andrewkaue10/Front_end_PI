@@ -24,6 +24,9 @@ import SharedSettings from "./pages/Shared/SharedSettings";
 import InvestorFavorites from "./pages/Investor/InvestorFavorites";
 import InvestorPortfolio from "./pages/Investor/InvestorPortfolio";
 import InvestorQualifications from "./pages/Investor/InvestorQualifications";
+import StartupPublications from "./pages/StartupPublications/StartupPublications";
+import StartupProfile from "./pages/StartupProfile/StartupProfile";
+import InvestorMatches from "./pages/Investor/InvestorMatches";
 
 function App() {
   const location = useLocation();
@@ -66,6 +69,8 @@ function App() {
           <Route path="mentores" element={<StartupMentors />} />
           <Route path="mentores/:id" element={<StartupMentors />} />
           <Route path="editais" element={<StartupPrograms />} />
+          <Route path="publicacoes" element={<StartupPublications />} />
+          <Route path="perfil" element={<StartupProfile />} />
         </Route>
         <Route path="/mensagens" element={<SharedMessages />} />
         <Route path="/notificacoes" element={<SharedNotifications />} />
@@ -76,6 +81,7 @@ function App() {
           path="/investidor/qualificacoes"
           element={<InvestorQualifications />}
         />
+        <Route path="/investidor/matches" element={<InvestorMatches />} />
         <Route path="/painel" element={<Workspace />} />
         <Route path="/cadastro/investidor" element={<SignupInvestor />} />
         <Route path="/cadastro/startup" element={<SignupStartup />} />

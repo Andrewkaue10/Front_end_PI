@@ -114,6 +114,13 @@ export default function AreaShell({ children }) {
           ) : (
             <>
               <Link
+                className={active("/investidor/matches") ? "active" : ""}
+                to="/investidor/matches"
+              >
+                <Users size={16} />
+                <span>Matches</span>
+              </Link>
+              <Link
                 className={active("/investidor/favoritos") ? "active" : ""}
                 to="/investidor/favoritos"
               >

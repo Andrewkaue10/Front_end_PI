@@ -1,7 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { calculateMatch } from "../src/domain/matchmaking";
-import { registerSchema, password, optionalUrl } from "../src/domain/validation";
+import {
+  registerSchema,
+  password,
+  optionalUrl,
+  profileEdit,
+} from "../src/domain/validation";
 const startup = {
   sectors: ["IA"],
   stage: "MVP",
@@ -80,4 +85,22 @@ test("senha bcrypt respeita limite em bytes também em UTF-8", () => {
 });
 test("URL inválida é rejeitada sem lançar erro interno", () => {
   assert.equal(optionalUrl.safeParse("link-invalido").success, false);
+});
+test("edição valida os campos persistidos de startup e investidor", () => {
+  assert.equal(
+    profileEdit.safeParse({
+      sectors: ["IA"],
+      stage: "MVP",
+      fundingRange: "Até R$500k",
+      ask: 150000,
+      growth: "30% ao mês",
+      valuation: 1200000,
+      interests: ["Fintech"],
+      ticketRange: "R$50k - 200k",
+      specialties: ["Tecnologia"],
+      availability: 8,
+    }).success,
+    true,
+  );
+  assert.equal(profileEdit.safeParse({ sectors: ["inválido"] }).success, false);
 });

@@ -85,7 +85,7 @@ export default function StartupShell() {
         </Link>
         <nav className="startup-shell__top" aria-label="Navegação principal">
           <Link to="/startup">Início</Link>
-          <Link to="/configuracoes">Perfil</Link>
+          <Link to="/startup/perfil">Perfil</Link>
           <Link to="/mensagens">Rede</Link>
         </nav>
       </header>
@@ -95,9 +95,19 @@ export default function StartupShell() {
             <Home size={16} />
             <span>Início</span>
           </Link>
-          <Link to="/configuracoes">
+          <Link
+            className={active("/startup/perfil") ? "active" : ""}
+            to="/startup/perfil"
+          >
             <BriefcaseBusiness size={16} />
             <span>Perfil da startup</span>
+          </Link>
+          <Link
+            className={active("/startup/publicacoes") ? "active" : ""}
+            to="/startup/publicacoes"
+          >
+            <Mail size={16} />
+            <span>Publicações</span>
           </Link>
           <Link to="/notificacoes">
             <Bell size={16} />

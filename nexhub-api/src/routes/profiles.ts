@@ -5,6 +5,7 @@ import { professional } from "../lib/security";
 import { HttpError } from "../lib/errors";
 import { calculateMatch } from "../domain/matchmaking";
 import { paging, profileEdit, uuid } from "../domain/validation";
+import { fundingRanges, ticketRanges } from "../domain/catalog";
 
 export const profiles = Router();
 const money = (v: unknown) =>
@@ -88,6 +89,50 @@ profiles.get("/startups", async (req, res) => {
     .string()
     .max(40)
     .parse(req.query.category || "Todos");
+  const sector = z
+    .string()
+    .trim()
+    .max(40)
+    .parse(
+      req.query.sector ||
+        (["Todos", "Estágio MVP+"].includes(category) ? "" : category),
+    );
+  const stage = z
+    .string()
+    .trim()
+    .max(40)
+    .parse(req.query.stage || "");
+  const ticket = z
+    .enum(["", ...Object.keys(ticketRanges)])
+    .parse(req.query.ticket || req.query.ticketRange || "");
+  const ticketMin =
+    req.query.ticketMin === undefined
+      ? ticket
+        ? ticketRanges[ticket][0]
+        : undefined
+      : z.coerce.number().finite().min(0).parse(req.query.ticketMin);
+  const ticketMax =
+    req.query.ticketMax === undefined
+      ? ticket
+        ? ticketRanges[ticket][1]
+        : undefined
+      : z.coerce.number().finite().min(0).parse(req.query.ticketMax);
+  const and: any[] = [];
+  if (q) {
+    and.push({
+      OR: [
+        { name: { contains: q, mode: "insensitive" } },
+        { description: { contains: q, mode: "insensitive" } },
+      ],
+    });
+  }
+  if (ticket || ticketMin !== undefined || ticketMax !== undefined) {
+    if (ticketMax != null) and.push({ fundingMin: { lte: ticketMax } });
+    if (ticketMin !== undefined)
+      and.push({
+        OR: [{ fundingMax: null }, { fundingMax: { gte: ticketMin } }],
+      });
+  }
   const investor = await db.investor.findUnique({
     where: { ownerId: req.user!.userId },
     include: { owner: true },
@@ -95,19 +140,13 @@ profiles.get("/startups", async (req, res) => {
   const where: any = {
     status: "APPROVED",
     owner: { active: true, isDemo: false },
-    ...(q
-      ? {
-          OR: [
-            { name: { contains: q, mode: "insensitive" } },
-            { description: { contains: q, mode: "insensitive" } },
-          ],
-        }
+    ...(category === "Estágio MVP+"
+      ? { stage: { in: ["MVP", "Tração", "Escala"] } }
       : {}),
-    ...(category === "Todos"
-      ? {}
-      : category === "Estágio MVP+"
-        ? { stage: { in: ["MVP", "Tração", "Escala"] } }
-        : { sectors: { has: category } }),
+    ...(sector ? { sectors: { has: sector } } : {}),
+    ...(stage ? { stage } : {}),
+    ...(and.length ? { AND: and } : {}),
+    ...(investor ? { dismissals: { none: { investorId: investor.id } } } : {}),
   };
   if (req.query.favorites === "true")
     where.favorites = { some: { userId: req.user!.userId } };
@@ -201,6 +240,32 @@ profiles.get("/investors", async (req, res) => {
 });
 profiles.get("/recommendations", async (req, res) => {
   const { page, limit } = paging.parse(req.query);
+  const q = z
+    .string()
+    .trim()
+    .max(120)
+    .parse(req.query.q || "");
+  const category = z
+    .string()
+    .trim()
+    .max(40)
+    .parse(req.query.category || "");
+  const sector = z
+    .string()
+    .trim()
+    .max(40)
+    .parse(
+      req.query.sector ||
+        (["Todos", "Estágio MVP+"].includes(category) ? "" : category),
+    );
+  const stage = z
+    .string()
+    .trim()
+    .max(40)
+    .parse(req.query.stage || "");
+  const ticket = z
+    .enum(["", ...Object.keys(ticketRanges)])
+    .parse(req.query.ticket || req.query.ticketRange || "");
   const own = await db.user.findUniqueOrThrow({
     where: { id: req.user!.userId },
     include: { startup: true, investor: true },
@@ -216,6 +281,20 @@ profiles.get("/recommendations", async (req, res) => {
       where: {
         status: "APPROVED",
         owner: { active: true, isDemo: false },
+        ...(sector ? { interests: { has: sector } } : {}),
+        ...(stage ? { stages: { has: stage } } : {}),
+        ...(ticket ? { ticketRange: ticket } : {}),
+        ...(q
+          ? {
+              OR: [
+                { name: { contains: q, mode: "insensitive" } },
+                { company: { contains: q, mode: "insensitive" } },
+                { bio: { contains: q, mode: "insensitive" } },
+                { type: { contains: q, mode: "insensitive" } },
+              ],
+            }
+          : {}),
+        dismissals: { none: { startupId: own.startup.id } },
         connections: {
           none: {
             startupId: own.startup.id,
@@ -241,6 +320,38 @@ profiles.get("/recommendations", async (req, res) => {
       where: {
         status: "APPROVED",
         owner: { active: true, isDemo: false },
+        ...(sector ? { sectors: { has: sector } } : {}),
+        ...(stage ? { stage } : {}),
+        ...(q
+          ? {
+              OR: [
+                { name: { contains: q, mode: "insensitive" } },
+                { description: { contains: q, mode: "insensitive" } },
+              ],
+            }
+          : {}),
+        ...(ticket
+          ? {
+              AND: [
+                ...(ticketRanges[ticket][1] != null
+                  ? [
+                      {
+                        fundingMin: {
+                          lte: ticketRanges[ticket][1],
+                        },
+                      },
+                    ]
+                  : []),
+                {
+                  OR: [
+                    { fundingMax: null },
+                    { fundingMax: { gte: ticketRanges[ticket][0] } },
+                  ],
+                },
+              ],
+            }
+          : {}),
+        dismissals: { none: { investorId: own.investor.id } },
         connections: {
           none: {
             investorId: own.investor.id,
@@ -325,16 +436,56 @@ profiles.get("/investors/:id", async (req, res) => {
 profiles.patch("/profile", async (req, res) => {
   const v = profileEdit.parse(req.body);
   if (req.user!.role === "STARTUP") {
-    const { bio, stages, ...data } = v;
+    const data = {
+      name: v.name,
+      description: v.description,
+      city: v.city,
+      state: v.state,
+      needs: v.needs,
+      website: v.website,
+      pitchUrl: v.pitchUrl,
+      canvas: v.canvas,
+      materialsPublic: v.materialsPublic,
+      sectors: v.sectors,
+      stage: v.stage,
+      fundingRange: v.fundingRange,
+      ...(v.fundingRange
+        ? {
+            fundingMin: fundingRanges[v.fundingRange][0],
+            fundingMax: fundingRanges[v.fundingRange][1],
+          }
+        : {}),
+      ask: v.ask,
+      growth: v.growth,
+      valuation: v.valuation,
+    };
     await db.startup.update({
       where: { ownerId: req.user!.userId },
       data: { ...data, status: "PENDING" },
     });
   } else if (["INVESTOR", "MENTOR", "BOTH"].includes(req.user!.role)) {
-    const { bio, city, state, stages } = v;
+    const data = {
+      name: v.name,
+      bio: v.bio,
+      city: v.city,
+      state: v.state,
+      stages: v.stages,
+      company: v.company,
+      type: v.type,
+      interests: v.interests,
+      ticketRange: v.ticketRange,
+      ...(v.ticketRange !== undefined
+        ? {
+            ticketMin: v.ticketRange ? ticketRanges[v.ticketRange][0] : null,
+            ticketMax: v.ticketRange ? ticketRanges[v.ticketRange][1] : null,
+          }
+        : {}),
+      specialties: v.specialties,
+      availability: v.availability,
+    };
     await db.investor.update({
       where: { ownerId: req.user!.userId },
-      data: { bio, city, state, stages, status: "PENDING" },
+      data: { ...data, status: "PENDING" },
     });
   } else throw new HttpError(403, "Perfil não editável.");
   res.json({ message: "Alterações salvas e enviadas para análise." });

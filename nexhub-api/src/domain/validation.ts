@@ -90,6 +90,7 @@ export const paging = z.object({
 export const uuid = z.string().uuid();
 export const profileEdit = z
   .object({
+    name: z.string().trim().min(2).max(120).optional(),
     description: z.string().trim().max(2000).optional(),
     bio: z.string().trim().max(2000).optional(),
     city: z.string().trim().max(120).optional(),
@@ -106,5 +107,25 @@ export const profileEdit = z
     pitchUrl: optionalUrl,
     canvas: z.record(z.string(), z.string().max(3000)).optional(),
     materialsPublic: z.boolean().optional(),
+    sectors: z.array(z.enum(sectors)).min(1).max(8).optional(),
+    stage: z.enum(stages).optional(),
+    fundingRange: z
+      .enum(Object.keys(fundingRanges) as [string, ...string[]])
+      .optional(),
+    ask: z.number().finite().min(0).nullable().optional(),
+    growth: z.string().trim().max(120).nullable().optional(),
+    valuation: z.number().finite().min(0).nullable().optional(),
+    company: z.string().trim().max(120).nullable().optional(),
+    type: z
+      .enum(["Anjo", "VC", "Family Office", "Corporate"])
+      .nullable()
+      .optional(),
+    interests: z.array(z.enum(sectors)).min(1).max(8).optional(),
+    ticketRange: z
+      .enum(Object.keys(ticketRanges) as [string, ...string[]])
+      .nullable()
+      .optional(),
+    specialties: z.array(z.enum(specialties)).max(6).optional(),
+    availability: z.number().int().min(1).max(160).nullable().optional(),
   })
   .strict();
