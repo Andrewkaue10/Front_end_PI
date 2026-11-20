@@ -7,6 +7,16 @@ import { paging, uuid } from "../domain/validation";
 export const programs = Router();
 
 const programSchema = z.object({
+  sourceUrl: z
+    .string()
+    .url()
+    .max(2000)
+    .refine(
+      (value) => new URL(value).protocol === "https:",
+      "Use um endereço HTTPS.",
+    )
+    .nullable()
+    .optional(),
   title: z.string().trim().min(2).max(160),
   organization: z.string().trim().min(2).max(160),
   modality: z.string().trim().min(2).max(80),

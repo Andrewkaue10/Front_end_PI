@@ -110,6 +110,10 @@ export default function StartupShell() {
             <Mail size={16} />
             <span>Publicações</span>
           </Link>
+          <Link to="/alia">
+            <Sparkles size={16} />
+            <span>A.L.I.A</span>
+          </Link>
           <Link to="/notificacoes">
             <Bell size={16} />
             <span>Notificações</span>

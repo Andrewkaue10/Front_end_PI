@@ -1,4 +1,5 @@
 import express from "express";
+import { alia } from "./routes/alia";
 import cors from "cors";
 import helmet from "helmet";
 import { rateLimit } from "express-rate-limit";
@@ -65,11 +66,17 @@ app.use(
   programs,
   account,
   publications,
+  alia,
 );
 app.use("/api/admin", admin);
 
 app.get("/health", (req, res) => {
-  return res.json({ status: "OK", service: "Nexhub API", version: "1.0.0" });
+  return res.json({
+    status: "OK",
+    service: "Nexhub API",
+    version: "1.0.0",
+    alia: "alia-v1",
+  });
 });
 app.use((_req, res) => {
   res.status(404).json({ error: "Rota não encontrada." });

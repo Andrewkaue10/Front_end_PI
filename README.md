@@ -59,3 +59,15 @@ O frontend usa `VITE_API_URL=http://localhost:3333/api` por padrão. Ajuste `Fro
 ## Autores
 
 Andrew Kauê e João Gabriel.
+
+## A.L.I.A — entrega de IA do PI
+
+A A.L.I.A está integrada à API existente e à página autenticada `/alia`. O modo local usa TF-IDF; Claude é opcional e requer chave no backend. Não inicie um segundo backend a partir da pasta de referência.
+
+- [Documentação técnica e resultados](docs/ia/DOCUMENTACAO_TECNICA.md)
+- [Roteiro de apresentação](docs/ia/APRESENTACAO.md)
+- [Hospedagem e configuração](docs/ia/HOSPEDAGEM.md)
+- [Auditoria dos arquivos do Andrew](docs/ia/AUDITORIA_ANDREW.md)
+- [Casos de avaliação](nexhub-api/evaluation/cases.json) e [resultados locais](nexhub-api/evaluation/results/local.json)
+
+As pastas `alia-backend/` e `files/` preservam o material recebido como referência histórica. Seus SQLs e servidores independentes não são usados pelo deploy.

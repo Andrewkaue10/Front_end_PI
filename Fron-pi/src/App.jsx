@@ -28,6 +28,7 @@ import StartupPublications from "./pages/StartupPublications/StartupPublications
 import StartupProfile from "./pages/StartupProfile/StartupProfile";
 import InvestorMatches from "./pages/Investor/InvestorMatches";
 
+import Alia from "./pages/Alia/Alia";
 import MyProfile from "./pages/Shared/MyProfile";
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
       "/notificacoes",
       "/configuracoes",
       "/perfil",
+      "/alia",
     ].includes(location.pathname) ||
     location.pathname.startsWith("/startup/") ||
     location.pathname.startsWith("/investidor/");
@@ -59,7 +61,7 @@ function App() {
           path="/para-investidores"
           element={<Marketing page="investor" />}
         />
-        <Route path="/alia" element={<Marketing page="alia" />} />
+        <Route path="/alia" element={<Alia />} />
         <Route path="/sobre" element={<Marketing page="about" />} />
         <Route path="/esqueci-senha" element={<ForgotPassword />} />
         <Route path="/redefinir-senha" element={<ResetPassword />} />

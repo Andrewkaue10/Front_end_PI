@@ -107,6 +107,16 @@ admin.get("/metrics", async (_req, res) => {
   });
 });
 const programInput = z.object({
+  sourceUrl: z
+    .string()
+    .url()
+    .max(2000)
+    .refine(
+      (value) => new URL(value).protocol === "https:",
+      "Use um endereço HTTPS.",
+    )
+    .nullable()
+    .optional(),
   title: z.string().trim().min(2).max(160),
   organization: z.string().trim().min(2).max(160),
   modality: z.string().trim().min(2).max(80),
@@ -176,7 +186,9 @@ admin.post("/investments", async (req, res) => {
       amount: z.coerce.number().positive().max(9999999999999999),
       currency: z.string().trim().length(3).default("BRL"),
       equityPercent: z.coerce.number().min(0).max(100).optional(),
-      status: z.enum(["NEGOTIATING", "COMPLETED", "CANCELLED"]).default("NEGOTIATING"),
+      status: z
+        .enum(["NEGOTIATING", "COMPLETED", "CANCELLED"])
+        .default("NEGOTIATING"),
       investedAt: z.iso.datetime({ offset: true }).optional(),
     })
     .strict()

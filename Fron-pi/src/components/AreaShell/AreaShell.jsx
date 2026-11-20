@@ -95,6 +95,7 @@ export default function AreaShell({ children }) {
         <nav className="area-shell__top" aria-label="Navegação principal">
           <Link to={base}>Início</Link>
           <Link to="/mensagens">Mensagens</Link>
+          <Link to="/alia">A.L.I.A</Link>
           <Link to="/notificacoes">Notificações</Link>
           <Link to="/configuracoes">Configurações</Link>
         </nav>
@@ -152,6 +153,10 @@ export default function AreaShell({ children }) {
               </Link>
             </>
           )}
+          <Link className={active("/alia") ? "active" : ""} to="/alia">
+            <Sparkles size={16} />
+            <span>A.L.I.A</span>
+          </Link>
           <Link
             className={active("/mensagens") ? "active" : ""}
             to="/mensagens"

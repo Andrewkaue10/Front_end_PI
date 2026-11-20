@@ -1,0 +1,306 @@
+.alia-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 0 40px;
+  color: #172a49;
+}
+.alia-page * {
+  box-sizing: border-box;
+}
+.alia-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px;
+  border-radius: 22px;
+  background: linear-gradient(120deg, #e9eeff, #f3f8ff);
+  margin-bottom: 24px;
+}
+.alia-hero h1 {
+  font-size: clamp(26px, 3vw, 38px);
+  letter-spacing: -1px;
+  margin: 14px 0;
+}
+.alia-hero p {
+  max-width: 650px;
+  color: #536985;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.alia-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #3359c8;
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  font-weight: 700;
+}
+.alia-badge {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #dce5f5;
+  border-radius: 30px;
+  padding: 8px 12px;
+  font-size: 12px;
+  white-space: nowrap;
+  color: #3156bf;
+}
+.alia-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  align-items: start;
+}
+.alia-card {
+  border: 1px solid #e0e6f1;
+  background: #fff;
+  border-radius: 20px;
+  padding: 26px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 18px #19355204;
+}
+.alia-card h2 {
+  font-size: 21px;
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.alia-card h3 {
+  font-size: 17px;
+  margin: 0 0 8px;
+}
+.alia-card p,
+.alia-card li {
+  font-size: 15px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+.alia-topics {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.alia-topics button {
+  border: 1px solid #dce4f3;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #476082;
+  cursor: pointer;
+}
+.alia-topics button[aria-pressed="true"] {
+  background: #315bea;
+  border-color: #315bea;
+  color: #fff;
+}
+.alia-field {
+  display: grid;
+  gap: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 20px 0 12px;
+}
+.alia-field textarea,
+.alia-field select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ccd8eb;
+  border-radius: 10px;
+  font: inherit;
+  line-height: 1.6;
+  color: #172a49;
+  background: #fbfcff;
+}
+.alia-field textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+.alia-page button:focus-visible,
+.alia-page input:focus-visible,
+.alia-page textarea:focus-visible,
+.alia-page select:focus-visible {
+  outline: 3px solid #91aaff;
+  outline-offset: 3px;
+}
+.alia-form-meta,
+.alia-result-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.alia-page .alia-link {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  color: #315bce;
+  font-size: 14px;
+  cursor: pointer;
+}
+.alia-page .alia-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 12px 22px;
+  background: #315bea;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.alia-page button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.alia-page .alia-muted {
+  color: #687a94;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.alia-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 18px 0;
+}
+.alia-check input {
+  flex-shrink: 0;
+  margin-top: 5px;
+  accent-color: #315bea;
+}
+.alia-actions article {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border-top: 1px solid #edf0f7;
+  padding: 22px 0;
+}
+.alia-step {
+  display: grid;
+  place-items: center;
+  background: #edf2ff;
+  color: #315bea;
+  border-radius: 10px;
+  min-width: 32px;
+  height: 32px;
+  font-weight: 700;
+}
+.alia-metric {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  background: #eef8f4;
+  color: #246752;
+  padding: 12px;
+  border-radius: 10px;
+}
+.alia-metric svg {
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.alia-note {
+  padding: 16px;
+  border-radius: 12px;
+  background: #f4f6fb;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.alia-result details {
+  margin-top: 22px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.alia-result summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 8px 0;
+}
+.alia-history {
+  display: grid;
+  gap: 10px;
+  max-height: 480px;
+  overflow: auto;
+}
+.alia-history button {
+  display: grid;
+  text-align: left;
+  gap: 6px;
+  border: 1px solid #e1e7f2;
+  padding: 14px;
+  background: #f8faff;
+  border-radius: 12px;
+  color: #20385e;
+  cursor: pointer;
+}
+.alia-history button[aria-pressed="true"] {
+  border-color: #315bea;
+}
+.alia-history span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 235px;
+  font-size: 13px;
+}
+.alia-history small {
+  font-size: 11px;
+  color: #687a94;
+}
+.alia-alert {
+  background: #fff3f2;
+  color: #9d3434;
+  padding: 16px;
+  border: 1px solid #f5c9c6;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+@media (max-width: 1000px) {
+  .alia-layout {
+    grid-template-columns: 1fr;
+  }
+  .alia-side {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .alia-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .alia-history span {
+    max-width: 300px;
+  }
+}
+@media (max-width: 650px) {
+  .alia-side {
+    display: block;
+  }
+  .alia-card,
+  .alia-hero {
+    padding: 20px;
+  }
+  .alia-topics button {
+    flex: 1 1 40%;
+  }
+  .alia-result-heading {
+    align-items: flex-start;
+  }
+  .alia-badge {
+    white-space: normal;
+  }
+}

@@ -1,0 +1,520 @@
+Projeto Integrador — Escopo de Entrega da 2ª Unidade
+
+Objetivo da etapa
+
+Nesta segunda etapa do Projeto Integrador, cada grupo deverá evoluir a solução desenvolvida anteriormente por meio da aplicação de uma ou mais técnicas de Inteligência Artificial estudadas ao longo da unidade.
+
+Os conteúdos apresentados em sala representam possibilidades técnicas disponíveis para o projeto, entre elas:
+
+- Machine Learning Supervisionado;
+- Machine Learning Não Supervisionado;
+- Feature Engineering;
+- Pipelines;
+- Comparação de Modelos;
+- Cross-Validation;
+- Otimização;
+- Tratamento de Dados Desbalanceados;
+- Redes Neurais;
+- Deep Learning;
+- IA Generativa;
+- LLMs;
+- Embeddings;
+- RAG.
+
+Não existe uma tecnologia obrigatória para todos os grupos.
+
+A equipe deverá selecionar as abordagens que apresentem maior coerência com o problema que pretende resolver e demonstrar tecnicamente por que essas escolhas são adequadas.
+
+O projeto será avaliado pela coerência entre problema, dados, tecnologia, implementação e resultados, e não pela quantidade de técnicas utilizadas.
+
+---
+
+CAMADA 1 — ENTREGAS OBRIGATÓRIAS PARA TODOS OS GRUPOS
+
+Independentemente da tecnologia escolhida, todos os projetos deverão apresentar os elementos a seguir.
+
+1. Problema que será tratado pela IA
+
+O grupo deverá apresentar claramente qual problema do Projeto Integrador será tratado nesta etapa.
+
+Deve ficar evidente:
+
+- qual necessidade existe;
+- quem será beneficiado pela solução;
+- qual decisão ou processo a IA pretende apoiar;
+- por que esse problema justifica o uso de Inteligência Artificial.
+
+O problema apresentado deverá estar diretamente relacionado ao funcionamento da solução proposta.
+
+---
+
+2. Abordagem técnica escolhida
+
+O grupo deverá informar qual abordagem de IA foi adotada e justificar sua escolha.
+
+Não será suficiente informar apenas: “Utilizamos K-Means.” ou: “Utilizamos uma LLM.”
+
+A equipe deverá demonstrar:
+
+- por que a tecnologia foi escolhida;
+- por que ela é adequada ao problema;
+- quais alternativas foram consideradas, quando aplicável;
+- quais limitações essa escolha possui.
+
+---
+
+3. Arquitetura da solução de IA
+
+Deverá ser apresentada uma visão do fluxo da solução.
+
+Exemplo conceitual:
+
+Dados de entrada
+      ↓
+Preparação
+      ↓
+Modelo / Técnica de IA
+      ↓
+Resultado
+      ↓
+Aplicação no sistema
+
+Dependendo do projeto, esse fluxo poderá ser diferente. O objetivo é mostrar como a IA se integra ao restante da solução.
+
+---
+
+4. Dados utilizados
+
+A equipe deverá documentar quais informações são utilizadas pela solução.
+
+Deverá ficar claro:
+
+- origem dos dados;
+- atributos utilizados;
+- informações descartadas;
+- tratamentos realizados;
+- possíveis limitações dos dados.
+
+Caso tenham sido utilizadas bases externas, APIs, documentos ou outras fontes, elas deverão ser identificadas.
+
+---
+
+5. Preparação necessária
+
+O grupo deverá apresentar as transformações realizadas antes da aplicação da técnica de IA.
+
+A preparação poderá envolver, conforme a necessidade do projeto:
+
+- tratamento de dados ausentes;
+- normalização;
+- padronização;
+- encoding;
+- transformação textual;
+- criação de novas features;
+- redução ou seleção de atributos;
+- transformação em embeddings;
+- chunking de documentos;
+- outras etapas necessárias.
+
+Não existe uma preparação obrigatória.
+
+A equipe deverá apresentar apenas aquilo que realmente foi necessário para sua solução.
+
+---
+
+6. Implementação da solução
+
+Deverá existir uma implementação funcional da abordagem escolhida.
+
+A implementação deverá permitir compreender:
+
+- entrada;
+- processamento;
+- resultado produzido.
+
+Não será suficiente apresentar apenas código desconectado do Projeto Integrador.
+
+A solução deverá estar integrada ou demonstravelmente conectável ao sistema desenvolvido pelo grupo.
+
+---
+
+7. Avaliação da solução
+
+Todo projeto deverá demonstrar alguma forma de validação. A forma de avaliação dependerá da tecnologia utilizada.
+
+O grupo deverá responder: Como vocês sabem que a solução está funcionando de maneira aceitável? Os critérios utilizados deverão ser coerentes com o tipo de solução implementada.
+
+---
+
+8. Resultados obtidos
+
+A equipe deverá apresentar evidências do comportamento da solução. Esses resultados poderão assumir diferentes formatos, como:
+
+- métricas;
+- previsões;
+- clusters;
+- rankings;
+- recomendações;
+- resultados de busca;
+- respostas geradas;
+- similaridades;
+- exemplos de utilização;
+- análises comparativas.
+
+O resultado deverá ser interpretado. Não será suficiente apresentar apenas números ou saídas da ferramenta.
+
+---
+
+9. Aplicação do resultado no Projeto Integrador
+
+O grupo deverá demonstrar como a IA agrega valor ao sistema. Deverá ficar claro:
+
+Entrada
+   ↓
+IA
+   ↓
+Resultado
+   ↓
+Utilização pelo usuário/sistema
+
+A solução deverá possuir uma finalidade dentro do produto.
+
+---
+
+10. Limitações e próximos passos
+
+A equipe deverá reconhecer limitações da solução desenvolvida.
+
+Exemplos:
+
+- pouco volume de dados;
+- base simulada;
+- baixa representatividade;
+- desempenho limitado;
+- ausência de histórico;
+- custo computacional;
+- dependência de serviço externo;
+- qualidade de documentos;
+- risco de respostas incorretas;
+- necessidade de retreinamento;
+- necessidade de coleta futura de dados.
+
+Também deverão indicar como o projeto poderia evoluir.
+
+---
+
+CAMADA 2 — EVIDÊNCIAS ESPECÍFICAS CONFORME A TECNOLOGIA UTILIZADA
+
+Nesta camada, cada grupo apresentará apenas as evidências relacionadas às técnicas efetivamente utilizadas. Não é necessário atender a todas as categorias abaixo.
+
+---
+
+A. Caso utilize Machine Learning Supervisionado
+
+A entrega deverá evidenciar:
+
+- variável que se pretende prever;
+- features utilizadas;
+- separação entre dados de treino e avaliação;
+- algoritmo ou algoritmos utilizados;
+- resultados obtidos;
+- métricas adequadas ao problema;
+- análise dos erros;
+- possíveis sinais de overfitting ou underfitting.
+
+Caso existam classes desbalanceadas, deverá ser demonstrado como o problema foi analisado ou tratado.
+
+---
+
+B. Caso utilize Machine Learning Não Supervisionado
+
+A entrega deverá evidenciar:
+
+- quais dados foram utilizados para representar os registros;
+- quais features participaram da análise;
+- forma de preparação;
+- algoritmo utilizado;
+- critério para definição da configuração escolhida;
+- interpretação dos grupos ou padrões encontrados;
+- utilidade dos resultados para o projeto.
+
+Os clusters ou agrupamentos não deverão ser apresentados apenas por números. A equipe deverá interpretar o significado dos grupos.
+
+---
+
+C. Caso utilize Feature Engineering
+
+A equipe deverá demonstrar:
+
+- quais novas características foram criadas;
+- de quais dados elas foram derivadas;
+- por que essas features podem melhorar a solução;
+- impacto observado após sua utilização.
+
+Feature Engineering deverá estar relacionado à necessidade da solução e não apenas ao aumento da quantidade de colunas.
+
+---
+
+D. Caso utilize Pipeline de Machine Learning
+
+Deverá ser apresentado o fluxo automatizado utilizado.
+
+Exemplo:
+
+Dados
+  ↓
+Tratamento
+  ↓
+Transformação
+  ↓
+Modelo
+  ↓
+Resultado
+
+A equipe deverá demonstrar quais etapas foram incorporadas ao pipeline e por que essa estrutura beneficia o projeto.
+
+---
+
+E. Caso compare diferentes modelos
+
+Caso o grupo teste mais de uma abordagem, deverá apresentar:
+
+- modelos avaliados;
+- critérios utilizados na comparação;
+- resultados encontrados;
+- justificativa para escolha do modelo final.
+
+Não será suficiente selecionar automaticamente aquele com maior métrica. Deverão ser considerados aspectos como:
+
+- desempenho;
+- estabilidade;
+- interpretabilidade;
+- custo;
+- complexidade;
+- aplicabilidade.
+
+---
+
+F. Caso utilize Cross-Validation
+
+A equipe deverá demonstrar:
+
+- por que a validação cruzada foi utilizada;
+- estratégia adotada;
+- resultados obtidos;
+- variação de desempenho entre as divisões;
+- conclusão sobre estabilidade do modelo.
+
+---
+
+G. Caso realize otimização do modelo
+
+A entrega deverá demonstrar:
+
+- quais parâmetros foram avaliados;
+- qual estratégia de busca foi utilizada;
+- resultado antes da otimização;
+- resultado depois da otimização;
+- impacto real da mudança.
+
+A otimização deverá ter finalidade clara.
+
+---
+
+H. Caso trate dados desbalanceados
+
+A equipe deverá demonstrar:
+
+- distribuição original das classes;
+- impacto do desbalanceamento;
+- estratégia utilizada;
+- resultado antes e depois do tratamento.
+
+Apenas transformar os dados para 50/50 sem justificativa não será considerado suficiente.
+
+---
+
+I. Caso utilize Redes Neurais ou Deep Learning
+
+A equipe deverá justificar por que uma abordagem baseada em rede neural foi considerada adequada.
+
+Deverá apresentar:
+
+- estrutura geral da rede;
+- dados de entrada;
+- arquitetura utilizada;
+- processo de treinamento;
+- função de perda;
+- métricas;
+- evolução do treinamento;
+- resultado final;
+- sinais de overfitting, quando existentes.
+
+Não será avaliada positivamente uma arquitetura complexa quando uma solução mais simples resolveria adequadamente o problema sem justificativa técnica.
+
+---
+
+J. Caso utilize Embeddings
+
+A equipe deverá demonstrar:
+
+- quais informações foram transformadas em embeddings;
+- modelo utilizado;
+- finalidade da representação vetorial;
+- estratégia de comparação ou busca;
+- medida de similaridade utilizada;
+- exemplos dos resultados obtidos.
+
+Deverá ficar claro por que embeddings são necessários dentro da solução.
+
+---
+
+K. Caso utilize LLMs
+
+A entrega deverá apresentar:
+
+- finalidade da LLM dentro da solução;
+- modelo ou serviço utilizado;
+- entradas fornecidas;
+- estrutura dos prompts;
+- formato esperado das respostas;
+- critérios utilizados para avaliar a qualidade da saída;
+- limitações identificadas.
+
+O simples envio de uma pergunta a uma API não caracteriza uma solução completa de IA para o Projeto Integrador.
+
+---
+
+L. Caso utilize RAG
+
+A equipe deverá apresentar a arquitetura utilizada. Exemplo conceitual:
+
+Documentos
+    ↓
+Preparação / Chunking
+    ↓
+Embeddings
+    ↓
+Base Vetorial
+    ↓
+Busca
+    ↓
+Contexto Recuperado
+    ↓
+LLM
+    ↓
+Resposta
+
+Também deverá demonstrar:
+
+- fonte dos documentos;
+- estratégia de divisão;
+- modelo de embeddings;
+- mecanismo de recuperação;
+- quantidade ou critério dos resultados recuperados;
+- exemplos de contexto recuperado;
+- respostas geradas;
+- análise da relação entre fonte e resposta;
+- limitações observadas.
+
+---
+
+ENTREGÁVEIS FINAIS
+
+Cada grupo deverá entregar:
+
+1. Documentação Técnica
+
+Documento contendo:
+
+1. problema;
+2. objetivo da solução;
+3. arquitetura;
+4. dados utilizados;
+5. tecnologia escolhida;
+6. justificativa;
+7. preparação;
+8. implementação;
+9. avaliação;
+10. resultados;
+11. integração com o sistema;
+12. limitações;
+13. próximos passos.
+
+---
+
+2. Código-Fonte / Notebook
+
+Deverá conter a implementação funcional da solução.
+
+Poderá incluir:
+
+- notebooks;
+- scripts;
+- APIs;
+- serviços;
+- arquivos de configuração;
+- componentes necessários para execução.
+
+---
+
+3. Evidências da Tecnologia Utilizada
+
+O grupo deverá apresentar as evidências específicas da Camada 2 correspondentes às tecnologias realmente utilizadas.
+
+---
+
+4. Aplicação Integrada
+
+A IA deverá estar integrada ao Projeto Integrador ou ser apresentada de maneira que demonstre claramente como ocorreria essa integração.
+
+---
+
+5. Apresentação
+
+A apresentação deverá demonstrar principalmente:
+
+PROBLEMA
+   ↓
+ESCOLHA TÉCNICA
+   ↓
+IMPLEMENTAÇÃO
+   ↓
+VALIDAÇÃO
+   ↓
+RESULTADO
+   ↓
+VALOR PARA O PROJETO
+
+A apresentação não deverá ser apenas uma demonstração de código.
+
+---
+
+Critério principal de avaliação
+
+O projeto não receberá maior pontuação simplesmente por utilizar uma tecnologia considerada mais avançada.
+
+Por exemplo:
+
+RAG
+Deep Learning
+LLM
+Rede Neural
+
+não representam automaticamente uma solução superior. Será considerada mais adequada a solução que apresentar melhor coerência entre:
+
+PROBLEMA
++
+DADOS
++
+TECNOLOGIA
++
+VALIDAÇÃO
++
+RESULTADO
++
+APLICAÇÃO
+
+Portanto: Utilizar a tecnologia correta para o problema é mais importante do que utilizar a tecnologia mais complexa.
+
+Essa estrutura também resolve um problema importante de avaliação: você consegue ter, por exemplo, um grupo com K-Means e outro com RAG recebendo o mesmo escopo-base, mas cada um precisa comprovar tecnicamente aquilo que escolheu usar.

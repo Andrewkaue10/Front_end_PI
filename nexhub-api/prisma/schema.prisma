@@ -99,6 +99,7 @@ model User {
   twoFactor               TwoFactorAuth?
   notificationPreferences NotificationPreference?
   aiPreference            AiPreference?
+  aiAnalyses              AiAnalysis[]
   deletionRequest         AccountDeletionRequest?
   portfolioUpdates        PortfolioUpdate[]
   messageReads            MessageRead[]
@@ -261,6 +262,7 @@ model Notification {
 }
 
 model Program {
+  sourceUrl           String?
   id                  String               @id @default(uuid()) @db.Uuid
   title               String
   organization        String
@@ -467,6 +469,7 @@ model AiPreference {
   user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   enabled                Boolean  @default(false)
   profileAnalysisEnabled Boolean  @default(false)
+  externalProviderConsent Boolean @default(false)
   updatedAt              DateTime @updatedAt
 
   @@schema("nexhub")
@@ -624,4 +627,25 @@ model MatchDismissal {
   @@id([investorId, startupId])
   @@index([startupId])
   @@schema("nexhub")
+}
+
+model AiAnalysis {
+ id String @id @default(uuid()) @db.Uuid
+ userId String @db.Uuid
+ user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ topic String
+ mode String
+ question String
+ status String @default("PENDING")
+ result Json?
+ model String @default("")
+ promptVersion String
+ inputTokens Int @default(0)
+ outputTokens Int @default(0)
+ durationMs Int @default(0)
+ hidden Boolean @default(false)
+ createdAt DateTime @default(now())
+ @@index([userId, createdAt])
+ @@index([mode, createdAt])
+ @@schema("nexhub")
 }

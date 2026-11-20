@@ -1,0 +1,146 @@
+[
+  {
+    "id": "d01",
+    "topic": "diagnostico",
+    "question": "Como validar a dor dos clientes com entrevistas antes de construir?",
+    "expected": "problema"
+  },
+  {
+    "id": "d02",
+    "topic": "diagnostico",
+    "question": "Temos muitos cadastros mas não sabemos quantos usuários voltam. Como medir retenção?",
+    "expected": "tracao"
+  },
+  {
+    "id": "p01",
+    "topic": "pitch",
+    "question": "Como organizar os slides do pitch e terminar com um pedido ao investidor?",
+    "expected": "pitch"
+  },
+  {
+    "id": "p02",
+    "topic": "pitch",
+    "question": "Meu pitch tem números de faturamento sem fonte. Como apresentar evidências?",
+    "expected": "pitch-evidencia"
+  },
+  {
+    "id": "m01",
+    "topic": "modelo",
+    "question": "Como testar preço de assinatura e disposição do cliente a pagar?",
+    "expected": "receita"
+  },
+  {
+    "id": "m02",
+    "topic": "modelo",
+    "question": "Preciso calcular CAC, LTV, margem e custos por cliente.",
+    "expected": "custos"
+  },
+  {
+    "id": "s01",
+    "topic": "solucao",
+    "question": "O MVP tem muitas funcionalidades e pouco tempo de desenvolvimento.",
+    "expected": "mvp"
+  },
+  {
+    "id": "s02",
+    "topic": "solucao",
+    "question": "Os usuários abandonam a interface e erram a navegação. Como testar usabilidade?",
+    "expected": "usabilidade"
+  },
+  {
+    "id": "c01",
+    "topic": "mercado",
+    "question": "Como comparar concorrentes e alternativas manuais usadas pelos clientes?",
+    "expected": "concorrencia"
+  },
+  {
+    "id": "c02",
+    "topic": "mercado",
+    "question": "Como estimar TAM SAM SOM e escolher o primeiro nicho de mercado?",
+    "expected": "segmento"
+  },
+  {
+    "id": "a01",
+    "topic": "plano30",
+    "question": "Quero um cronograma de quatro semanas e um plano de 30 dias.",
+    "expected": "plano30"
+  },
+  {
+    "id": "a02",
+    "topic": "plano30",
+    "question": "Como priorizar hipóteses por impacto, esforço e risco?",
+    "expected": "priorizacao"
+  },
+  {
+    "id": "d03",
+    "topic": "diagnostico",
+    "question": "Quero conversar com cinco possíveis clientes sobre a frequência do problema.",
+    "expected": "problema"
+  },
+  {
+    "id": "d04",
+    "topic": "diagnostico",
+    "question": "Cadastro não significa receita: como avaliar ativação e uso recorrente?",
+    "expected": "tracao"
+  },
+  {
+    "id": "p03",
+    "topic": "pitch",
+    "question": "Vou apresentar a solução e a equipe em dois minutos para investidores.",
+    "expected": "pitch"
+  },
+  {
+    "id": "p04",
+    "topic": "pitch",
+    "question": "Posso afirmar no deck que temos mil clientes sem ter medido isso?",
+    "expected": "pitch-evidencia"
+  },
+  {
+    "id": "m03",
+    "topic": "modelo",
+    "question": "Não sabemos se devemos cobrar por venda ou assinatura. Como validar monetização?",
+    "expected": "receita"
+  },
+  {
+    "id": "m04",
+    "topic": "modelo",
+    "question": "O canal de aquisição custa mais que a receita. Como revisar a economia unitária?",
+    "expected": "custos"
+  },
+  {
+    "id": "s03",
+    "topic": "solucao",
+    "question": "Quero um protótipo pequeno para testar uma hipótese de valor do produto.",
+    "expected": "mvp"
+  },
+  {
+    "id": "s04",
+    "topic": "solucao",
+    "question": "As pessoas não concluem a tarefa principal. Devo observar tempo e erros?",
+    "expected": "usabilidade"
+  },
+  {
+    "id": "c03",
+    "topic": "mercado",
+    "question": "Meus clientes usam planilhas como substituto. Isso conta como concorrência?",
+    "expected": "concorrencia"
+  },
+  {
+    "id": "c04",
+    "topic": "mercado",
+    "question": "Preciso delimitar público, região e capacidade de compra para estimar demanda.",
+    "expected": "segmento"
+  },
+  {
+    "id": "a03",
+    "topic": "plano30",
+    "question": "Preciso de metas semanais para o próximo mês de validação.",
+    "expected": "plano30"
+  },
+  {
+    "id": "a04",
+    "topic": "plano30",
+    "question": "Tenho poucos recursos: qual hipótese de maior risco devo testar primeiro?",
+    "expected": "priorizacao"
+  }
+]

@@ -283,6 +283,17 @@ export default function StartupPrograms() {
                     </div>
                   )}
                 <div className="startup-profile-card__actions">
+                  {program.sourceUrl &&
+                    /^https:\/\//i.test(program.sourceUrl) && (
+                      <a
+                        className="secondary"
+                        href={program.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Abrir página do edital ↗
+                      </a>
+                    )}
                   <button
                     className="secondary"
                     disabled={busyId === program.id}

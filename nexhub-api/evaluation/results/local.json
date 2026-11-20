@@ -1,0 +1,775 @@
+{
+  "version": "alia-v1",
+  "createdAt": "2026-11-20T23:25:49.639Z",
+  "dataset": "24 perguntas sintéticas de desenvolvimento, não validação independente",
+  "corpus": 12,
+  "metrics": {
+    "top1": 0.9583333333333334,
+    "hitAt2": 0.9583333333333334,
+    "top1WithUserTopic": 0.9583333333333334,
+    "keywordBaselineTop1": 0.9166666666666666
+  },
+  "acceptance": {
+    "targetTop1": 0.75,
+    "passed": true
+  },
+  "cases": [
+    {
+      "id": "d01",
+      "expected": "problema",
+      "predicted": "problema",
+      "top2": [
+        "problema",
+        "mvp"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre diagnóstico na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Validar a dor antes de construir",
+            "detail": "Entreviste cinco pessoas do público escolhido sobre a última vez em que enfrentaram o problema. Registre frequência, consequência e alternativa utilizada, sem apresentar a solução primeiro.",
+            "metric": "Cinco entrevistas registradas e uma hipótese revisada."
+          },
+          {
+            "title": "Distinguir interesse de uso recorrente",
+            "detail": "Defina a ação que representa valor entregue e acompanhe quantos usuários voltam a realizá-la. Separe cadastros, usuários ativos e clientes pagantes.",
+            "metric": "Uma coorte acompanhada semanalmente com numerador e denominador."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "d02",
+      "expected": "tracao",
+      "predicted": "tracao",
+      "top2": [
+        "tracao",
+        "custos"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre diagnóstico na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Distinguir interesse de uso recorrente",
+            "detail": "Defina a ação que representa valor entregue e acompanhe quantos usuários voltam a realizá-la. Separe cadastros, usuários ativos e clientes pagantes.",
+            "metric": "Uma coorte acompanhada semanalmente com numerador e denominador."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "p01",
+      "expected": "pitch",
+      "predicted": "pitch",
+      "top2": [
+        "pitch",
+        "pitch-evidencia"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre pitch na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Contar uma história verificável",
+            "detail": "Organize o pitch em problema, público, solução, evidências, modelo de receita, equipe e pedido. Identifique como hipótese tudo que ainda não foi validado.",
+            "metric": "Pitch de dois minutos com um pedido claro e evidências identificadas."
+          },
+          {
+            "title": "Trocar promessas por evidências",
+            "detail": "Revise cada número do pitch e registre sua origem e período. Se não houver medição, apresente um plano de validação em vez de inventar tração.",
+            "metric": "Todos os números apresentados com origem e período, ou marcados como hipótese."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "p02",
+      "expected": "pitch-evidencia",
+      "predicted": "pitch-evidencia",
+      "top2": [
+        "pitch-evidencia",
+        "pitch"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre pitch na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Trocar promessas por evidências",
+            "detail": "Revise cada número do pitch e registre sua origem e período. Se não houver medição, apresente um plano de validação em vez de inventar tração.",
+            "metric": "Todos os números apresentados com origem e período, ou marcados como hipótese."
+          },
+          {
+            "title": "Contar uma história verificável",
+            "detail": "Organize o pitch em problema, público, solução, evidências, modelo de receita, equipe e pedido. Identifique como hipótese tudo que ainda não foi validado.",
+            "metric": "Pitch de dois minutos com um pedido claro e evidências identificadas."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "m01",
+      "expected": "receita",
+      "predicted": "receita",
+      "top2": [
+        "receita",
+        "custos"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre modelo de negócio na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Testar disposição a pagar",
+            "detail": "Escolha um segmento e teste uma oferta com preço explícito. Registre objeções e intenção de compra; intenção não equivale a pagamento.",
+            "metric": "Cinco ofertas testadas, com preço e objeções documentados."
+          },
+          {
+            "title": "Estimar a economia por cliente",
+            "detail": "Liste custos variáveis por cliente e custos de aquisição por canal. Calcule margem com valores observados; não estime LTV como fato sem retenção histórica.",
+            "metric": "Planilha com receitas, custos e hipóteses separadas por cliente."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "m02",
+      "expected": "custos",
+      "predicted": "custos",
+      "top2": [
+        "custos",
+        "receita"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre modelo de negócio na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Estimar a economia por cliente",
+            "detail": "Liste custos variáveis por cliente e custos de aquisição por canal. Calcule margem com valores observados; não estime LTV como fato sem retenção histórica.",
+            "metric": "Planilha com receitas, custos e hipóteses separadas por cliente."
+          },
+          {
+            "title": "Testar disposição a pagar",
+            "detail": "Escolha um segmento e teste uma oferta com preço explícito. Registre objeções e intenção de compra; intenção não equivale a pagamento.",
+            "metric": "Cinco ofertas testadas, com preço e objeções documentados."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "s01",
+      "expected": "mvp",
+      "predicted": "mvp",
+      "top2": [
+        "mvp",
+        "usabilidade"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre produto e mvp na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Reduzir o MVP à hipótese principal",
+            "detail": "Escolha uma hipótese de valor e mantenha somente as funcionalidades necessárias para testá-la. Use um protótipo antes de ampliar o desenvolvimento.",
+            "metric": "Um teste de tarefa com cinco usuários e taxa de conclusão registrada."
+          },
+          {
+            "title": "Observar onde o usuário trava",
+            "detail": "Peça ao usuário que execute a tarefa principal sem ajuda. Registre erros, tempo e pontos de abandono; priorize o obstáculo mais frequente.",
+            "metric": "Cinco sessões observadas e um obstáculo corrigido e retestado."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "s02",
+      "expected": "usabilidade",
+      "predicted": "usabilidade",
+      "top2": [
+        "usabilidade",
+        "tracao"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": false,
+      "answer": {
+        "summary": "Encontrei orientações sobre produto e mvp na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Observar onde o usuário trava",
+            "detail": "Peça ao usuário que execute a tarefa principal sem ajuda. Registre erros, tempo e pontos de abandono; priorize o obstáculo mais frequente.",
+            "metric": "Cinco sessões observadas e um obstáculo corrigido e retestado."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "c01",
+      "expected": "concorrencia",
+      "predicted": "concorrencia",
+      "top2": [
+        "concorrencia",
+        "tracao"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre mercado na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Comparar alternativas reais",
+            "detail": "Liste alternativas citadas pelos próprios clientes, incluindo processos manuais. Compare público, benefício e preço apenas quando houver fonte verificável e data.",
+            "metric": "Matriz de alternativas com fontes e lacunas explicitadas."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "c02",
+      "expected": "segmento",
+      "predicted": "segmento",
+      "top2": [
+        "segmento",
+        "custos"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre mercado na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Delimitar o primeiro mercado",
+            "detail": "Defina um segmento por necessidade, localização e capacidade de compra. Procure fontes primárias para dimensionar o mercado e registre ano, método e incerteza.",
+            "metric": "Um segmento prioritário e estimativas acompanhadas de fonte e premissas."
+          },
+          {
+            "title": "Comparar alternativas reais",
+            "detail": "Liste alternativas citadas pelos próprios clientes, incluindo processos manuais. Compare público, benefício e preço apenas quando houver fonte verificável e data.",
+            "metric": "Matriz de alternativas com fontes e lacunas explicitadas."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "a01",
+      "expected": "plano30",
+      "predicted": "plano30",
+      "top2": [
+        "plano30",
+        "priorizacao"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre plano de 30 dias na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Transformar hipóteses em quatro semanas de testes",
+            "detail": "Semana 1: entrevistar clientes. Semana 2: testar a hipótese com protótipo. Semana 3: testar oferta e canal. Semana 4: revisar evidências e decidir o próximo experimento.",
+            "metric": "Uma evidência e uma decisão registradas por semana."
+          },
+          {
+            "title": "Priorizar por incerteza e esforço",
+            "detail": "Liste hipóteses que podem inviabilizar o negócio. Comece pelo teste barato da hipótese de maior risco, com responsável, prazo e critério de decisão.",
+            "metric": "Três ações priorizadas, cada uma com responsável e critério de conclusão."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "a02",
+      "expected": "priorizacao",
+      "predicted": "priorizacao",
+      "top2": [
+        "priorizacao",
+        "plano30"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre plano de 30 dias na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Priorizar por incerteza e esforço",
+            "detail": "Liste hipóteses que podem inviabilizar o negócio. Comece pelo teste barato da hipótese de maior risco, com responsável, prazo e critério de decisão.",
+            "metric": "Três ações priorizadas, cada uma com responsável e critério de conclusão."
+          },
+          {
+            "title": "Transformar hipóteses em quatro semanas de testes",
+            "detail": "Semana 1: entrevistar clientes. Semana 2: testar a hipótese com protótipo. Semana 3: testar oferta e canal. Semana 4: revisar evidências e decidir o próximo experimento.",
+            "metric": "Uma evidência e uma decisão registradas por semana."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "d03",
+      "expected": "problema",
+      "predicted": "problema",
+      "top2": [
+        "problema",
+        "pitch"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre diagnóstico na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Validar a dor antes de construir",
+            "detail": "Entreviste cinco pessoas do público escolhido sobre a última vez em que enfrentaram o problema. Registre frequência, consequência e alternativa utilizada, sem apresentar a solução primeiro.",
+            "metric": "Cinco entrevistas registradas e uma hipótese revisada."
+          },
+          {
+            "title": "Distinguir interesse de uso recorrente",
+            "detail": "Defina a ação que representa valor entregue e acompanhe quantos usuários voltam a realizá-la. Separe cadastros, usuários ativos e clientes pagantes.",
+            "metric": "Uma coorte acompanhada semanalmente com numerador e denominador."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "d04",
+      "expected": "tracao",
+      "predicted": "tracao",
+      "top2": [
+        "tracao",
+        "receita"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre diagnóstico na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Distinguir interesse de uso recorrente",
+            "detail": "Defina a ação que representa valor entregue e acompanhe quantos usuários voltam a realizá-la. Separe cadastros, usuários ativos e clientes pagantes.",
+            "metric": "Uma coorte acompanhada semanalmente com numerador e denominador."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "p03",
+      "expected": "pitch",
+      "predicted": "pitch",
+      "top2": [
+        "pitch",
+        "problema"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre pitch na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Contar uma história verificável",
+            "detail": "Organize o pitch em problema, público, solução, evidências, modelo de receita, equipe e pedido. Identifique como hipótese tudo que ainda não foi validado.",
+            "metric": "Pitch de dois minutos com um pedido claro e evidências identificadas."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "p04",
+      "expected": "pitch-evidencia",
+      "predicted": "pitch",
+      "top2": [
+        "pitch",
+        "tracao"
+      ],
+      "top1": false,
+      "hit2": false,
+      "withTopic": false,
+      "baseline": false,
+      "answer": {
+        "summary": "Encontrei orientações sobre pitch na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Contar uma história verificável",
+            "detail": "Organize o pitch em problema, público, solução, evidências, modelo de receita, equipe e pedido. Identifique como hipótese tudo que ainda não foi validado.",
+            "metric": "Pitch de dois minutos com um pedido claro e evidências identificadas."
+          },
+          {
+            "title": "Trocar promessas por evidências",
+            "detail": "Revise cada número do pitch e registre sua origem e período. Se não houver medição, apresente um plano de validação em vez de inventar tração.",
+            "metric": "Todos os números apresentados com origem e período, ou marcados como hipótese."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "m03",
+      "expected": "receita",
+      "predicted": "receita",
+      "top2": [
+        "receita",
+        "problema"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre modelo de negócio na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Testar disposição a pagar",
+            "detail": "Escolha um segmento e teste uma oferta com preço explícito. Registre objeções e intenção de compra; intenção não equivale a pagamento.",
+            "metric": "Cinco ofertas testadas, com preço e objeções documentados."
+          },
+          {
+            "title": "Estimar a economia por cliente",
+            "detail": "Liste custos variáveis por cliente e custos de aquisição por canal. Calcule margem com valores observados; não estime LTV como fato sem retenção histórica.",
+            "metric": "Planilha com receitas, custos e hipóteses separadas por cliente."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "m04",
+      "expected": "custos",
+      "predicted": "custos",
+      "top2": [
+        "custos",
+        "plano30"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre modelo de negócio na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Estimar a economia por cliente",
+            "detail": "Liste custos variáveis por cliente e custos de aquisição por canal. Calcule margem com valores observados; não estime LTV como fato sem retenção histórica.",
+            "metric": "Planilha com receitas, custos e hipóteses separadas por cliente."
+          },
+          {
+            "title": "Testar disposição a pagar",
+            "detail": "Escolha um segmento e teste uma oferta com preço explícito. Registre objeções e intenção de compra; intenção não equivale a pagamento.",
+            "metric": "Cinco ofertas testadas, com preço e objeções documentados."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "s03",
+      "expected": "mvp",
+      "predicted": "mvp",
+      "top2": [
+        "mvp",
+        "plano30"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre produto e mvp na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Reduzir o MVP à hipótese principal",
+            "detail": "Escolha uma hipótese de valor e mantenha somente as funcionalidades necessárias para testá-la. Use um protótipo antes de ampliar o desenvolvimento.",
+            "metric": "Um teste de tarefa com cinco usuários e taxa de conclusão registrada."
+          },
+          {
+            "title": "Observar onde o usuário trava",
+            "detail": "Peça ao usuário que execute a tarefa principal sem ajuda. Registre erros, tempo e pontos de abandono; priorize o obstáculo mais frequente.",
+            "metric": "Cinco sessões observadas e um obstáculo corrigido e retestado."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "s04",
+      "expected": "usabilidade",
+      "predicted": "usabilidade",
+      "top2": [
+        "usabilidade",
+        "problema"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre produto e mvp na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Observar onde o usuário trava",
+            "detail": "Peça ao usuário que execute a tarefa principal sem ajuda. Registre erros, tempo e pontos de abandono; priorize o obstáculo mais frequente.",
+            "metric": "Cinco sessões observadas e um obstáculo corrigido e retestado."
+          },
+          {
+            "title": "Reduzir o MVP à hipótese principal",
+            "detail": "Escolha uma hipótese de valor e mantenha somente as funcionalidades necessárias para testá-la. Use um protótipo antes de ampliar o desenvolvimento.",
+            "metric": "Um teste de tarefa com cinco usuários e taxa de conclusão registrada."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "c03",
+      "expected": "concorrencia",
+      "predicted": "concorrencia",
+      "top2": [
+        "concorrencia",
+        "tracao"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre mercado na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Comparar alternativas reais",
+            "detail": "Liste alternativas citadas pelos próprios clientes, incluindo processos manuais. Compare público, benefício e preço apenas quando houver fonte verificável e data.",
+            "metric": "Matriz de alternativas com fontes e lacunas explicitadas."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "c04",
+      "expected": "segmento",
+      "predicted": "segmento",
+      "top2": [
+        "segmento",
+        "custos"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre mercado na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Delimitar o primeiro mercado",
+            "detail": "Defina um segmento por necessidade, localização e capacidade de compra. Procure fontes primárias para dimensionar o mercado e registre ano, método e incerteza.",
+            "metric": "Um segmento prioritário e estimativas acompanhadas de fonte e premissas."
+          },
+          {
+            "title": "Comparar alternativas reais",
+            "detail": "Liste alternativas citadas pelos próprios clientes, incluindo processos manuais. Compare público, benefício e preço apenas quando houver fonte verificável e data.",
+            "metric": "Matriz de alternativas com fontes e lacunas explicitadas."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "a03",
+      "expected": "plano30",
+      "predicted": "plano30",
+      "top2": [
+        "plano30",
+        "pitch-evidencia"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre plano de 30 dias na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Transformar hipóteses em quatro semanas de testes",
+            "detail": "Semana 1: entrevistar clientes. Semana 2: testar a hipótese com protótipo. Semana 3: testar oferta e canal. Semana 4: revisar evidências e decidir o próximo experimento.",
+            "metric": "Uma evidência e uma decisão registradas por semana."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    },
+    {
+      "id": "a04",
+      "expected": "priorizacao",
+      "predicted": "priorizacao",
+      "top2": [
+        "priorizacao",
+        "plano30"
+      ],
+      "top1": true,
+      "hit2": true,
+      "withTopic": true,
+      "baseline": true,
+      "answer": {
+        "summary": "Encontrei orientações sobre plano de 30 dias na base da A.L.I.A. Use-as como roteiro de validação, não como diagnóstico comprovado da empresa.",
+        "actions": [
+          {
+            "title": "Priorizar por incerteza e esforço",
+            "detail": "Liste hipóteses que podem inviabilizar o negócio. Comece pelo teste barato da hipótese de maior risco, com responsável, prazo e critério de decisão.",
+            "metric": "Três ações priorizadas, cada uma com responsável e critério de conclusão."
+          },
+          {
+            "title": "Transformar hipóteses em quatro semanas de testes",
+            "detail": "Semana 1: entrevistar clientes. Semana 2: testar a hipótese com protótipo. Semana 3: testar oferta e canal. Semana 4: revisar evidências e decidir o próximo experimento.",
+            "metric": "Uma evidência e uma decisão registradas por semana."
+          }
+        ],
+        "missingInformation": [
+          "Quais evidências você já tem sobre o problema e o público?",
+          "Qual resultado você quer medir no próximo teste?"
+        ],
+        "limitations": "Modo local: busca lexical TF-IDF em 12 orientações editoriais. Não gera texto livre, não acessa a internet e não comprova a viabilidade do negócio. Similaridade não é probabilidade de sucesso."
+      }
+    }
+  ]
+}
