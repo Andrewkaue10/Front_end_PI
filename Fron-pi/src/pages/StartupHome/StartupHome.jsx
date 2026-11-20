@@ -7,6 +7,7 @@ import {
   Heart,
   Home,
   Mail,
+  Newspaper,
   Search,
   Settings,
   Sparkles,
@@ -208,6 +209,10 @@ export default function StartupHome() {
           <Link to="/painel#perfil">
             <BriefcaseBusiness size={16} />
             <span>Perfil da startup</span>
+          </Link>
+          <Link to="/startup/publicacoes">
+            <Newspaper size={16} />
+            <span>Publicações</span>
           </Link>
           <Link to="/notificacoes">
             <Bell size={16} />
