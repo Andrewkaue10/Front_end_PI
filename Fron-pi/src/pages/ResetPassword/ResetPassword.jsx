@@ -1,6 +1,6 @@
-import { api } from "../../lib/api";
+import { api, clearSession } from "../../lib/api";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
 import "../../styles/forms.css";
 import "../../styles/centered-card.css";
@@ -21,7 +21,9 @@ function ResetPassword() {
   const [confirmar, setConfirmar] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [success, setSuccess] = useState(false);
+  const [token] = useState(() => new URLSearchParams(window.location.search).get("token") || "");
+  const validToken = /^[a-f0-9]{64}$/.test(token);
 
   const todosOk = REQUISITOS.every((req) => req.test(senha));
   const senhasConferem = senha.length > 0 && senha === confirmar;
@@ -30,6 +32,11 @@ function ResetPassword() {
     e.preventDefault();
     setError(null);
 
+    if (loading || !validToken) return;
+    if (new TextEncoder().encode(senha).length > 72) {
+      setError("A senha deve ter no máximo 72 bytes. Reduza o tamanho.");
+      return;
+    }
     if (!todosOk) {
       setError("A senha ainda não atende todos os requisitos.");
       return;
@@ -45,17 +52,37 @@ function ResetPassword() {
         method: "POST",
         body: {
           senha,
-          token: new URLSearchParams(window.location.search).get("token"),
+          token,
         },
       });
 
-      navigate("/login");
+      clearSession();
+      window.history.replaceState(null, "", window.location.pathname);
+      setSenha("");
+      setConfirmar("");
+      setSuccess(true);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
+
+  if (success || !validToken) {
+    return (
+      <div className="theme-blue centered-card-page">
+        <div className="centered-card" role="status">
+          <h1 className="centered-card__title">{success ? "Senha alterada!" : "Link de recuperação inválido"}</h1>
+          <p className="centered-card__subtitle">
+            {success ? "Sua nova senha foi salva. Entre novamente para acessar sua conta." : "Abra o link completo recebido por e-mail ou solicite um novo link."}
+          </p>
+          <Link to={success ? "/login" : "/esqueci-senha"} className="auth-form__submit" style={{ display: "block", textAlign: "center", marginTop: 24 }}>
+            {success ? "Entrar com a nova senha" : "Solicitar novo link"}
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="theme-blue centered-card-page">
@@ -75,6 +102,8 @@ function ResetPassword() {
             <input
               id="nova-senha"
               type="password"
+              autoComplete="new-password"
+              maxLength={72}
               placeholder="Mínimo 8 caracteres"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
@@ -87,6 +116,8 @@ function ResetPassword() {
             <input
               id="confirmar-nova-senha"
               type="password"
+              autoComplete="new-password"
+              maxLength={72}
               placeholder="Repita a nova senha"
               value={confirmar}
               onChange={(e) => setConfirmar(e.target.value)}
@@ -114,6 +145,7 @@ function ResetPassword() {
           {error && (
             <div className="form-alert" role="alert">
               {error}
+              <div><Link to="/esqueci-senha">Solicitar outro link de recuperação</Link></div>
             </div>
           )}
 
