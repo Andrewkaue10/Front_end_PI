@@ -4,7 +4,6 @@ import {
   Bell,
   BriefcaseBusiness,
   CalendarDays,
-  Heart,
   Home,
   Mail,
   Newspaper,
@@ -236,10 +235,6 @@ export default function StartupHome() {
           <Link to="/mensagens">
             <Mail size={16} />
             <span>Mensagens</span>
-          </Link>
-          <Link to="/configuracoes">
-            <Heart size={16} />
-            <span>Perfil da startup</span>
           </Link>
           <Link to="/painel#perfil">
             <Settings size={16} />
