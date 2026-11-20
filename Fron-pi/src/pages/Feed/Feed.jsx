@@ -18,6 +18,7 @@ import "./Feed.css";
 import { roleLabel } from "../../lib/profile";
 
 const notificationLabels = {
+  MESSAGE: "Nova mensagem",
   CONNECTION_REQUEST: "Nova solicitação de conexão",
   CONNECTION_ACCEPTED: "Conexão aceita",
   MEETING_PROPOSED: "Reunião proposta",
@@ -286,7 +287,11 @@ export default function Feed() {
             aria-label="Abrir meu perfil"
             to="/perfil"
           >
-            {initials(me?.name)}
+            {me?.avatarData ? (
+              <img src={me.avatarData} alt="" />
+            ) : (
+              initials(me?.name)
+            )}
           </Link>
           <div>
             <Link className="account-name" to="/perfil">
@@ -478,7 +483,7 @@ export default function Feed() {
         <section>
           <div className="context-heading">
             <h2>Notificações</h2>
-            <Link to="/painel#avisos">Ver todas</Link>
+            <Link to="/notificacoes">Ver todas</Link>
           </div>
           {notifications.length === 0 ? (
             <p className="context-empty">Nenhuma notificação.</p>
@@ -513,7 +518,7 @@ export default function Feed() {
         <section>
           <div className="context-heading">
             <h2>Minhas qualificações</h2>
-            <Link to="/painel#perfil">Editar</Link>
+            <Link to="/investidor/qualificacoes">Editar</Link>
           </div>
           {qualifications.length === 0 ? (
             <p className="context-empty">Nenhuma qualificação informada.</p>

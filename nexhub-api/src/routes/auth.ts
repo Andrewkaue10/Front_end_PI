@@ -112,6 +112,7 @@ authRoutes.get("/me", authenticateJWT, async (req, res) => {
   });
   res.json({
     ...publicUser(user),
+    avatarData: user.avatarData,
     startup: user.startup,
     investor: user.investor,
   });

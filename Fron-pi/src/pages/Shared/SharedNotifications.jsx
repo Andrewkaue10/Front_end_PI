@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import AreaShell from "../../components/AreaShell/AreaShell";
 import { api } from "../../lib/api";
+import { notificationDetail } from "../../lib/notifications";
 import "./SharedPages.css";
 const labels = {
   CONNECTION_REQUEST: "Solicitação de conexão",
@@ -54,7 +55,7 @@ export default function SharedNotifications() {
     setError("");
     if (!selected) return;
     setDetailLoading(true);
-    api(`/notifications/${encodeURIComponent(selected)}`)
+    notificationDetail(selected)
       .then(async (d) => {
         if (!alive) return;
         setDetail(d);
@@ -101,7 +102,7 @@ export default function SharedNotifications() {
         method: "PATCH",
         body: { action },
       });
-      setDetail(await api(`/notifications/${detail.id}`));
+      setDetail(await notificationDetail(detail.id));
     } catch (e) {
       setError(e.message);
     } finally {

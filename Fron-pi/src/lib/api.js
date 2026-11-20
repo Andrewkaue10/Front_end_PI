@@ -40,13 +40,15 @@ export async function api(path, options = {}) {
       clearSession();
       window.location.assign("/login");
     }
-    throw new Error(
+    const error = new Error(
       data?.fields
         ?.map((f) => `${f.field || "Cadastro"}: ${f.message}`)
         .join(" · ") ||
         data?.error ||
         "Não foi possível concluir a operação.",
     );
+    error.status = response.status;
+    throw error;
   }
   return data;
 }

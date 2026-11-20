@@ -6,6 +6,31 @@ import { HttpError } from "../lib/errors";
 import { email, password, paging } from "../domain/validation";
 
 export const account = Router();
+account.put("/account/avatar", async (req, res) => {
+  const { avatarData } = z
+    .object({ avatarData: z.string().max(350000).nullable() })
+    .strict()
+    .parse(req.body);
+  if (avatarData !== null) {
+    if (!/^data:image\/jpeg;base64,[A-Za-z0-9+/]+={0,2}$/.test(avatarData))
+      throw new HttpError(400, "Envie uma foto JPEG válida.");
+    const bytes = Buffer.from(avatarData.split(",")[1], "base64");
+    if (
+      bytes.length > 250000 ||
+      bytes.length < 4 ||
+      bytes[0] !== 255 ||
+      bytes[1] !== 216 ||
+      bytes[bytes.length - 2] !== 255 ||
+      bytes[bytes.length - 1] !== 217
+    )
+      throw new HttpError(400, "Foto inválida ou muito grande.");
+  }
+  await db.user.update({
+    where: { id: req.user!.userId },
+    data: { avatarData },
+  });
+  res.json({ avatarData });
+});
 
 account.patch("/account", async (req, res) => {
   const value = z
@@ -23,7 +48,9 @@ account.patch("/account", async (req, res) => {
     .parse(req.body);
 
   if (value.email) {
-    const existing = await db.user.findUnique({ where: { email: value.email } });
+    const existing = await db.user.findUnique({
+      where: { email: value.email },
+    });
     if (existing && existing.id !== req.user!.userId)
       throw new HttpError(409, "Este e-mail já está em uso.");
   }
@@ -160,7 +187,10 @@ account.get("/portfolio", async (req, res) => {
     where: { ownerId: req.user!.userId },
   });
   if (!investor)
-    throw new HttpError(403, "Portfólio disponível apenas para perfis profissionais.");
+    throw new HttpError(
+      403,
+      "Portfólio disponível apenas para perfis profissionais.",
+    );
   const { page, limit } = paging.parse(req.query);
   const where = { investorId: investor.id };
   const [items, total] = await db.$transaction([
@@ -168,7 +198,13 @@ account.get("/portfolio", async (req, res) => {
       where,
       include: {
         startup: {
-          select: { id: true, name: true, sectors: true, stage: true, state: true },
+          select: {
+            id: true,
+            name: true,
+            sectors: true,
+            stage: true,
+            state: true,
+          },
         },
         updates: { orderBy: { createdAt: "desc" }, take: 5 },
       },

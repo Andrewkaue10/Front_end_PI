@@ -43,6 +43,14 @@ export default function AreaShell({ children }) {
     };
   }, [navigate]);
 
+  useEffect(() => {
+    const update = (event) =>
+      setMe((current) =>
+        current ? { ...current, avatarData: event.detail } : current,
+      );
+    window.addEventListener("nexhub:avatar", update);
+    return () => window.removeEventListener("nexhub:avatar", update);
+  }, []);
   async function logout() {
     try {
       await api("/auth/logout", { method: "POST" });
@@ -172,7 +180,11 @@ export default function AreaShell({ children }) {
             aria-label="Abrir meu perfil"
             to="/perfil"
           >
-            {initials || "—"}
+            {me.avatarData ? (
+              <img src={me.avatarData} alt="" />
+            ) : (
+              initials || "—"
+            )}
           </Link>
           <div>
             <Link className="account-name" to="/perfil">

@@ -1,3 +1,4 @@
+import ProfilePhoto from "../../components/ProfilePhoto";
 import { Link } from "react-router-dom";
 import { MapPin, ArrowUpRight, UserRound, CheckCircle2 } from "lucide-react";
 import AreaShell from "../../components/AreaShell/AreaShell";
@@ -19,7 +20,11 @@ export default function MyProfile() {
               <div className="profile-hero__cover" />
               <div className="profile-hero__body">
                 <span className="profile-hero__avatar">
-                  <UserRound size={32} />
+                  {me.avatarData ? (
+                    <img src={me.avatarData} alt="" />
+                  ) : (
+                    <UserRound size={32} />
+                  )}
                 </span>
                 <div>
                   <span className="profile-badge">{roleLabel(me.role)}</span>
@@ -35,6 +40,7 @@ export default function MyProfile() {
                 </Link>
               </div>
             </section>
+            <ProfilePhoto me={me} />
             <div className="profile-summary-grid">
               <section className="area-card">
                 <h2>Apresentação</h2>

@@ -35,7 +35,7 @@ app.use(
     origin: frontendOrigins,
   }),
 );
-app.use(express.json({ limit: "100kb" }));
+app.use(express.json({ limit: "400kb" }));
 app.use(
   "/api",
   rateLimit({

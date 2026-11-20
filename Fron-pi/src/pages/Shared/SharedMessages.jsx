@@ -4,6 +4,17 @@ import AreaShell from "../../components/AreaShell/AreaShell";
 import { api } from "../../lib/api";
 import "./SharedPages.css";
 
+const statusLabel = (value) =>
+  ({
+    ACCEPTED: "Conectados",
+    PENDING: "Aguardando resposta",
+    DECLINED: "Recusada",
+    CANCELLED: "Cancelada",
+    CLOSED: "Encerrada",
+  })[value] || value;
+const purposeLabel = (value) =>
+  ({ MENTORSHIP: "Mentoria", INVESTMENT: "Investimento" })[value] || value;
+
 function initials(name) {
   return (name || "—")
     .trim()
@@ -43,7 +54,11 @@ export default function SharedMessages() {
         if (!alive) return;
         setConnections(data.items || []);
         if (data.items?.length)
-          setSelectedId((current) => data.items.some(item => item.id === requestedConnection) ? requestedConnection : current || data.items[0].id);
+          setSelectedId((current) =>
+            data.items.some((item) => item.id === requestedConnection)
+              ? requestedConnection
+              : current || data.items[0].id,
+          );
       })
       .catch((e) => alive && setError(e.message))
       .finally(() => alive && setLoading(false));
@@ -200,7 +215,8 @@ export default function SharedMessages() {
                       <div>
                         <strong>{partner?.name || "Contato"}</strong>
                         <small>
-                          {connection.status} · {connection.purpose}
+                          {statusLabel(connection.status)} ·{" "}
+                          {purposeLabel(connection.purpose)}
                         </small>
                       </div>
                     </button>
@@ -221,7 +237,7 @@ export default function SharedMessages() {
                             ? selected.investor?.name
                             : selected.startup?.name}
                         </strong>
-                        <small>{selected.status}</small>
+                        <small>{statusLabel(selected.status)}</small>
                       </div>
                       {selected.status === "ACCEPTED" && (
                         <button
@@ -318,16 +334,35 @@ export default function SharedMessages() {
                           Nenhuma mensagem nesta conversa.
                         </p>
                       ) : (
-                        messages.map((message) => (
-                          <article key={message.id}>
-                            <p>{message.text}</p>
-                            <small>
-                              {new Date(message.createdAt).toLocaleString(
-                                "pt-BR",
-                              )}
-                            </small>
-                          </article>
-                        ))
+                        [...messages]
+                          .sort(
+                            (a, b) =>
+                              new Date(a.createdAt) - new Date(b.createdAt),
+                          )
+                          .map((message) => (
+                            <article
+                              key={message.id}
+                              className={
+                                message.senderId === me.id
+                                  ? "message-own"
+                                  : "message-received"
+                              }
+                            >
+                              <strong className="message-author">
+                                {message.senderId === me.id
+                                  ? "Você"
+                                  : (me.role === "STARTUP"
+                                      ? selected.investor?.name
+                                      : selected.startup?.name) || "Contato"}
+                              </strong>
+                              <p>{message.text}</p>
+                              <small>
+                                {new Date(message.createdAt).toLocaleString(
+                                  "pt-BR",
+                                )}
+                              </small>
+                            </article>
+                          ))
                       )}
                     </div>
                     {selected.status === "ACCEPTED" ? (
