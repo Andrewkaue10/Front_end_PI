@@ -66,6 +66,7 @@ const postInclude = (userId: string) => ({
   tags: { select: { tag: true }, orderBy: { tag: "asc" as const } },
   metric: { include: { metric: true } },
   likes: { where: { userId }, select: { userId: true } },
+  reposts: { where: { userId }, select: { userId: true } },
   _count: { select: { likes: true, comments: true, reposts: true } },
 });
 
@@ -84,6 +85,7 @@ function postResponse(post: any, userId: string) {
     commentsCount: post._count.comments,
     repostsCount: post._count.reposts,
     liked: post.likes.length > 0,
+    reposted: post.reposts.length > 0,
     owner: post.author.ownerId === userId,
     isDemo: post.author.owner.isDemo,
   };
@@ -105,6 +107,7 @@ publications.get("/posts", async (req, res) => {
     .enum(["feed", "mine", "drafts"])
     .default("feed")
     .parse(req.query.view);
+  const authorId = uuid.optional().parse(req.query.authorId);
   const userId = req.user!.userId;
   const startup = view === "feed" ? null : await startupFor(userId);
   const where: any = {
@@ -134,6 +137,7 @@ publications.get("/posts", async (req, res) => {
         }
       : {}),
     ...(tag ? { tags: { some: { tag } } } : {}),
+    ...(authorId && view === "feed" ? { authorId } : {}),
   };
   const [rows, total] = await db.$transaction([
     db.post.findMany({

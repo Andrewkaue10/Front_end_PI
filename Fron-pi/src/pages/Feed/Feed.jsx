@@ -1,3 +1,4 @@
+import SocialFeed from "../../components/SocialFeed";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -327,6 +328,7 @@ export default function Feed() {
           </label>
         </section>
 
+        <SocialFeed />
         <section className="investor-suggestions">
           <div className="investor-section-heading">
             <div>

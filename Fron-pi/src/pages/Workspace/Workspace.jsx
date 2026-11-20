@@ -1,3 +1,4 @@
+import SocialFeed from "../../components/SocialFeed";
 import { Fragment } from "react";
 import AreaShell from "../../components/AreaShell/AreaShell";
 import { useCallback, useEffect, useState } from "react";
@@ -265,6 +266,13 @@ export default function Workspace() {
                 </form>
               )}
           </section>
+        )}
+        {id && kind === "startups" && detail?.id === id && (
+          <SocialFeed
+            key={id}
+            authorId={id}
+            title={`Publicações de ${detail.name}`}
+          />
         )}
         {own && !id && (
           <section id="perfil">

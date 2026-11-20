@@ -1,3 +1,4 @@
+import SocialFeed from "../../components/SocialFeed";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -296,6 +297,7 @@ export default function StartupHome() {
           </section>
         )}
 
+        <SocialFeed />
         <section id="investidores" className="startup-matches">
           <div className="startup-section-heading">
             <div>
