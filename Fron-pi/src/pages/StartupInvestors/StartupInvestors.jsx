@@ -56,10 +56,7 @@ export default function StartupInvestors() {
         });
         const [discover, rec, conns] = await Promise.all([
           api(`/investors?${params}`),
-          api("/recommendations?page=1&limit=100").catch((e) => {
-            if (me.startup?.status !== "APPROVED") return { items: [] };
-            throw e;
-          }),
+          api("/recommendations?page=1&limit=100"),
           api("/connections?page=1&limit=100"),
         ]);
         if (!alive) return;
@@ -160,16 +157,6 @@ export default function StartupInvestors() {
             </div>
           </article>
         ) : null)}
-      {me.startup?.status !== "APPROVED" && (
-        <p className="startup-alert" role="status">
-          Seu perfil está{" "}
-          {me.startup?.status === "REJECTED"
-            ? "reprovado"
-            : "aguardando análise"}
-          . Recomendações exigem aprovação; revise os dados em{" "}
-          <Link to="/painel#perfil">Perfil da startup</Link>.
-        </p>
-      )}
       {error && (
         <p className="startup-alert" role="alert">
           {error}

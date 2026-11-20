@@ -85,14 +85,7 @@ export default function StartupHome() {
         const [investorData, recommendationData, notificationData] =
           await Promise.all([
             api("/investors?page=1&limit=50"),
-            api("/recommendations?page=1&limit=50").catch((e) => {
-              if (e.message.includes("aprovado")) {
-                throw new Error(
-                  "Seu perfil precisa ser aprovado para receber recomendações.",
-                );
-              }
-              throw e;
-            }),
+            api("/recommendations?page=1&limit=50"),
             api("/notifications?page=1&limit=5"),
           ]);
         if (!alive) return;
@@ -160,7 +153,6 @@ export default function StartupHome() {
   }
 
   const startup = me?.startup;
-  const profileStatus = startup?.status;
   const mentors = recommendations.filter((item) =>
     ["MENTOR", "BOTH"].includes(item.role),
   );
@@ -271,20 +263,6 @@ export default function StartupHome() {
           </div>
         </section>
 
-        {profileStatus === "PENDING" && (
-          <div className="startup-status" role="status">
-            Seu perfil está aguardando análise. As recomendações ficam
-            disponíveis após a aprovação.
-            <Link to="/painel#perfil">Editar perfil</Link>
-          </div>
-        )}
-        {profileStatus === "REJECTED" && (
-          <div className="startup-status" role="status">
-            Seu perfil foi reprovado. Revise os dados antes de solicitar uma
-            nova análise.
-            <Link to="/painel#perfil">Editar perfil</Link>
-          </div>
-        )}
         {error && (
           <p className="startup-alert" role="alert">
             {error}

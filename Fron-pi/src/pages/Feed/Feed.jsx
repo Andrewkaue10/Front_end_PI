@@ -195,9 +195,6 @@ export default function Feed() {
   }
 
   const profile = me?.investor;
-  const profileStatus = profile?.status;
-  const pendingProfile = profileStatus === "PENDING";
-  const rejectedProfile = profileStatus === "REJECTED";
   const qualifications = [
     profile?.type,
     ...(profile?.interests || []),
@@ -318,15 +315,6 @@ export default function Feed() {
             />
           </label>
         </section>
-
-        {(pendingProfile || rejectedProfile) && (
-          <div className="investor-status" role="status">
-            {pendingProfile
-              ? "Seu perfil está aguardando análise. Algumas recomendações podem ficar disponíveis após a aprovação."
-              : "Seu perfil foi reprovado. Confira os dados em Minha área antes de solicitar uma nova análise."}
-            <Link to="/painel#perfil">Editar perfil</Link>
-          </div>
-        )}
 
         <section className="investor-suggestions">
           <div className="investor-section-heading">

@@ -272,11 +272,6 @@ profiles.get("/recommendations", async (req, res) => {
   });
   let items: any[] = [];
   if (own.startup) {
-    if (own.startup.status !== "APPROVED")
-      throw new HttpError(
-        409,
-        "Seu perfil precisa ser aprovado para receber recomendações.",
-      );
     const rows = await db.investor.findMany({
       where: {
         status: "APPROVED",
@@ -311,11 +306,6 @@ profiles.get("/recommendations", async (req, res) => {
       ),
     );
   } else if (own.investor) {
-    if (own.investor.status !== "APPROVED")
-      throw new HttpError(
-        409,
-        "Seu perfil precisa ser aprovado para receber recomendações.",
-      );
     const rows = await db.startup.findMany({
       where: {
         status: "APPROVED",
@@ -461,7 +451,7 @@ profiles.patch("/profile", async (req, res) => {
     };
     await db.startup.update({
       where: { ownerId: req.user!.userId },
-      data: { ...data, status: "PENDING" },
+      data: { ...data, status: "APPROVED", moderationReason: null },
     });
   } else if (["INVESTOR", "MENTOR", "BOTH"].includes(req.user!.role)) {
     const data = {
@@ -485,10 +475,10 @@ profiles.patch("/profile", async (req, res) => {
     };
     await db.investor.update({
       where: { ownerId: req.user!.userId },
-      data: { ...data, status: "PENDING" },
+      data: { ...data, status: "APPROVED", moderationReason: null },
     });
   } else throw new HttpError(403, "Perfil não editável.");
-  res.json({ message: "Alterações salvas e enviadas para análise." });
+  res.json({ message: "Alterações salvas. Seu perfil continua disponível." });
 });
 profiles.put("/favorites/:id", professional, async (req, res) => {
   const id = uuid.parse(req.params.id);

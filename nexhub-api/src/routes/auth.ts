@@ -56,6 +56,7 @@ authRoutes.post("/register", async (req, res) => {
           fundingMin: min,
           fundingMax: max,
           pitchUrl: v.pitchDeck || null,
+          status: "APPROVED",
         },
       });
     } else {
@@ -73,6 +74,7 @@ authRoutes.post("/register", async (req, res) => {
           ticketMax: range?.[1] ?? null,
           specialties: v.specialties,
           availability: v.availability ?? null,
+          status: "APPROVED",
         },
       });
     }
@@ -81,7 +83,7 @@ authRoutes.post("/register", async (req, res) => {
   res.status(201).json({
     user: publicUser(user),
     access_token: issueToken(user),
-    message: "Cadastro salvo. Complete o perfil para análise.",
+    message: "Cadastro salvo. Seu perfil está disponível.",
   });
 });
 // Keep a constant cost for unknown accounts as well as invalid passwords.

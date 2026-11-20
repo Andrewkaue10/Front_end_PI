@@ -185,7 +185,8 @@ Perfil profissional:
 - `state`;
 - `stages`.
 
-A interface avisa que salvar altera o status do perfil publico para `PENDING`.
+Perfis de startups e profissionais permanecem aprovados ao salvar; edições não
+exigem análise administrativa.
 
 Também foram implementados:
 
@@ -223,7 +224,8 @@ Usa:
 - `PUT /favorites/:id`;
 - `DELETE /favorites/:id`.
 
-Somente startups aprovadas, ativas e nao-demo podem aparecer ou ser favoritadas.
+Somente startups ativas e nao-demo podem aparecer ou ser favoritadas. O cadastro
+e as edições mantêm o perfil automaticamente aprovado.
 
 ### Portfolio
 

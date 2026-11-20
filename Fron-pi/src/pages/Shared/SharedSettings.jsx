@@ -184,9 +184,7 @@ function SettingsForm({ me }) {
             stages: form.stages,
           };
       await api("/profile", { method: "PATCH", body });
-      setNotice(
-        "Alterações enviadas para análise. O perfil volta ao estado PENDING.",
-      );
+      setNotice("Alterações salvas. Seu perfil continua disponível.");
     } catch (e) {
       setError(e.message);
     } finally {

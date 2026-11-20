@@ -28,8 +28,8 @@ O navegador acessa a API Express. O frontend não deve conectar diretamente ao P
 
 | Frontend | Chamadas principais | Responsabilidade do backend |
 |---|---|---|
-| `pages/SignupStartup/SignupStartup.jsx` | `POST /auth/register` | Cria usuário e perfil de startup pendente. |
-| `pages/SignupInvestor/SignupInvestor.jsx` | `POST /auth/register` | Cria perfil profissional como `INVESTOR`, `MENTOR` ou `BOTH`, pendente. |
+| `pages/SignupStartup/SignupStartup.jsx` | `POST /auth/register` | Cria usuário e perfil de startup aprovado automaticamente. |
+| `pages/SignupInvestor/SignupInvestor.jsx` | `POST /auth/register` | Cria perfil profissional como `INVESTOR`, `MENTOR` ou `BOTH`, aprovado automaticamente. |
 | `pages/Login/Login.jsx` | `POST /auth/login` | Valida credenciais e retorna `access_token` e `user`. |
 | `pages/ForgotPassword/ForgotPassword.jsx` | `POST /auth/forgot-password` | Solicita recuperação por e-mail; envio depende de SMTP configurado no backend. |
 | `pages/ResetPassword/ResetPassword.jsx` | `POST /auth/reset-password` | Consome token de uso único e troca a senha. |
@@ -57,13 +57,13 @@ As chamadas de `Workspace` incluem:
 - Campos do cadastro são em português (`nome`, `telefone`, `senha`, `confirmarSenha`, `termos`, `setores` etc.); a resposta de cadastro/login contém `access_token`.
 - Listas retornam `{ items, page, limit }` (algumas também incluem `total`). A interface consome `items`.
 - Favoritos são somente para perfis profissionais e usam `PUT` para salvar e `DELETE` para remover.
-- A edição de perfil envia `PATCH /profile`. No perfil profissional usa `bio`; no de startup usa `description`. Alterações voltam para análise (`PENDING`).
+- A edição de perfil envia `PATCH /profile`. No perfil profissional usa `bio`; no de startup usa `description`. Alterações mantêm o perfil aprovado, sem análise administrativa.
 - Convites só podem ser respondidos pelo destinatário; conversas são restritas aos participantes. Mensagens e reuniões exigem conexão aceita.
 - O catálogo oficial existe em `GET /api/catalog`, mas o frontend atual não o consulta: listas de setores, estágios e faixas também estão declaradas nas telas de cadastro. Alterar opções exige manter os dois lados em sincronia.
 
 ## Limites conhecidos da entrega do backend
 
-- Recomendações exigem perfil próprio aprovado; apenas perfis aprovados e ativos aparecem na descoberta.
+- Perfis de startup e profissionais são aprovados automaticamente no cadastro e permanecem aprovados após edições; apenas perfis ativos aparecem na descoberta.
 - Chat atualiza por nova consulta manual, sem WebSocket.
 - Recuperação por e-mail depende de SMTP; recuperação por telefone, login social, upload de arquivos, feedback e cobrança não estão implementados nesta etapa.
 - A edição do perfil tem escopo limitado; não cobre todas as preferências do cadastro.

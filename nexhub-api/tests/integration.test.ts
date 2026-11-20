@@ -28,7 +28,7 @@ test("API aceita X-Forwarded-For do proxy do Render", async () => {
     .expect(200);
 });
 
-test("fluxo persistente: cadastro, moderação, recomendação, conexão, conversa e reunião", async () => {
+test("fluxo persistente: cadastro automático, recomendação, conexão, conversa e reunião", async () => {
   const ids: string[] = [];
   const profileIds: string[] = [];
   const senha = "Teste-local-2026!";
@@ -99,7 +99,8 @@ test("fluxo persistente: cadastro, moderação, recomendação, conexão, conver
       await request(app).get("/api/auth/me").set(call(it)).expect(200)
     ).body.investor;
     profileIds.push(sp.id, ip.id);
-    await request(app).get("/api/recommendations").set(call(it)).expect(409);
+    assert.equal(sp.status, "APPROVED");
+    assert.equal(ip.status, "APPROVED");
     await request(app).get("/api/admin/metrics").set(call(it)).expect(403);
     await request(app)
       .patch("/api/profile")
@@ -118,18 +119,20 @@ test("fluxo persistente: cadastro, moderação, recomendação, conexão, conver
       .set(call(it))
       .send({ bio: text })
       .expect(200);
-    for (const [kind, id] of [
-      ["startup", sp.id],
-      ["investor", ip.id],
-    ])
-      await request(app)
-        .patch(`/api/admin/profiles/${kind}/${id}`)
-        .set(call(a))
-        .send({
-          status: "APPROVED",
-          reason: "Verificação automática de integração.",
-        })
-        .expect(200);
+    const updatedStartup = (
+      await request(app).get("/api/auth/me").set(call(st)).expect(200)
+    ).body.startup;
+    const updatedInvestor = (
+      await request(app).get("/api/auth/me").set(call(it)).expect(200)
+    ).body.investor;
+    assert.equal(updatedStartup.status, "APPROVED");
+    assert.equal(updatedInvestor.status, "APPROVED");
+    const startupRecommendations = (
+      await request(app).get("/api/recommendations").set(call(st)).expect(200)
+    ).body;
+    assert.ok(
+      startupRecommendations.items.some((x: any) => x.id === ip.id),
+    );
     const rec = (
       await request(app)
         .get("/api/recommendations?limit=100")

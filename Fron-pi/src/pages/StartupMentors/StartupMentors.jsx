@@ -182,11 +182,6 @@ export default function StartupMentors() {
             </div>
           </article>
         ) : null)}
-      {me.startup?.status !== "APPROVED" && (
-        <p className="startup-alert" role="status">
-          Seu perfil precisa ser aprovado para receber recomendações.
-        </p>
-      )}
       {!canMentor && (
         <p className="startup-alert" role="status">
           A startup não possui uma necessidade de mentoria cadastrada.{" "}
