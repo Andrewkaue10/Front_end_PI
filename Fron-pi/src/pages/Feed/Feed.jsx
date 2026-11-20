@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { api, clearSession, token } from "../../lib/api";
 import "./Feed.css";
+import { roleLabel } from "../../lib/profile";
 
 const notificationLabels = {
   CONNECTION_REQUEST: "Nova solicitação de conexão",
@@ -243,13 +244,10 @@ export default function Feed() {
             <Home size={16} />
             <span>Início</span>
           </button>
-          <button
-            className={mode === "recommended" ? "active" : ""}
-            onClick={() => setMode("recommended")}
-          >
-            <Users size={16} />
+          <Link to="/investidor/matches">
+            <Users size={18} />
             <span>Matches</span>
-          </button>
+          </Link>
           <Link to="/alia">
             <Star size={16} />
             <span>A.L.I.A</span>
@@ -283,10 +281,18 @@ export default function Feed() {
           </Link>
         </nav>
         <div className="investor-account">
-          <span>{initials(me?.name)}</span>
+          <Link
+            className="account-avatar"
+            aria-label="Abrir meu perfil"
+            to="/perfil"
+          >
+            {initials(me?.name)}
+          </Link>
           <div>
-            <strong>{me?.name || "Usuário"}</strong>
-            <small>{profile?.type || "Investidor"}</small>
+            <Link className="account-name" to="/perfil">
+              <strong>{me?.name || "Usuário"}</strong>
+            </Link>
+            <small>{roleLabel(me?.role)}</small>
           </div>
           <button onClick={logout} aria-label="Sair">
             <LogOut size={15} />
@@ -479,7 +485,11 @@ export default function Feed() {
           ) : (
             <div className="notification-list">
               {notifications.slice(0, 5).map((notification) => (
-                <div className="notification-row" key={notification.id}>
+                <Link
+                  className="notification-row"
+                  to={`/notificacoes?notification=${notification.id}`}
+                  key={notification.id}
+                >
                   <span>
                     <Bell size={13} />
                   </span>
@@ -494,7 +504,7 @@ export default function Feed() {
                       )}
                     </small>
                   </p>
-                </div>
+                </Link>
               ))}
             </div>
           )}

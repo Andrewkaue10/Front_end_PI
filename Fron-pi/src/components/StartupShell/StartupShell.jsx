@@ -1,3 +1,4 @@
+import { roleLabel } from "../../lib/profile";
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -144,9 +145,17 @@ export default function StartupShell() {
           </Link>
         </nav>
         <div className="startup-shell__account">
-          <span>{initials || "—"}</span>
+          <Link
+            className="account-avatar"
+            aria-label="Abrir meu perfil"
+            to="/perfil"
+          >
+            {initials || "—"}
+          </Link>
           <div>
-            <strong>{me.startup?.name || me.name}</strong>
+            <Link className="account-name" to="/perfil">
+              <strong>{me.startup?.name || me.name}</strong>
+            </Link>
             <small>Startup</small>
           </div>
           <button onClick={logout} aria-label="Sair">

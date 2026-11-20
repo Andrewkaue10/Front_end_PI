@@ -11,3 +11,4 @@ createRoot(document.getElementById("root")).render(
     </BrowserRouter>
   </StrictMode>,
 );
+import "./workspace-polish.css";

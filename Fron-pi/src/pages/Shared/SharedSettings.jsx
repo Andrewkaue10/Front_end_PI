@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { roleLabel, profileStatus } from "../../lib/profile";
 import AreaShell from "../../components/AreaShell/AreaShell";
 import { api } from "../../lib/api";
 import "./SharedPages.css";
@@ -8,6 +10,16 @@ export default function SharedSettings() {
 }
 
 function SettingsForm({ me }) {
+  const [params, setParams] = useSearchParams();
+  const tab = [
+    "profile",
+    "account",
+    "security",
+    "preferences",
+    "privacy",
+  ].includes(params.get("tab"))
+    ? params.get("tab")
+    : "profile";
   const startup = me.role === "STARTUP";
   const profile = startup ? me.startup : me.investor;
   const [form, setForm] = useState(
@@ -130,7 +142,12 @@ function SettingsForm({ me }) {
   }
 
   async function requestDeletion() {
-    if (!window.confirm("Solicitar exclusão da conta em 30 dias? O pedido poderá ser cancelado antes da execução.")) return;
+    if (
+      !window.confirm(
+        "Solicitar exclusão da conta em 30 dias? O pedido poderá ser cancelado antes da execução.",
+      )
+    )
+      return;
     setSaving(true);
     setError("");
     setNotice("");
@@ -139,7 +156,9 @@ function SettingsForm({ me }) {
         method: "POST",
         body: { reason: deletionReason },
       });
-      setNotice("Solicitação registrada. Exclusão agendada para daqui a 30 dias.");
+      setNotice(
+        "Solicitação registrada. Exclusão agendada para daqui a 30 dias.",
+      );
     } catch (e) {
       setError(e.message);
     } finally {
@@ -184,7 +203,7 @@ function SettingsForm({ me }) {
             stages: form.stages,
           };
       await api("/profile", { method: "PATCH", body });
-      setNotice("Alterações salvas. Seu perfil continua disponível.");
+      setNotice("Alterações do perfil salvas.");
     } catch (e) {
       setError(e.message);
     } finally {
@@ -196,7 +215,7 @@ function SettingsForm({ me }) {
     <div className="area-page shared-settings">
       <h1>Configurações</h1>
       <p className="area-page__lead">
-        Dados da conta e campos persistentes do perfil público.
+        Seu perfil, sua segurança e suas escolhas. Tudo em um só lugar.
       </p>
       {error && (
         <p className="area-alert" role="alert">
@@ -208,11 +227,33 @@ function SettingsForm({ me }) {
           {notice}
         </p>
       )}
+      <nav className="settings-tabs" aria-label="Seções das configurações">
+        {[
+          ["profile", "Perfil"],
+          ["account", "Conta"],
+          ["security", "Segurança"],
+          ["preferences", "Preferências"],
+          ["privacy", "Privacidade"],
+        ].map(([key, label]) => (
+          <button
+            key={key}
+            aria-pressed={tab === key}
+            className={tab === key ? "active" : ""}
+            onClick={() => setParams({ tab: key })}
+          >
+            {label}
+          </button>
+        ))}
+      </nav>
       <div className="shared-settings__grid">
-        <form className="shared-settings__card area-form" onSubmit={save}>
+        <form
+          hidden={tab !== "profile"}
+          className="shared-settings__card area-form"
+          onSubmit={save}
+        >
           <h2>{startup ? "Perfil da startup" : "Perfil profissional"}</h2>
           <p className="shared-settings__status">
-            Salvar alterações pode reabrir o perfil para análise.
+            Apresente sua experiência e mantenha suas informações atualizadas.
           </p>
           <label>
             Nome
@@ -350,50 +391,52 @@ function SettingsForm({ me }) {
           </button>
         </form>
 
-        <aside className="shared-settings__aside shared-settings__card">
-          <h2>Conta</h2>
-          <dl>
-            <div>
-              <dt>Papel</dt>
-              <dd>{me.role}</dd>
-            </div>
-            <div>
-              <dt>Status do perfil</dt>
-              <dd>{profile?.status || "Não informado"}</dd>
-            </div>
-          </dl>
-          <form className="area-form" onSubmit={saveAccount}>
-            <label>
-              Nome
-              <input
-                value={accountName}
-                onChange={(e) => setAccountName(e.target.value)}
-                minLength={2}
-                maxLength={120}
-                required
-              />
-            </label>
-            <label>
-              Telefone
-              <input
-                value={accountPhone}
-                onChange={(e) => setAccountPhone(e.target.value)}
-                minLength={10}
-                maxLength={20}
-                required
-              />
-            </label>
-            <label>
-              E-mail
-              <input value={me.email} disabled />
-            </label>
-            <button className="area-button" disabled={saving} type="submit">
-              Salvar conta
-            </button>
-          </form>
-
+        <div className="shared-settings__aside">
+          <section hidden={tab !== "account"} className="shared-settings__card">
+            <h2>Conta</h2>
+            <dl>
+              <div>
+                <dt>Papel</dt>
+                <dd>{roleLabel(me.role)}</dd>
+              </div>
+              <div>
+                <dt>Status do perfil</dt>
+                <dd>{profileStatus(profile?.status)}</dd>
+              </div>
+            </dl>
+            <form className="area-form" onSubmit={saveAccount}>
+              <label>
+                Nome
+                <input
+                  value={accountName}
+                  onChange={(e) => setAccountName(e.target.value)}
+                  minLength={2}
+                  maxLength={120}
+                  required
+                />
+              </label>
+              <label>
+                Telefone
+                <input
+                  value={accountPhone}
+                  onChange={(e) => setAccountPhone(e.target.value)}
+                  minLength={10}
+                  maxLength={20}
+                  required
+                />
+              </label>
+              <label>
+                E-mail
+                <input value={me.email} disabled />
+              </label>
+              <button className="area-button" disabled={saving} type="submit">
+                Salvar conta
+              </button>
+            </form>
+          </section>
           <form
-            className="area-form shared-settings__password"
+            hidden={tab !== "security"}
+            className="area-form shared-settings__card shared-settings__password"
             onSubmit={changePassword}
           >
             <h2>Alterar senha</h2>
@@ -432,7 +475,10 @@ function SettingsForm({ me }) {
             </button>
           </form>
 
-          <section className="shared-settings__password">
+          <section
+            hidden={tab !== "preferences"}
+            className="shared-settings__card shared-settings__password settings-preferences"
+          >
             <h2>Preferências de notificações</h2>
             {[
               ["appEnabled", "Aplicativo"],
@@ -492,7 +538,10 @@ function SettingsForm({ me }) {
             </button>
           </section>
 
-          <section className="shared-settings__password">
+          <section
+            hidden={tab !== "privacy"}
+            className="shared-settings__card shared-settings__password settings-privacy area-form"
+          >
             <h2>Exclusão da conta</h2>
             <label>
               Motivo opcional
@@ -519,7 +568,7 @@ function SettingsForm({ me }) {
               Cancelar solicitação
             </button>
           </section>
-        </aside>
+        </div>
       </div>
     </div>
   );

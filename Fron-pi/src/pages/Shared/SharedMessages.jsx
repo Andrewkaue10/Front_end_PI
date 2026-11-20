@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import AreaShell from "../../components/AreaShell/AreaShell";
 import { api } from "../../lib/api";
 import "./SharedPages.css";
@@ -15,6 +15,8 @@ function initials(name) {
 }
 
 export default function SharedMessages() {
+  const [params] = useSearchParams();
+  const requestedConnection = params.get("connection") || "";
   const [connections, setConnections] = useState([]);
   const [selectedId, setSelectedId] = useState("");
   const [messages, setMessages] = useState([]);
@@ -41,7 +43,7 @@ export default function SharedMessages() {
         if (!alive) return;
         setConnections(data.items || []);
         if (data.items?.length)
-          setSelectedId((current) => current || data.items[0].id);
+          setSelectedId((current) => data.items.some(item => item.id === requestedConnection) ? requestedConnection : current || data.items[0].id);
       })
       .catch((e) => alive && setError(e.message))
       .finally(() => alive && setLoading(false));
@@ -51,7 +53,7 @@ export default function SharedMessages() {
     return () => {
       alive = false;
     };
-  }, []);
+  }, [requestedConnection]);
 
   useEffect(() => {
     if (!selectedId) return;

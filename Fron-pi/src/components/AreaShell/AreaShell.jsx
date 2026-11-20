@@ -1,3 +1,4 @@
+import { roleLabel } from "../../lib/profile";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -166,10 +167,20 @@ export default function AreaShell({ children }) {
           </Link>
         </nav>
         <div className="area-shell__account">
-          <span>{initials || "—"}</span>
+          <Link
+            className="account-avatar"
+            aria-label="Abrir meu perfil"
+            to="/perfil"
+          >
+            {initials || "—"}
+          </Link>
           <div>
-            <strong>{me.startup?.name || me.investor?.name || me.name}</strong>
-            <small>{startup ? "Startup" : "Profissional"}</small>
+            <Link className="account-name" to="/perfil">
+              <strong>
+                {me.startup?.name || me.investor?.name || me.name}
+              </strong>
+            </Link>
+            <small>{roleLabel(me.role)}</small>
           </div>
           <button onClick={logout} aria-label="Sair">
             <LogOut size={15} />

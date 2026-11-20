@@ -404,6 +404,64 @@ interactions.get("/notifications", async (req, res) => {
     limit,
   });
 });
+interactions.get("/notifications/:id", async (req, res) => {
+  const userId = req.user!.userId;
+  const notification = await db.notification.findFirst({
+    where: { id: uuid.parse(req.params.id), userId },
+  });
+  if (!notification) throw new HttpError(404, "Notificação indisponível.");
+  let connection = null;
+  let meeting = null;
+  if (
+    notification.resourceId &&
+    (notification.type.startsWith("CONNECTION_") ||
+      notification.type === "MESSAGE")
+  ) {
+    connection = await db.connection.findFirst({
+      where: { id: notification.resourceId, ...memberWhere(userId) },
+      include: {
+        startup: { select: { id: true, name: true, ownerId: true } },
+        investor: { select: { id: true, name: true, ownerId: true } },
+      },
+    });
+  } else if (
+    notification.resourceId &&
+    notification.type.startsWith("MEETING_")
+  ) {
+    meeting = await db.meeting.findFirst({
+      where: { id: notification.resourceId, connection: memberWhere(userId) },
+      select: {
+        id: true,
+        title: true,
+        startsAt: true,
+        status: true,
+        connectionId: true,
+      },
+    });
+  }
+  const partner = connection
+    ? connection.startup.ownerId === userId
+      ? connection.investor
+      : connection.startup
+    : null;
+  res.json({
+    ...notification,
+    partner: partner ? { id: partner.id, name: partner.name } : null,
+    connection: connection
+      ? {
+          id: connection.id,
+          status: connection.status,
+          introduction: connection.introduction,
+          purpose: connection.purpose,
+          canRespond:
+            connection.status === "PENDING" &&
+            connection.requestedBy !== userId,
+        }
+      : null,
+    meeting,
+  });
+});
+
 interactions.patch("/notifications/read-all", async (req, res) => {
   await db.notification.updateMany({
     where: { userId: req.user!.userId, read: false },
@@ -532,7 +590,8 @@ interactions.patch("/meeting-proposals/:id", async (req, res) => {
       const member =
         record.connection.startup.ownerId === userId ||
         record.connection.investor.ownerId === userId;
-      if (!member) throw new HttpError(403, "Você não participa desta proposta.");
+      if (!member)
+        throw new HttpError(403, "Você não participa desta proposta.");
       if (record.status !== "PROPOSED")
         throw new HttpError(409, "Proposta já respondida.");
       if (value.action === "accept" && record.proposerId === userId)

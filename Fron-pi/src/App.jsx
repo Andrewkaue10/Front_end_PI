@@ -28,6 +28,8 @@ import StartupPublications from "./pages/StartupPublications/StartupPublications
 import StartupProfile from "./pages/StartupProfile/StartupProfile";
 import InvestorMatches from "./pages/Investor/InvestorMatches";
 
+import MyProfile from "./pages/Shared/MyProfile";
+
 function App() {
   const location = useLocation();
   const hideNavbar =
@@ -41,6 +43,7 @@ function App() {
       "/mensagens",
       "/notificacoes",
       "/configuracoes",
+      "/perfil",
     ].includes(location.pathname) ||
     location.pathname.startsWith("/startup/") ||
     location.pathname.startsWith("/investidor/");
@@ -74,6 +77,7 @@ function App() {
         </Route>
         <Route path="/mensagens" element={<SharedMessages />} />
         <Route path="/notificacoes" element={<SharedNotifications />} />
+        <Route path="/perfil" element={<MyProfile />} />
         <Route path="/configuracoes" element={<SharedSettings />} />
         <Route path="/investidor/favoritos" element={<InvestorFavorites />} />
         <Route path="/investidor/portfolio" element={<InvestorPortfolio />} />

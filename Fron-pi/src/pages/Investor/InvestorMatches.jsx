@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AreaShell from "../../components/AreaShell/AreaShell";
 import { api } from "../../lib/api";
 import "../MissingScreens.css";
+import { isProfessional } from "../../lib/profile";
 
 function initials(name) {
   return (name || "—")
@@ -18,11 +19,11 @@ export default function InvestorMatches() {
   return (
     <AreaShell>
       {(me) => {
-        if (!["INVESTOR", "BOTH"].includes(me.role)) {
+        if (!isProfessional(me.role)) {
           return (
             <div className="area-page">
               <p className="area-alert">
-                Esta tela é exclusiva para perfis de investidor.
+                Esta área reúne matches de investidores e mentores.
               </p>
             </div>
           );
@@ -129,9 +130,11 @@ function InvestorMatchesContent({ me }) {
         method: "POST",
         body: {
           startupId: startup.id,
-          purpose: "INVESTMENT",
+          purpose: me.role === "MENTOR" ? "MENTORSHIP" : "INVESTMENT",
           introduction:
-            "Gostaria de conhecer esta startup e avaliar uma possível conexão de investimento.",
+            me.role === "MENTOR"
+              ? "Gostaria de conhecer esta startup e oferecer apoio de mentoria."
+              : "Gostaria de conhecer esta startup e avaliar uma possível conexão de investimento.",
         },
       });
       setNotice("Solicitação de conexão enviada.");
@@ -314,7 +317,7 @@ function InvestorMatchesContent({ me }) {
                   {typeof startup.match === "number" && (
                     <div className="match-score">
                       <strong>{startup.match}%</strong>
-                      <small>regras rules-v1</small>
+                      <small>compatibilidade</small>
                     </div>
                   )}
                 </div>
@@ -434,7 +437,7 @@ function InvestorMatchesContent({ me }) {
             <h2>Minhas qualificações</h2>
             <dl className="qualification-list">
               <div>
-                <dt>Investidor</dt>
+                <dt>Profissional</dt>
                 <dd>{investor.name || me.name || "Não informado"}</dd>
               </div>
               {investor.type && (

@@ -1,0 +1,577 @@
+.area-shell {
+  --area-muted: #64748b;
+  --area-line: #e5eaf2;
+  background: #f5f7fb;
+  grid-template-columns: 244px minmax(0, 1fr);
+  grid-template-rows: 72px minmax(0, 1fr);
+}
+.area-shell__header {
+  height: 72px;
+  grid-template-columns: 220px 1fr;
+  padding: 0 28px;
+}
+.area-shell__top a {
+  font-size: 13px;
+  font-weight: 500;
+}
+.area-shell__sidebar {
+  min-height: calc(100vh - 72px);
+  padding: 20px 16px;
+}
+.area-shell__sidebar nav a {
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 13px;
+  border-radius: 10px;
+  gap: 12px;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.area-shell__sidebar nav a:hover {
+  background: #f1f5fb;
+  color: #155eef;
+}
+.area-shell__page {
+  padding: 36px clamp(20px, 3vw, 52px) 56px;
+}
+.area-page {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.area-page h1 {
+  font-size: 28px;
+  letter-spacing: -0.7px;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.area-page__lead {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+.area-page h2 {
+  font-size: 18px;
+  line-height: 1.4;
+}
+.page-eyebrow {
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 1.8px;
+  color: #64748b;
+  margin: 0 0 12px;
+}
+.area-card,
+.shared-settings__card {
+  border: 1px solid #e5eaf2;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px #15274705;
+}
+.area-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 10px 16px;
+  font-size: 13px;
+  border-radius: 9px;
+  line-height: 1.4;
+}
+.area-button.secondary {
+  border-color: #dce3ed;
+  color: #42526b;
+}
+.area-button:hover:not(:disabled) {
+  filter: brightness(0.96);
+}
+.area-button:disabled {
+  cursor: not-allowed;
+}
+.area-alert,
+.area-notice,
+.area-state {
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 16px;
+}
+.area-form {
+  align-content: start;
+  gap: 18px;
+}
+.area-form label {
+  font-size: 13px;
+  font-weight: 500;
+  gap: 8px;
+}
+.area-form input,
+.area-form select,
+.area-form textarea {
+  font-size: 14px;
+  padding: 12px 14px;
+  min-height: 44px;
+  border-color: #dce3ed;
+}
+.area-form input:disabled {
+  background: #f7f9fc;
+  color: #64748b;
+}
+.area-form textarea {
+  min-height: 128px;
+}
+.area-form fieldset {
+  padding: 16px;
+  border: 1px solid #e5eaf2;
+  border-radius: 10px;
+}
+.area-form fieldset label,
+.area-form label:has(input[type="checkbox"]) {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+.area-form input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  min-height: 0;
+  accent-color: #155eef;
+}
+.area-shell :focus-visible,
+.investor-home :focus-visible {
+  outline: 3px solid #9bbcff;
+  outline-offset: 3px;
+}
+.account-avatar {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  background: #eaf1ff;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none;
+  color: #155eef;
+}
+.account-name {
+  color: inherit;
+  text-decoration: none;
+}
+.account-name:hover {
+  color: #155eef;
+}
+.area-shell__account strong,
+.investor-account strong {
+  font-size: 12px;
+}
+.area-shell__account small,
+.investor-account small {
+  font-size: 11px;
+}
+.area-shell__account {
+  grid-template-columns: 38px minmax(0, 1fr) 24px;
+}
+.settings-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  background: #eaf0f7;
+  border-radius: 12px;
+  margin-bottom: 26px;
+  width: fit-content;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+.settings-tabs button {
+  border: 0;
+  background: transparent;
+  padding: 11px 20px;
+  color: #64748b;
+  font: inherit;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.settings-tabs button.active {
+  color: #155eef;
+  background: #fff;
+  box-shadow: 0 2px 8px #23395912;
+  font-weight: 650;
+}
+.shared-settings {
+  max-width: 1020px;
+}
+.shared-settings__grid {
+  display: block;
+}
+.shared-settings__grid [hidden] {
+  display: none !important;
+}
+.shared-settings__aside {
+  display: contents;
+}
+.shared-settings__card {
+  max-width: 800px;
+}
+.shared-settings__card h2 {
+  font-size: 19px;
+  margin: 0 0 8px;
+}
+.shared-settings__status {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 8px;
+}
+.shared-settings__password {
+  margin: 0;
+}
+.shared-settings__aside dl {
+  display: flex;
+  gap: 36px;
+  background: #f7f9fc;
+  padding: 16px;
+  border-radius: 10px;
+  margin: 12px 0 24px;
+}
+.shared-settings__aside dt {
+  font-size: 12px;
+}
+.shared-settings__aside dd {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 6px;
+}
+.shared-settings__card .area-button {
+  justify-self: start;
+  width: fit-content;
+  margin-top: 4px;
+}
+.settings-preferences > label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  gap: 16px;
+  padding: 16px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #edf0f5;
+}
+.settings-preferences input {
+  width: 20px;
+  height: 20px;
+  accent-color: #155eef;
+  flex-shrink: 0;
+}
+.settings-preferences h2:not(:first-child) {
+  margin-top: 28px;
+}
+.settings-preferences .area-button {
+  margin-top: 24px;
+}
+.settings-privacy {
+  border-color: #f1d5d5;
+}
+.settings-privacy h2 {
+  color: #a33939;
+}
+.shared-notifications {
+  max-width: 1000px;
+}
+.shared-notifications__toolbar {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.notification-filters {
+  display: flex;
+  gap: 8px;
+}
+.shared-notifications__list {
+  gap: 12px;
+}
+.shared-notification {
+  padding: 16px 20px;
+  border-radius: 14px;
+}
+.shared-notification.unread {
+  border-left: 4px solid #155eef;
+  background: #fcfdff;
+}
+.notification-open {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  border: 0;
+  background: none;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  padding: 6px 0;
+  width: 100%;
+}
+.notification-icon {
+  background: #edf3ff;
+  color: #155eef;
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+}
+.shared-notification strong {
+  font-size: 15px;
+}
+.shared-notification small {
+  font-size: 12px;
+  line-height: 1.6;
+}
+.shared-notification__meta {
+  gap: 6px;
+}
+.notification-open__hint {
+  font-size: 12px;
+  color: #155eef;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.notification-detail {
+  margin-bottom: 20px;
+  border-color: #c7d8fb;
+}
+.notification-detail__heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.notification-detail__heading h2 {
+  margin: 0;
+}
+.notification-detail p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.notification-detail__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.notification-empty {
+  text-align: center;
+  padding: 60px 24px;
+  color: #64748b;
+}
+.notification-empty h2 {
+  color: #17233c;
+}
+.profile-badge,
+.profile-tags span {
+  display: inline-block;
+  border-radius: 100px;
+  background: #edf3ff;
+  padding: 6px 12px;
+  color: #2254b0;
+  font-size: 12px;
+  font-weight: 600;
+}
+.profile-hero {
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid #e0e7f1;
+  background: white;
+  margin-bottom: 24px;
+}
+.profile-hero__cover {
+  height: 100px;
+  background: linear-gradient(120deg, #0c2d66, #245fd1 60%, #8cacfa);
+}
+.profile-hero__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px;
+  padding: 28px;
+}
+.profile-hero__body > .area-button {
+  margin-left: auto;
+}
+.profile-hero__body h2 {
+  font-size: 26px;
+  margin: 8px 0;
+}
+.profile-hero__body p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+.profile-hero__avatar {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  border: 4px solid white;
+  border-radius: 22px;
+  background: #eef3ff;
+  color: #155eef;
+  margin-top: -60px;
+}
+.profile-summary-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 24px;
+}
+.profile-summary-grid p {
+  line-height: 1.7;
+  font-size: 14px;
+}
+.profile-summary-grid h3 {
+  font-size: 14px;
+  margin-top: 28px;
+}
+.profile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.profile-bio {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.notification-row {
+  color: inherit;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 10px;
+}
+.notification-row:hover {
+  background: #edf3ff;
+}
+.investor-sidebar nav a,
+.investor-sidebar nav button {
+  font-size: 13px;
+  min-height: 43px;
+}
+.investor-main h1 {
+  font-size: 26px;
+}
+.investor-main h2 {
+  font-size: 18px;
+}
+.investor-greeting p,
+.investor-section-heading p {
+  font-size: 13px;
+}
+.investor-main {
+  line-height: 1.5;
+}
+.match-card {
+  border-radius: 16px;
+  padding: 24px;
+}
+.match-card h2 {
+  font-size: 18px;
+}
+.match-card p,
+.match-card dd {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.match-card dt,
+.match-card small {
+  font-size: 12px;
+}
+.match-toolbar input,
+.match-toolbar select {
+  font-size: 13px;
+  min-height: 42px;
+}
+.profile-tabs button {
+  font-size: 13px;
+  padding: 12px 16px;
+}
+@media (max-width: 820px) {
+  .area-shell {
+    display: block;
+    padding-bottom: 88px;
+  }
+  .area-shell__header {
+    height: 64px;
+    padding: 0 16px;
+    grid-template-columns: 120px 1fr;
+  }
+  .area-shell__sidebar {
+    min-height: 72px;
+    height: 72px;
+    padding: 6px;
+  }
+  .area-shell__sidebar nav {
+    overflow-x: auto;
+    justify-content: flex-start;
+    height: 58px;
+    gap: 4px;
+  }
+  .area-shell__sidebar nav a {
+    flex-shrink: 0;
+    min-width: 64px;
+    min-height: 54px;
+    flex-direction: column;
+    gap: 4px;
+    padding: 5px 8px;
+  }
+  .area-shell__sidebar nav span {
+    display: block;
+    font-size: 10px;
+  }
+  .area-shell__page {
+    padding: 24px 16px 36px;
+  }
+  .area-shell__account {
+    display: none;
+  }
+  .area-page h1 {
+    font-size: 25px;
+  }
+  .settings-tabs {
+    width: 100%;
+  }
+  .settings-tabs button {
+    flex: 1;
+    padding: 10px;
+    font-size: 12px;
+  }
+  .area-card,
+  .shared-settings__card {
+    padding: 20px;
+  }
+  .shared-notification {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .shared-notification > .area-button {
+    justify-self: end;
+  }
+  .profile-summary-grid {
+    grid-template-columns: 1fr;
+  }
+  .profile-hero__body {
+    padding: 20px;
+    gap: 16px;
+  }
+  .profile-hero__body > .area-button {
+    margin-left: 0;
+  }
+  .shared-messages__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
