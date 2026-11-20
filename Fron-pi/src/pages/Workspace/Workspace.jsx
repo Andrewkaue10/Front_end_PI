@@ -140,21 +140,40 @@ export default function Workspace() {
   const Shell = me && me.role !== "ADMIN" ? AreaShell : Fragment;
   return (
     <Shell>
-      <main className="nx-workspace">
+      <main className={`nx-workspace ${id ? "nx-public-view" : ""}`}>
         <header>
           <Link to={me?.role === "STARTUP" ? "/startup/investidores" : "/feed"}>
             ← Explorar perfis
           </Link>
           <p className="page-eyebrow">CONEXÕES QUE MOVEM IDEIAS</p>
           <h1>{detail?.name || "Minha área Nexhub"}</h1>
-          <p>{me?.name}</p>
-          <nav>
-            <a href="#perfil">Perfil</a>
-            <a href="#conexoes">Conexões e mensagens</a>
-            <a href="#agenda">Agenda</a>
-            <a href="#avisos">Notificações</a>
-            {pending && <a href="#admin">Administração</a>}
-          </nav>
+          {!id && <p>{me?.name}</p>}
+          {id ? (
+            <nav aria-label="Ações do perfil">
+              <Link
+                to={
+                  me?.startup?.id === id
+                    ? "/startup/perfil"
+                    : me?.role === "STARTUP"
+                      ? "/startup/investidores"
+                      : "/investidor/matches"
+                }
+              >
+                {me?.startup?.id === id
+                  ? "Editar minha startup"
+                  : "Explorar perfis"}
+              </Link>
+              <Link to="/mensagens">Minhas conversas</Link>
+            </nav>
+          ) : (
+            <nav>
+              <a href="#perfil">Perfil</a>
+              <a href="#conexoes">Conexões e mensagens</a>
+              <a href="#agenda">Agenda</a>
+              <a href="#avisos">Notificações</a>
+              {pending && <a href="#admin">Administração</a>}
+            </nav>
+          )}
         </header>
         {error && (
           <p role="alert" className="nx-alert">
@@ -247,7 +266,7 @@ export default function Workspace() {
               )}
           </section>
         )}
-        {own && (
+        {own && !id && (
           <section id="perfil">
             <h2>Meu perfil</h2>
             <p>Status: {states[own.status]}</p>
@@ -352,390 +371,405 @@ export default function Workspace() {
             </form>
           </section>
         )}
-        <section id="conexoes">
-          <h2>Conexões e mensagens</h2>
-          <button disabled={busy} onClick={() => act(load)}>
-            Atualizar
-          </button>
-          {!connections.length && <p>Nenhuma conexão nesta página.</p>}
-          {connections.map((c) => (
-            <article key={c.id}>
-              <h3>
-                {c.startup.name} ↔ {c.investor.name}
-              </h3>
-              <p>
-                {states[c.status]} ·{" "}
-                {c.purpose === "INVESTMENT" ? "Investimento" : "Mentoria"}
-              </p>
-              <p>{c.introduction}</p>
-              {c.status === "PENDING" &&
-                (c.requestedBy === me?.id ? (
-                  <button
-                    disabled={busy}
-                    onClick={() =>
-                      act(() =>
-                        api("/connections/" + c.id, {
-                          method: "PATCH",
-                          body: { action: "cancel" },
-                        }),
-                      )
-                    }
-                  >
-                    Cancelar convite
-                  </button>
-                ) : (
-                  <>
-                    <button
-                      disabled={busy}
-                      onClick={() =>
-                        act(() =>
-                          api("/connections/" + c.id, {
-                            method: "PATCH",
-                            body: { action: "accept" },
-                          }),
-                        )
-                      }
-                    >
-                      Aceitar
-                    </button>
-                    <button
-                      disabled={busy}
-                      onClick={() =>
-                        act(() =>
-                          api("/connections/" + c.id, {
-                            method: "PATCH",
-                            body: { action: "decline" },
-                          }),
-                        )
-                      }
-                    >
-                      Recusar
-                    </button>
-                  </>
-                ))}
-              {c.status === "ACCEPTED" && (
-                <button
-                  disabled={busy}
-                  onClick={() =>
-                    act(() =>
-                      api("/connections/" + c.id, {
-                        method: "PATCH",
-                        body: { action: "close" },
-                      }),
-                    )
-                  }
-                >
-                  Encerrar conexão
-                </button>
-              )}
-              <button disabled={busy} onClick={() => act(() => chat(c.id))}>
-                Abrir conversa
+        {!id && (
+          <>
+            <section id="conexoes">
+              <h2>Conexões e mensagens</h2>
+              <button disabled={busy} onClick={() => act(load)}>
+                Atualizar
               </button>
-            </article>
-          ))}
-          {selected && (
-            <div className="nx-conversation">
-              <h3>Conversa selecionada</h3>
-              <button
-                disabled={busy}
-                onClick={() => act(() => chat(selected, messagePage))}
-              >
-                Atualizar mensagens
-              </button>
-              <ol>
-                {messages.map((m) => (
-                  <li key={m.id}>
-                    <strong>
-                      {m.senderId === me?.id ? "Você" : "Outra pessoa"}:
-                    </strong>{" "}
-                    {m.text}
-                    <small>
-                      {" "}
-                      {new Date(m.createdAt).toLocaleString("pt-BR")}
-                    </small>
-                  </li>
-                ))}
-              </ol>
-              <button
-                disabled={busy || messagePage === 1}
-                onClick={() => act(() => chat(selected, messagePage - 1))}
-              >
-                Mais recentes
-              </button>
-              <button
-                disabled={busy || messages.length < 20}
-                onClick={() => act(() => chat(selected, messagePage + 1))}
-              >
-                Mais antigas
-              </button>
-              {connections.find((c) => c.id === selected)?.status ===
-                "ACCEPTED" && (
-                <>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      const form = e.currentTarget;
-                      const text = new FormData(form).get("text");
-                      act(async () => {
-                        await api(`/connections/${selected}/messages`, {
-                          method: "POST",
-                          body: { text, clientId: crypto.randomUUID() },
-                        });
-                        form.reset();
-                        await chat(selected);
-                      });
-                    }}
-                  >
-                    <label>
-                      Mensagem
-                      <textarea name="text" required maxLength={2000} />
-                    </label>
-                    <button disabled={busy}>Enviar</button>
-                  </form>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      const f = new FormData(e.currentTarget);
-                      act(() =>
-                        api(`/connections/${selected}/meetings`, {
-                          method: "POST",
-                          body: {
-                            title: f.get("title"),
-                            startsAt: new Date(f.get("startsAt")).toISOString(),
-                            duration: Number(f.get("duration")),
-                            timezone:
-                              Intl.DateTimeFormat().resolvedOptions().timeZone,
-                            location: f.get("location"),
-                          },
-                        }),
-                      );
-                    }}
-                  >
-                    <h3>Propor reunião</h3>
-                    <label>
-                      Título
-                      <input
-                        name="title"
-                        minLength={3}
-                        maxLength={120}
-                        required
-                      />
-                    </label>
-                    <label>
-                      Data e hora (
-                      {Intl.DateTimeFormat().resolvedOptions().timeZone})
-                      <input type="datetime-local" name="startsAt" required />
-                    </label>
-                    <label>
-                      Duração
-                      <select name="duration">
-                        {[15, 30, 45, 60, 90].map((n) => (
-                          <option key={n} value={n}>
-                            {n} minutos
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                    <label>
-                      Local ou link
-                      <input
-                        name="location"
-                        minLength={5}
-                        maxLength={2048}
-                        required
-                      />
-                    </label>
-                    <button disabled={busy}>Enviar proposta</button>
-                  </form>
-                </>
-              )}
-            </div>
-          )}
-        </section>
-        <section id="agenda">
-          <h2>Agenda</h2>
-          {!meetings.length && <p>Nenhuma reunião nesta página.</p>}
-          {meetings.map((m) => (
-            <article key={m.id}>
-              <h3>{m.title}</h3>
-              <p>
-                {new Date(m.startsAt).toLocaleString("pt-BR")} —{" "}
-                {states[m.status]}
-              </p>
-              <p>{m.location}</p>
-              {m.status === "PROPOSED" && m.organizerId !== me?.id && (
-                <button
-                  disabled={busy}
-                  onClick={() =>
-                    act(() =>
-                      api("/meetings/" + m.id, {
-                        method: "PATCH",
-                        body: { action: "confirm" },
-                      }),
-                    )
-                  }
-                >
-                  Confirmar
-                </button>
-              )}
-              {m.status === "CONFIRMED" &&
-                m.organizerId === me?.id &&
-                new Date(m.endsAt) < new Date() && (
-                  <button
-                    disabled={busy}
-                    onClick={() =>
-                      act(() =>
-                        api("/meetings/" + m.id, {
-                          method: "PATCH",
-                          body: { action: "complete" },
-                        }),
-                      )
-                    }
-                  >
-                    Marcar concluída
-                  </button>
-                )}
-              {["PROPOSED", "CONFIRMED"].includes(m.status) && (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    const reason = new FormData(e.currentTarget).get("reason");
-                    act(() =>
-                      api("/meetings/" + m.id, {
-                        method: "PATCH",
-                        body: { action: "cancel", reason },
-                      }),
-                    );
-                  }}
-                >
-                  <label>
-                    Motivo do cancelamento
-                    <input name="reason" minLength={10} required />
-                  </label>
-                  <button disabled={busy}>Cancelar reunião</button>
-                </form>
-              )}
-            </article>
-          ))}
-        </section>
-        <section id="avisos">
-          <h2>Notificações</h2>
-          {notifications.map((n) => (
-            <p key={n.id}>
-              {{
-                CONNECTION_REQUEST: "Novo convite de conexão",
-                CONNECTION_ACCEPTED: "Conexão aceita",
-                MESSAGE: "Nova mensagem",
-                MEETING_PROPOSED: "Nova proposta de reunião",
-                MEETING_CONFIRMED: "Reunião confirmada",
-                PROFILE_APPROVED: "Perfil aprovado",
-                PROFILE_REJECTED: "Perfil reprovado",
-              }[n.type] || "Atualização em conexão, perfil ou agenda"}{" "}
-              · {new Date(n.createdAt).toLocaleString("pt-BR")}{" "}
-              {!n.read && (
-                <button
-                  disabled={busy}
-                  onClick={() =>
-                    act(() =>
-                      api("/notifications/" + n.id, { method: "PATCH" }),
-                    )
-                  }
-                >
-                  Marcar como lida
-                </button>
-              )}
-            </p>
-          ))}
-        </section>
-        {pending && (
-          <section id="admin">
-            <h2>Administração</h2>
-            {metrics && (
-              <p>
-                Matches: {metrics.matches} · Conversas: {metrics.conversations}{" "}
-                · Reuniões confirmadas/concluídas: {metrics.meetings}
-              </p>
-            )}
-            {[
-              ["startup", pending.startups],
-              ["investor", pending.investors],
-            ].flatMap(([k, rows]) =>
-              rows.map((p) => (
-                <article key={p.id}>
-                  <h3>{p.name}</h3>
+              {!connections.length && <p>Nenhuma conexão nesta página.</p>}
+              {connections.map((c) => (
+                <article key={c.id}>
+                  <h3>
+                    {c.startup.name} ↔ {c.investor.name}
+                  </h3>
                   <p>
-                    {p.description ||
-                      p.bio ||
-                      "Apresentação ainda não preenchida."}
+                    {states[c.status]} ·{" "}
+                    {c.purpose === "INVESTMENT" ? "Investimento" : "Mentoria"}
                   </p>
-                  <Link
-                    to={`/painel?kind=${k === "startup" ? "startups" : "investors"}&id=${p.id}`}
-                  >
-                    Inspecionar perfil
-                  </Link>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      const f = new FormData(e.currentTarget);
-                      act(() =>
-                        api(`/admin/profiles/${k}/${p.id}`, {
-                          method: "PATCH",
-                          body: {
-                            status: f.get("status"),
-                            reason: f.get("reason"),
-                          },
-                        }),
-                      );
-                    }}
-                  >
-                    <label>
-                      Decisão
-                      <select name="status">
-                        <option value="APPROVED">Aprovar</option>
-                        <option value="REJECTED">Reprovar</option>
-                      </select>
-                    </label>
-                    <label>
-                      Justificativa
-                      <input
-                        name="reason"
-                        minLength={10}
-                        maxLength={1000}
-                        required
-                      />
-                    </label>
-                    <button disabled={busy}>Registrar análise</button>
-                  </form>
+                  <p>{c.introduction}</p>
+                  {c.status === "PENDING" &&
+                    (c.requestedBy === me?.id ? (
+                      <button
+                        disabled={busy}
+                        onClick={() =>
+                          act(() =>
+                            api("/connections/" + c.id, {
+                              method: "PATCH",
+                              body: { action: "cancel" },
+                            }),
+                          )
+                        }
+                      >
+                        Cancelar convite
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          disabled={busy}
+                          onClick={() =>
+                            act(() =>
+                              api("/connections/" + c.id, {
+                                method: "PATCH",
+                                body: { action: "accept" },
+                              }),
+                            )
+                          }
+                        >
+                          Aceitar
+                        </button>
+                        <button
+                          disabled={busy}
+                          onClick={() =>
+                            act(() =>
+                              api("/connections/" + c.id, {
+                                method: "PATCH",
+                                body: { action: "decline" },
+                              }),
+                            )
+                          }
+                        >
+                          Recusar
+                        </button>
+                      </>
+                    ))}
+                  {c.status === "ACCEPTED" && (
+                    <button
+                      disabled={busy}
+                      onClick={() =>
+                        act(() =>
+                          api("/connections/" + c.id, {
+                            method: "PATCH",
+                            body: { action: "close" },
+                          }),
+                        )
+                      }
+                    >
+                      Encerrar conexão
+                    </button>
+                  )}
+                  <button disabled={busy} onClick={() => act(() => chat(c.id))}>
+                    Abrir conversa
+                  </button>
                 </article>
-              )),
+              ))}
+              {selected && (
+                <div className="nx-conversation">
+                  <h3>Conversa selecionada</h3>
+                  <button
+                    disabled={busy}
+                    onClick={() => act(() => chat(selected, messagePage))}
+                  >
+                    Atualizar mensagens
+                  </button>
+                  <ol>
+                    {messages.map((m) => (
+                      <li key={m.id}>
+                        <strong>
+                          {m.senderId === me?.id ? "Você" : "Outra pessoa"}:
+                        </strong>{" "}
+                        {m.text}
+                        <small>
+                          {" "}
+                          {new Date(m.createdAt).toLocaleString("pt-BR")}
+                        </small>
+                      </li>
+                    ))}
+                  </ol>
+                  <button
+                    disabled={busy || messagePage === 1}
+                    onClick={() => act(() => chat(selected, messagePage - 1))}
+                  >
+                    Mais recentes
+                  </button>
+                  <button
+                    disabled={busy || messages.length < 20}
+                    onClick={() => act(() => chat(selected, messagePage + 1))}
+                  >
+                    Mais antigas
+                  </button>
+                  {connections.find((c) => c.id === selected)?.status ===
+                    "ACCEPTED" && (
+                    <>
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          const form = e.currentTarget;
+                          const text = new FormData(form).get("text");
+                          act(async () => {
+                            await api(`/connections/${selected}/messages`, {
+                              method: "POST",
+                              body: { text, clientId: crypto.randomUUID() },
+                            });
+                            form.reset();
+                            await chat(selected);
+                          });
+                        }}
+                      >
+                        <label>
+                          Mensagem
+                          <textarea name="text" required maxLength={2000} />
+                        </label>
+                        <button disabled={busy}>Enviar</button>
+                      </form>
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          const f = new FormData(e.currentTarget);
+                          act(() =>
+                            api(`/connections/${selected}/meetings`, {
+                              method: "POST",
+                              body: {
+                                title: f.get("title"),
+                                startsAt: new Date(
+                                  f.get("startsAt"),
+                                ).toISOString(),
+                                duration: Number(f.get("duration")),
+                                timezone:
+                                  Intl.DateTimeFormat().resolvedOptions()
+                                    .timeZone,
+                                location: f.get("location"),
+                              },
+                            }),
+                          );
+                        }}
+                      >
+                        <h3>Propor reunião</h3>
+                        <label>
+                          Título
+                          <input
+                            name="title"
+                            minLength={3}
+                            maxLength={120}
+                            required
+                          />
+                        </label>
+                        <label>
+                          Data e hora (
+                          {Intl.DateTimeFormat().resolvedOptions().timeZone})
+                          <input
+                            type="datetime-local"
+                            name="startsAt"
+                            required
+                          />
+                        </label>
+                        <label>
+                          Duração
+                          <select name="duration">
+                            {[15, 30, 45, 60, 90].map((n) => (
+                              <option key={n} value={n}>
+                                {n} minutos
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                        <label>
+                          Local ou link
+                          <input
+                            name="location"
+                            minLength={5}
+                            maxLength={2048}
+                            required
+                          />
+                        </label>
+                        <button disabled={busy}>Enviar proposta</button>
+                      </form>
+                    </>
+                  )}
+                </div>
+              )}
+            </section>
+            <section id="agenda">
+              <h2>Agenda</h2>
+              {!meetings.length && <p>Nenhuma reunião nesta página.</p>}
+              {meetings.map((m) => (
+                <article key={m.id}>
+                  <h3>{m.title}</h3>
+                  <p>
+                    {new Date(m.startsAt).toLocaleString("pt-BR")} —{" "}
+                    {states[m.status]}
+                  </p>
+                  <p>{m.location}</p>
+                  {m.status === "PROPOSED" && m.organizerId !== me?.id && (
+                    <button
+                      disabled={busy}
+                      onClick={() =>
+                        act(() =>
+                          api("/meetings/" + m.id, {
+                            method: "PATCH",
+                            body: { action: "confirm" },
+                          }),
+                        )
+                      }
+                    >
+                      Confirmar
+                    </button>
+                  )}
+                  {m.status === "CONFIRMED" &&
+                    m.organizerId === me?.id &&
+                    new Date(m.endsAt) < new Date() && (
+                      <button
+                        disabled={busy}
+                        onClick={() =>
+                          act(() =>
+                            api("/meetings/" + m.id, {
+                              method: "PATCH",
+                              body: { action: "complete" },
+                            }),
+                          )
+                        }
+                      >
+                        Marcar concluída
+                      </button>
+                    )}
+                  {["PROPOSED", "CONFIRMED"].includes(m.status) && (
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        const reason = new FormData(e.currentTarget).get(
+                          "reason",
+                        );
+                        act(() =>
+                          api("/meetings/" + m.id, {
+                            method: "PATCH",
+                            body: { action: "cancel", reason },
+                          }),
+                        );
+                      }}
+                    >
+                      <label>
+                        Motivo do cancelamento
+                        <input name="reason" minLength={10} required />
+                      </label>
+                      <button disabled={busy}>Cancelar reunião</button>
+                    </form>
+                  )}
+                </article>
+              ))}
+            </section>
+            <section id="avisos">
+              <h2>Notificações</h2>
+              {notifications.map((n) => (
+                <p key={n.id}>
+                  {{
+                    CONNECTION_REQUEST: "Novo convite de conexão",
+                    CONNECTION_ACCEPTED: "Conexão aceita",
+                    MESSAGE: "Nova mensagem",
+                    MEETING_PROPOSED: "Nova proposta de reunião",
+                    MEETING_CONFIRMED: "Reunião confirmada",
+                    PROFILE_APPROVED: "Perfil aprovado",
+                    PROFILE_REJECTED: "Perfil reprovado",
+                  }[n.type] || "Atualização em conexão, perfil ou agenda"}{" "}
+                  · {new Date(n.createdAt).toLocaleString("pt-BR")}{" "}
+                  {!n.read && (
+                    <button
+                      disabled={busy}
+                      onClick={() =>
+                        act(() =>
+                          api("/notifications/" + n.id, { method: "PATCH" }),
+                        )
+                      }
+                    >
+                      Marcar como lida
+                    </button>
+                  )}
+                </p>
+              ))}
+            </section>
+            {pending && (
+              <section id="admin">
+                <h2>Administração</h2>
+                {metrics && (
+                  <p>
+                    Matches: {metrics.matches} · Conversas:{" "}
+                    {metrics.conversations} · Reuniões confirmadas/concluídas:{" "}
+                    {metrics.meetings}
+                  </p>
+                )}
+                {[
+                  ["startup", pending.startups],
+                  ["investor", pending.investors],
+                ].flatMap(([k, rows]) =>
+                  rows.map((p) => (
+                    <article key={p.id}>
+                      <h3>{p.name}</h3>
+                      <p>
+                        {p.description ||
+                          p.bio ||
+                          "Apresentação ainda não preenchida."}
+                      </p>
+                      <Link
+                        to={`/painel?kind=${k === "startup" ? "startups" : "investors"}&id=${p.id}`}
+                      >
+                        Inspecionar perfil
+                      </Link>
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          const f = new FormData(e.currentTarget);
+                          act(() =>
+                            api(`/admin/profiles/${k}/${p.id}`, {
+                              method: "PATCH",
+                              body: {
+                                status: f.get("status"),
+                                reason: f.get("reason"),
+                              },
+                            }),
+                          );
+                        }}
+                      >
+                        <label>
+                          Decisão
+                          <select name="status">
+                            <option value="APPROVED">Aprovar</option>
+                            <option value="REJECTED">Reprovar</option>
+                          </select>
+                        </label>
+                        <label>
+                          Justificativa
+                          <input
+                            name="reason"
+                            minLength={10}
+                            maxLength={1000}
+                            required
+                          />
+                        </label>
+                        <button disabled={busy}>Registrar análise</button>
+                      </form>
+                    </article>
+                  )),
+                )}
+              </section>
             )}
-          </section>
+            <footer>
+              <p>
+                Página {page} das listas de conexões, agenda, avisos e
+                moderação.
+              </p>
+              <button
+                disabled={page === 1 || busy}
+                onClick={() => setPage((p) => p - 1)}
+              >
+                Anterior
+              </button>
+              <button
+                disabled={
+                  busy ||
+                  (connections.length < 20 &&
+                    meetings.length < 20 &&
+                    notifications.length < 20 &&
+                    (!pending ||
+                      (pending.startups.length < 20 &&
+                        pending.investors.length < 20)))
+                }
+                onClick={() => setPage((p) => p + 1)}
+              >
+                Próxima
+              </button>
+            </footer>
+          </>
         )}
-        <footer>
-          <p>
-            Página {page} das listas de conexões, agenda, avisos e moderação.
-          </p>
-          <button
-            disabled={page === 1 || busy}
-            onClick={() => setPage((p) => p - 1)}
-          >
-            Anterior
-          </button>
-          <button
-            disabled={
-              busy ||
-              (connections.length < 20 &&
-                meetings.length < 20 &&
-                notifications.length < 20 &&
-                (!pending ||
-                  (pending.startups.length < 20 &&
-                    pending.investors.length < 20)))
-            }
-            onClick={() => setPage((p) => p + 1)}
-          >
-            Próxima
-          </button>
-        </footer>
       </main>
     </Shell>
   );

@@ -1,3 +1,4 @@
+import { profileStatus } from "../../lib/profile";
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { api } from "../../lib/api";
@@ -234,9 +235,7 @@ export default function StartupProfile() {
                   {busy ? "Salvando…" : "Salvar perfil"}
                 </button>
               </div>
-              <small>
-                Alterações persistidas podem reabrir o perfil para análise.
-              </small>
+              <small>Mantenha as informações da sua startup atualizadas.</small>
             </form>
           )}
 
@@ -413,7 +412,7 @@ export default function StartupProfile() {
           </section>
           <section className="missing-card">
             <h2>Visibilidade</h2>
-            <p>Status: {startup.status || "Não informado"}</p>
+            <p>Status: {profileStatus(startup.status)}</p>
             <p>Materiais públicos: {startup.materialsPublic ? "Sim" : "Não"}</p>
           </section>
           <section className="missing-card">

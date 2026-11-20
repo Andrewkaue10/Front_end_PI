@@ -1230,3 +1230,195 @@
     padding: 20px 16px 90px;
   }
 }
+/* Read-only public presentation, separate from account management. */
+.area-shell .nx-workspace.nx-public-view {
+  display: block;
+  max-width: 1120px;
+  width: 100%;
+}
+.nx-public-view > header {
+  margin-bottom: 28px;
+}
+.nx-public-view > .nx-public-profile {
+  background: #fff;
+  padding: 32px;
+  border-radius: 22px;
+}
+.nx-public-view .nx-public-profile > h2 {
+  padding: 30px;
+  margin: -32px -32px 24px;
+  background: linear-gradient(120deg, #eaf0ff, #f4f7ff);
+  border-radius: 22px 22px 0 0;
+  font-size: 36px;
+}
+.nx-public-view .nx-public-profile > p {
+  font-size: 16px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-width: 850px;
+}
+.nx-public-view .nx-canvas {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.nx-public-view .nx-canvas p {
+  min-height: 120px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.nx-public-view .nx-canvas strong {
+  font-size: 13px;
+}
+.nx-public-view form {
+  border-top: 1px solid #e1e7f0;
+  padding-top: 24px;
+  margin-top: 32px;
+  max-width: 760px;
+}
+.startup-shell .profile-layout {
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+  align-items: start;
+}
+.startup-shell .profile-section {
+  padding: 28px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid #e2e8f2;
+}
+.startup-shell .profile-section h2 {
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+.startup-shell .profile-grid {
+  gap: 22px;
+  align-items: start;
+}
+.startup-shell .profile-grid label {
+  font-size: 14px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #4e607b;
+}
+.startup-shell .profile-grid input,
+.startup-shell .profile-grid select,
+.startup-shell .profile-grid textarea {
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 12px 14px;
+  border: 1px solid #d9e2ef;
+  border-radius: 10px;
+  min-height: 48px;
+  width: 100%;
+  color: #1b2b46;
+}
+.startup-shell .profile-grid textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+.startup-shell .profile-grid label:has(textarea) {
+  grid-column: 1/-1;
+}
+.startup-shell .missing-primary {
+  font-size: 14px;
+  min-height: 44px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+.startup-shell .profile-actions {
+  margin-top: 24px;
+}
+.startup-shell .metric-row {
+  padding: 20px;
+  border-radius: 14px;
+  background: #f6f8fc;
+  gap: 16px;
+}
+.startup-shell .metric-row strong {
+  display: block;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.startup-shell .metric-row small {
+  display: block;
+  font-size: 13px;
+  margin-top: 6px;
+  color: #65758d;
+}
+.startup-shell .missing-aside .missing-card {
+  padding: 24px;
+  border-radius: 18px;
+}
+.startup-shell .missing-aside h2 {
+  font-size: 18px;
+  line-height: 1.45;
+}
+.startup-shell .missing-aside p {
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.startup-shell .profile-tabs {
+  gap: 6px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.startup-shell .profile-tabs button {
+  font-size: 14px;
+  min-height: 44px;
+  padding: 12px 18px;
+}
+@media (max-width: 1000px) {
+  .startup-shell .profile-layout {
+    grid-template-columns: 1fr;
+  }
+  .nx-public-view .nx-canvas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .startup-shell .profile-grid {
+    grid-template-columns: 1fr;
+  }
+  .startup-shell .profile-section {
+    padding: 20px;
+  }
+  .nx-public-view > .nx-public-profile {
+    padding: 20px;
+  }
+  .nx-public-view .nx-public-profile > h2 {
+    margin: -20px -20px 20px;
+    padding: 24px;
+    font-size: 28px;
+  }
+  .nx-public-view .nx-canvas {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 820px) {
+  .startup-shell__sidebar,
+  .startup-sidebar {
+    min-height: 64px;
+    height: 64px;
+    padding: 6px;
+  }
+  .startup-shell__sidebar nav,
+  .startup-sidebar nav {
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+  .startup-shell__sidebar nav a,
+  .startup-sidebar nav a {
+    flex: 0 0 auto;
+  }
+  .startup-shell .startup-page {
+    padding-bottom: 96px;
+  }
+}
