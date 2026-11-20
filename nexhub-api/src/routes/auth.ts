@@ -2,7 +2,7 @@ import { Router } from "express";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import { randomBytes, createHash, randomUUID } from "node:crypto";
-import nodemailer from "nodemailer";
+import { resetMailConfig, sendPasswordReset } from "../lib/mail";
 import { rateLimit } from "express-rate-limit";
 import { db } from "../lib/db";
 import { HttpError } from "../lib/errors";
@@ -136,11 +136,7 @@ authRoutes.post("/forgot-password", async (req, res) => {
       "Recuperação por telefone depende de provedor SMS e ainda não está disponível. Use e-mail.",
     );
   const address = email.parse(v.contato);
-  if (!process.env.SMTP_HOST || !process.env.SMTP_FROM)
-    throw new HttpError(
-      503,
-      "Envio de e-mail ainda não configurado. Contate a equipe.",
-    );
+  const mailConfig = resetMailConfig();
   const user = await db.user.findUnique({ where: { email: address } });
   if (user?.active) {
     const token = randomBytes(32).toString("hex");
@@ -151,29 +147,11 @@ authRoutes.post("/forgot-password", async (req, res) => {
         expiresAt: new Date(Date.now() + 30 * 60 * 1000),
       },
     });
-    const transport = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT || 587),
-      secure: process.env.SMTP_PORT === "465",
-      ...(process.env.SMTP_USER
-        ? {
-            auth: {
-              user: process.env.SMTP_USER,
-              pass: process.env.SMTP_PASSWORD,
-            },
-          }
-        : {}),
-    });
     try {
-      await transport.sendMail({
-        from: process.env.SMTP_FROM,
-        to: user.email,
-        subject: "Nexhub — redefinir senha",
-        text: `Abra o link em até 30 minutos: ${process.env.FRONTEND_ORIGIN || "http://localhost:5173"}/redefinir-senha?token=${token}`,
-      });
+      await sendPasswordReset(user.email, token, mailConfig);
     } catch {
       await db.resetToken.delete({ where: { id: record.id } });
-      console.error("Falha no envio SMTP; nenhum segredo registrado.");
+      console.error("Falha no envio de recuperação; confira o provedor de e-mail. Nenhum segredo registrado.");
     }
   }
   res.json({
