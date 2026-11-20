@@ -86,7 +86,8 @@ export default function StartupShell() {
         <nav className="startup-shell__top" aria-label="Navegação principal">
           <Link to="/startup">Início</Link>
           <Link to="/startup/perfil">Perfil</Link>
-          <Link to="/mensagens">Rede</Link>
+          <Link to="/painel#conexoes">Rede</Link>
+          <Link to="/mensagens">Mensagens</Link>
         </nav>
       </header>
       <aside className="startup-shell__sidebar">
@@ -149,7 +150,11 @@ export default function StartupShell() {
             aria-label="Abrir meu perfil"
             to="/perfil"
           >
-            {initials || "—"}
+            {me.avatarData ? (
+              <img src={me.avatarData} alt="" />
+            ) : (
+              initials || "—"
+            )}
           </Link>
           <div>
             <Link className="account-name" to="/perfil">

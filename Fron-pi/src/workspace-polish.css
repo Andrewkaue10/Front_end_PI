@@ -853,3 +853,380 @@
   font-size: 13px;
   line-height: 1.6;
 }
+/* Shared navigation and complete profile workspace */
+.investor-top-nav,
+.startup-top-nav,
+.startup-shell__top,
+.area-shell__top {
+  gap: 8px;
+  align-items: center;
+}
+.investor-top-nav a,
+.startup-top-nav a,
+.startup-shell__top a,
+.area-shell__top a {
+  font-size: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.investor-top-nav a:hover,
+.startup-top-nav a:hover,
+.startup-shell__top a:hover,
+.area-shell__top a:hover {
+  background: #edf2ff;
+  color: #315de8;
+}
+.investor-layout {
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+}
+.missing-aside .area-card,
+.missing-aside > section {
+  padding: 24px;
+  border-radius: 16px;
+}
+.missing-aside p,
+.missing-aside small {
+  font-size: 13px;
+  line-height: 1.7;
+}
+.qualification-list {
+  display: grid;
+  gap: 16px;
+}
+.qualification-list > div {
+  display: block;
+}
+.qualification-list dt {
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: #6c7a91;
+}
+.qualification-list dd {
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+  margin: 0;
+  color: #253752;
+}
+.area-shell .nx-workspace {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr);
+  gap: 24px;
+  font-size: 14px;
+  align-items: start;
+}
+.nx-workspace > header {
+  grid-column: 1/-1;
+  border: 0;
+  background: transparent;
+  padding: 0 0 8px;
+  margin: 0;
+}
+.nx-workspace > header h1 {
+  font-size: 32px;
+  margin: 12px 0;
+}
+.nx-workspace > section {
+  margin: 0;
+  padding: 26px;
+  border-radius: 20px;
+  min-width: 0;
+}
+.nx-workspace > .nx-public-profile {
+  grid-column: 1;
+  grid-row: span 4;
+  background: linear-gradient(#eaf0ff 0 240px, #fff 240px);
+}
+.nx-public-profile > h2 {
+  font-size: 36px;
+  margin: 8px 0 20px;
+}
+.nx-public-profile > p {
+  font-size: 15px;
+  line-height: 1.8;
+}
+.nx-public-profile h3 {
+  margin: 28px 0 16px;
+}
+.nx-workspace .nx-canvas {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.nx-canvas p {
+  background: #f5f7fc;
+  border-radius: 12px;
+  padding: 18px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.nx-canvas strong {
+  display: block;
+  color: #62718a;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.nx-workspace input:not([type="checkbox"]),
+.nx-workspace textarea,
+.nx-workspace select {
+  border-color: #dce4f0;
+  min-height: 44px;
+  background: white;
+}
+.nx-workspace button {
+  background: #315de8;
+  border: 0;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+.nx-workspace a {
+  text-decoration: none;
+  font-weight: 500;
+}
+.nx-workspace > p,
+.nx-workspace > footer {
+  grid-column: 1/-1;
+}
+/* Startup uses the same visual system as the professional area. */
+.startup-home,
+.startup-shell {
+  --startup-accent: #315de8;
+  --startup-accent-soft: #edf2ff;
+  background: #f5f7fc;
+  grid-template-rows: 72px minmax(0, 1fr);
+  font-size: 14px;
+}
+.startup-home {
+  grid-template-columns: 244px minmax(0, 1fr) 320px;
+}
+.startup-shell {
+  grid-template-columns: 244px minmax(0, 1fr);
+}
+.startup-header,
+.startup-shell__header {
+  height: 72px;
+}
+.startup-sidebar,
+.startup-shell__sidebar {
+  background: #101e39;
+  padding: 16px;
+  min-height: calc(100vh - 72px);
+  border: 0;
+}
+.startup-sidebar nav a,
+.startup-shell__sidebar nav a {
+  color: #c2cde2;
+  font-size: 14px;
+  min-height: 44px;
+  border-radius: 10px;
+}
+.startup-sidebar nav a.active,
+.startup-shell__sidebar nav a.active {
+  background: #315de8;
+  color: #fff;
+}
+.startup-sidebar nav a:hover,
+.startup-shell__sidebar nav a:hover {
+  background: #203453;
+  color: #fff;
+}
+.startup-account,
+.startup-shell__account {
+  border-color: #2b3c58;
+}
+.startup-account strong,
+.startup-shell__account strong {
+  color: #fff;
+  font-size: 13px;
+}
+.startup-account small,
+.startup-shell__account small {
+  color: #b2c2da;
+  font-size: 12px;
+}
+.startup-main,
+.startup-shell__content {
+  padding: 32px;
+  min-width: 0;
+}
+.startup-main h1,
+.startup-shell h1 {
+  font-size: 28px;
+}
+.startup-main h2,
+.startup-shell h2 {
+  font-size: 20px;
+}
+.startup-main p,
+.startup-shell p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.startup-main small,
+.startup-shell small {
+  font-size: 12px;
+}
+.startup-card-grid article,
+.mentor-card,
+.startup-pitch {
+  padding: 24px;
+  border-radius: 18px;
+  border: 1px solid #e3e9f2;
+}
+.professional-details dt,
+.startup-profile-details dt {
+  font-size: 12px;
+}
+.professional-details dd,
+.startup-profile-details dd {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.startup-context {
+  background: #f5f7fc;
+  padding: 24px 16px;
+  border: 0;
+}
+.startup-context > section {
+  padding: 22px;
+  background: #fff;
+  border: 1px solid #e3e9f2;
+  border-radius: 18px;
+  margin-bottom: 20px;
+}
+.startup-context h2 {
+  font-size: 17px;
+}
+.startup-context p,
+.startup-context strong,
+.startup-context dd {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.startup-context a,
+.startup-context small,
+.startup-context dt {
+  font-size: 12px;
+}
+@media (max-width: 1200px) {
+  .investor-layout {
+    grid-template-columns: minmax(0, 1fr) 260px;
+  }
+  .startup-home {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+  .startup-context {
+    grid-column: 2;
+  }
+  .area-shell .nx-workspace {
+    grid-template-columns: 1fr;
+  }
+  .nx-workspace > .nx-public-profile {
+    grid-row: auto;
+    grid-column: auto;
+  }
+  .investor-header,
+  .startup-header {
+    grid-template-columns: auto minmax(100px, 1fr) auto;
+  }
+  .investor-global-search,
+  .startup-global-search {
+    max-width: 300px;
+  }
+}
+@media (max-width: 760px) {
+  .investor-layout {
+    display: block;
+  }
+  .missing-aside {
+    margin-top: 24px;
+  }
+  .startup-home {
+    display: block;
+  }
+  .startup-shell {
+    display: block;
+  }
+  .startup-main,
+  .startup-shell__content {
+    padding: 20px 16px 90px;
+  }
+  .startup-context {
+    padding-bottom: 90px;
+  }
+  .startup-header,
+  .startup-shell__header {
+    height: auto;
+    min-height: 72px;
+    flex-wrap: wrap;
+  }
+  .startup-top-nav,
+  .investor-top-nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .startup-global-search,
+  .investor-global-search {
+    display: none;
+  }
+  .startup-header,
+  .investor-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .startup-top-nav a,
+  .investor-top-nav a,
+  .area-shell__top a,
+  .startup-shell__top a {
+    font-size: 12px;
+    padding: 10px 8px;
+  }
+  .nx-workspace .nx-canvas {
+    grid-template-columns: 1fr;
+  }
+  .nx-workspace > section {
+    padding: 20px;
+  }
+  .nx-public-profile > h2 {
+    font-size: 28px;
+  }
+}
+.startup-shell > .area-page {
+  padding: 32px;
+  min-width: 0;
+  max-width: 1400px;
+  width: 100%;
+}
+.startup-shell .area-form label,
+.startup-shell .area-form input,
+.startup-shell .area-form textarea,
+.startup-shell .area-form select {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.startup-shell .area-card {
+  padding: 24px;
+  border-radius: 18px;
+}
+.startup-shell .area-button {
+  font-size: 13px;
+  min-height: 42px;
+}
+.startup-brand,
+.startup-shell__brand {
+  color: #ff5b3e;
+}
+@media (max-width: 760px) {
+  .startup-shell > .area-page {
+    padding: 20px 16px 90px;
+  }
+}

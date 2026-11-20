@@ -193,8 +193,8 @@ export default function StartupHome() {
           <Link className="active" to="/startup">
             Início
           </Link>
-          <Link to="/painel">Perfil</Link>
-          <Link to="/mensagens">Rede</Link>
+          <Link to="/perfil">Meu perfil</Link>
+          <Link to="/painel#conexoes">Rede</Link>
           <Link to="/mensagens">Mensagens</Link>
         </nav>
       </header>
@@ -205,7 +205,7 @@ export default function StartupHome() {
             <Home size={16} />
             <span>Início</span>
           </Link>
-          <Link to="/painel#perfil">
+          <Link to="/startup/perfil">
             <BriefcaseBusiness size={16} />
             <span>Perfil da startup</span>
           </Link>
@@ -236,15 +236,23 @@ export default function StartupHome() {
             <Mail size={16} />
             <span>Mensagens</span>
           </Link>
-          <Link to="/painel#perfil">
+          <Link to="/configuracoes">
             <Settings size={16} />
             <span>Configurações</span>
           </Link>
         </nav>
         <div className="startup-account">
-          <span>{initials(startup?.name || me.name)}</span>
+          <Link className="account-avatar" to="/perfil" aria-label="Meu perfil">
+            {me.avatarData ? (
+              <img src={me.avatarData} alt="" />
+            ) : (
+              initials(startup?.name || me.name)
+            )}
+          </Link>
           <div>
-            <strong>{startup?.name || me.name}</strong>
+            <Link to="/perfil">
+              <strong>{startup?.name || me.name}</strong>
+            </Link>
             <small>Startup</small>
           </div>
           <button onClick={logout} aria-label="Sair">
@@ -414,7 +422,7 @@ export default function StartupHome() {
         <section>
           <div className="startup-context-heading">
             <h2>Notificações</h2>
-            <Link to="/painel#avisos">Ver todas</Link>
+            <Link to="/notificacoes">Ver todas</Link>
           </div>
           {notifications.length === 0 ? (
             <p className="startup-context-empty">Nenhuma notificação.</p>
@@ -445,7 +453,7 @@ export default function StartupHome() {
         <section>
           <div className="startup-context-heading">
             <h2>Perfil da startup</h2>
-            <Link to="/painel#perfil">Editar</Link>
+            <Link to="/startup/perfil">Editar</Link>
           </div>
           <dl className="startup-profile-details">
             <div>

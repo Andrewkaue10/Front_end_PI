@@ -228,8 +228,8 @@ export default function Feed() {
           <Link className="active" to="/feed">
             Início
           </Link>
-          <Link to="/para-investidores">Explorar</Link>
-          <Link to="/feed" onClick={() => setMode("recommended")}>
+          <Link to="/investidor/matches">Explorar</Link>
+          <Link to="/painel#conexoes">
             Rede
           </Link>
           <Link to="/mensagens">Mensagens</Link>
