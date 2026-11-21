@@ -251,9 +251,6 @@ function Content({ me }) {
                         : "Gerado por Gemini"}
                   </span>
                 </div>
-                <p className="alia-note">
-                  <strong>Sua pergunta:</strong> {selected.question}
-                </p>
                 <p>{result.answer.summary}</p>
                 <div className="alia-actions">
                   {result.answer.actions.map((a, i) => (
