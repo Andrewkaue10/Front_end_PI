@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Sparkles,
   ArrowUpRight,
@@ -11,20 +11,66 @@ import AreaShell from "../../components/AreaShell/AreaShell";
 import { api } from "../../lib/api";
 import "./Alia.css";
 const prompts = {
-  diagnostico:
+  diagnostico: [
     "Minha startup está começando. Como posso validar se o problema do cliente é relevante?",
-  pitch:
+    "Recebemos elogios sobre a ideia, mas ninguém comprou. Que evidências devemos buscar antes de investir mais?",
+    "Temos muitos cadastros e poucos usuários que voltam. Como investigar a causa e escolher uma métrica útil?",
+    "Quero entrevistar possíveis clientes sem induzir respostas positivas. Que perguntas devo fazer?",
+    "Nossa equipe discorda sobre o público prioritário. Como testar qual segmento tem a necessidade mais urgente?",
+    "Quais hipóteses do nosso negócio deveríamos validar primeiro com pouco tempo e orçamento?",
+  ],
+  pitch: [
     "Como organizar um pitch convincente sem inventar resultados que ainda não temos?",
-  modelo:
+    "Tenho dois minutos para apresentar minha startup. Como priorizar problema, solução e pedido?",
+    "Ainda não temos clientes pagantes. Como apresentar nossas evidências com transparência em um pitch?",
+    "Como adaptar o pitch para um mentor, em vez de um investidor?",
+    "Meu pitch descreve muitas funcionalidades. Como explicar melhor o benefício para o cliente?",
+    "Como preparar respostas honestas para perguntas sobre concorrência, receita e riscos da startup?",
+  ],
+  modelo: [
     "Como testar o preço de uma assinatura e descobrir se nossos clientes pagariam?",
-  solucao:
+    "Estamos entre cobrar por assinatura ou por uso. Que experimento ajudaria a comparar essas opções?",
+    "Como identificar os principais custos por cliente antes de definir nosso preço?",
+    "Temos usuários gratuitos interessados. Como testar uma oferta paga sem confundir interesse com intenção real de compra?",
+    "Como comparar canais de aquisição com orçamento pequeno e medir o custo por cliente?",
+    "Nossa receita ainda é irregular. Quais dados precisamos coletar para avaliar se o modelo pode se sustentar?",
+  ],
+  solucao: [
     "Como reduzir o escopo do MVP e medir se as pessoas conseguem usar o produto?",
-  mercado:
+    "Os usuários precisam de ajuda para concluir a tarefa principal. Como organizar um teste de usabilidade?",
+    "Recebemos pedidos de muitas funcionalidades. Como decidir o que construir primeiro?",
+    "Como testar o valor da solução com um protótipo antes de desenvolver o produto completo?",
+    "Quero tornar nosso produto mais acessível para pessoas com pouca familiaridade digital. Como validar as melhorias?",
+    "Os usuários abandonam o cadastro. Como investigar o problema sem assumir que a solução é mudar o design?",
+  ],
+  mercado: [
     "Como identificar concorrentes e alternativas sem inventar números de mercado?",
-  plano30:
+    "Nossos clientes usam planilhas e processos manuais. Como comparar essas alternativas com nossa proposta?",
+    "Como escolher um nicho inicial sem tentar atender todos os públicos ao mesmo tempo?",
+    "Que fontes e premissas devo registrar para estimar o tamanho do mercado com transparência?",
+    "Como investigar se o diferencial que anunciamos realmente importa para os clientes?",
+    "Queremos atuar em outra região. Que hipóteses de mercado precisamos validar antes de expandir?",
+  ],
+  plano30: [
     "Preciso de um plano de 30 dias para validar nosso produto com poucos recursos.",
+    "Somos duas pessoas com cinco horas semanais cada. Como planejar um mês de entrevistas e testes de protótipo?",
+    "Quero testar uma oferta paga nos próximos 30 dias. Como dividir as etapas e definir critérios de decisão?",
+    "Nosso MVP já existe, mas a retenção é baixa. Como organizar quatro semanas de investigação e experimentos?",
+    "Temos várias ideias e nenhum foco. Como montar um plano mensal com responsáveis, prioridades e entregas?",
+    "Como planejar 30 dias para preparar um pitch baseado em evidências, incluindo o tempo necessário para coletá-las?",
+  ],
 };
 function Content({ me }) {
+  const examplePositions = useRef({});
+  function useExample() {
+    const choices = prompts[topic];
+    if (!choices?.length) return;
+    const index =
+      examplePositions.current[topic] ??
+      Math.floor(Math.random() * choices.length);
+    setMessage(choices[index]);
+    examplePositions.current[topic] = (index + 1) % choices.length;
+  }
   const [data, setData] = useState(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
@@ -169,10 +215,11 @@ function Content({ me }) {
                 <button
                   type="button"
                   className="alia-link"
-                  onClick={() => setMessage(prompts[topic])}
+                  onClick={useExample}
                   disabled={busy}
                 >
-                  Usar exemplo deste tema <ArrowUpRight size={14} />
+                  Outro exemplo do tema · sem gastar análise{" "}
+                  <ArrowUpRight size={14} />
                 </button>
                 <small>{message.length}/4000</small>
               </div>
