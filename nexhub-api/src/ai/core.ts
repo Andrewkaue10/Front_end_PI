@@ -21,7 +21,7 @@ export const inputSchema = z
       "mercado",
       "plano30",
     ]),
-    mode: z.enum(["local", "gemini"]).default("gemini"),
+    mode: z.literal("gemini").default("gemini"),
     useProfile: z.boolean().default(false),
   })
   .strict();

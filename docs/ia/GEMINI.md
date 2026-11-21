@@ -1,3 +1,5 @@
+> Atualização: somente Gemini está disponível na interface e na API de análises. Não há modo local nem fallback. Registros antigos e avaliações da busca permanecem como histórico técnico.
+
 # Atualização: A.L.I.A com Gemini
 
 A pedido da equipe, Gemini substitui Claude como provedor generativo. A biblioteca local é apenas referência editorial, pode repetir orientações e não é usada automaticamente quando o Gemini falha. Gemini é a seleção inicial; sem chave, a geração fica desabilitada.

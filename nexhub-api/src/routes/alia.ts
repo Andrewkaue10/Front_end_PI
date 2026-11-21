@@ -7,7 +7,6 @@ import {
   topics,
   inputSchema,
   prepareProfile,
-  localAnalysis,
   generateGemini,
   dayStart,
 } from "../ai/core";
@@ -58,7 +57,7 @@ alia.post("/alia/analyze", async (req, res) => {
   const input = inputSchema.parse(req.body),
     userId = req.user!.userId;
   const preference = await db.aiPreference.findUnique({ where: { userId } });
-  if (input.mode === "gemini" && !preference?.geminiConsent)
+  if (!preference?.geminiConsent)
     throw new HttpError(
       403,
       "Autorize o envio para a Google antes de usar o Gemini.",
@@ -68,8 +67,8 @@ alia.post("/alia/analyze", async (req, res) => {
       403,
       "Autorize a análise do perfil antes de incluí-lo.",
     );
-  if (input.mode === "gemini" && !process.env.GEMINI_API_KEY)
-    throw new HttpError(503, "Gemini ainda não configurado. Use o modo local.");
+  if (!process.env.GEMINI_API_KEY)
+    throw new HttpError(503, "Gemini ainda não configurado.");
   const profile = input.useProfile
     ? prepareProfile(
         await db.startup.findUnique({ where: { ownerId: userId } }),
@@ -80,31 +79,23 @@ alia.post("/alia/analyze", async (req, res) => {
     // Serializa apenas a reserva curta; a chamada externa fica fora da transação.
     await tx.$executeRaw`SELECT pg_advisory_xact_lock(71920421)`;
     const where = { userId, createdAt: { gte: dayStart() } };
-    if (input.mode === "gemini") {
-      const [used, total] = await Promise.all([
-        tx.aiAnalysis.count({
-          where: { ...where, mode: "gemini", status: { not: "FAILED" } },
-        }),
-        tx.aiAnalysis.count({
-          where: { mode: "gemini", createdAt: { gte: dayStart() } },
-        }),
-      ]);
-      if (used >= limit)
-        throw new HttpError(
-          429,
-          "Você atingiu as cinco análises Gemini de hoje. O modo local continua disponível.",
-        );
-      if (total >= globalLimit())
-        throw new HttpError(
-          429,
-          "O limite diário de uso externo foi atingido. Use o modo local.",
-        );
-    } else if (
-      (await tx.aiAnalysis.count({ where: { ...where, mode: "local" } })) >= 100
-    )
+    const [used, total] = await Promise.all([
+      tx.aiAnalysis.count({
+        where: { ...where, mode: "gemini", status: { not: "FAILED" } },
+      }),
+      tx.aiAnalysis.count({
+        where: { mode: "gemini", createdAt: { gte: dayStart() } },
+      }),
+    ]);
+    if (used >= limit)
       throw new HttpError(
         429,
-        "Limite de 100 análises locais por dia atingido.",
+        "Você atingiu as cinco análises Gemini de hoje. Tente novamente amanhã.",
+      );
+    if (total >= globalLimit())
+      throw new HttpError(
+        429,
+        "O limite diário de uso externo foi atingido. Tente novamente amanhã.",
       );
     return tx.aiAnalysis.create({
       data: {
@@ -117,10 +108,7 @@ alia.post("/alia/analyze", async (req, res) => {
     });
   });
   try {
-    const result =
-      input.mode === "local"
-        ? localAnalysis(input.message, input.topic, profile)
-        : await generateGemini(input.message, input.topic, profile);
+    const result = await generateGemini(input.message, input.topic, profile);
     const saved = await db.aiAnalysis.update({
       where: { id: analysis.id, hidden: false },
       data: {
@@ -144,7 +132,7 @@ alia.post("/alia/analyze", async (req, res) => {
     );
     throw new HttpError(
       502,
-      "Não foi possível concluir a análise. A cota pessoal foi devolvida; tente o modo local.",
+      "Não foi possível concluir a análise. A cota pessoal foi devolvida; tente novamente mais tarde.",
     );
   }
 });

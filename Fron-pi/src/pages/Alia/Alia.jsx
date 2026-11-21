@@ -30,7 +30,6 @@ function Content({ me }) {
     [busy, setBusy] = useState(false),
     [saving, setSaving] = useState(false);
   const [topic, setTopic] = useState("diagnostico"),
-    [mode, setMode] = useState("gemini"),
     [message, setMessage] = useState(""),
     [useProfile, setUseProfile] = useState(false),
     [selected, setSelected] = useState(null);
@@ -72,7 +71,7 @@ function Content({ me }) {
     try {
       const result = await api("/alia/analyze", {
         method: "POST",
-        body: { message, topic, mode, useProfile },
+        body: { message, topic, mode: "gemini", useProfile },
       });
       setSelected(result);
       await refresh();
@@ -114,11 +113,7 @@ function Content({ me }) {
             ações que você pode medir.
           </p>
         </div>
-        <span className="alia-badge">
-          {mode === "local"
-            ? "Busca local · sem API externa"
-            : "Gemini · IA generativa"}
-        </span>
+        <span className="alia-badge">Gemini · IA generativa</span>
       </header>
       {error && (
         <div className="alia-alert" role="alert">
@@ -137,9 +132,7 @@ function Content({ me }) {
             <form className="alia-card" onSubmit={submit}>
               {!data.geminiConfigured && (
                 <p role="status" className="alia-note">
-                  A geração com Gemini aguarda ativação. A biblioteca local
-                  contém orientações prontas e não substitui uma resposta
-                  gerada.
+                  A geração com Gemini aguarda ativação.
                 </p>
               )}
               <h2>O que vamos trabalhar hoje?</h2>
@@ -156,24 +149,9 @@ function Content({ me }) {
                   </button>
                 ))}
               </div>
-              <label className="alia-field">
-                Modo de análise
-                <select
-                  value={mode}
-                  onChange={(e) => setMode(e.target.value)}
-                  disabled={busy}
-                >
-                  <option value="local">
-                    Biblioteca local — orientações prontas (não generativa)
-                  </option>
-                  <option value="gemini" disabled={!data.geminiConfigured}>
-                    Gemini —{" "}
-                    {data.geminiConfigured
-                      ? `${data.remainingToday} análises disponíveis hoje`
-                      : "aguardando configuração"}
-                  </option>
-                </select>
-              </label>
+              <p className="alia-muted">
+                Gemini · {data.remainingToday} análises disponíveis hoje
+              </p>
               <label className="alia-field">
                 Conte o seu desafio
                 <textarea
@@ -212,10 +190,8 @@ function Content({ me }) {
               )}
               <p className="alia-muted">
                 Cada análise é independente. Não envie senhas, dados de clientes
-                ou informações confidenciais.{" "}
-                {mode === "local"
-                  ? "O modo local não envia dados ao Google."
-                  : "A pergunta e o perfil selecionado serão enviados ao Google."}
+                ou informações confidenciais. A pergunta e o perfil selecionado
+                serão enviados ao Google.
               </p>
               <button
                 className="alia-primary"
@@ -224,10 +200,9 @@ function Content({ me }) {
                   busy ||
                   saving ||
                   message.trim().length < 15 ||
-                  (mode === "gemini" &&
-                    (!data.geminiConfigured ||
-                      !data.preference.geminiConsent ||
-                      data.remainingToday === 0))
+                  !data.geminiConfigured ||
+                  !data.preference.geminiConsent ||
+                  data.remainingToday === 0
                 }
               >
                 {busy ? (
@@ -305,9 +280,8 @@ function Content({ me }) {
               <BookOpen size={22} />
               <h2>Você no controle</h2>
               <p>
-                A biblioteca local possui 12 orientações prontas e pode repetir
-                respostas. O Gemini pode aprofundar a análise, se estiver
-                configurado.
+                O Gemini gera uma análise a partir do seu desafio e das
+                informações que você autorizar.
               </p>
               <label className="alia-check">
                 <input

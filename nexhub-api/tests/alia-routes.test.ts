@@ -72,9 +72,13 @@ test("rotas: consentimento, propriedade, cotas, persistência e falha externa", 
   const input = {
     message: "Como validar o problema com entrevistas?",
     topic: "diagnostico",
-    mode: "local",
+    mode: "gemini",
   };
   try {
+    await request(app)
+      .post("/alia/analyze")
+      .send({ ...input, mode: "local" })
+      .expect(400);
     await request(app)
       .post("/alia/analyze")
       .send({ ...input, userId: "outro" })
@@ -98,6 +102,35 @@ test("rotas: consentimento, propriedade, cotas, persistência e falha externa", 
       .post("/alia/analyze")
       .send({ ...input, mode: "gemini" })
       .expect(503);
+    process.env.GEMINI_API_KEY = "mock";
+    global.fetch = (async () =>
+      new Response(
+        JSON.stringify({
+          candidates: [
+            {
+              finishReason: "STOP",
+              content: {
+                parts: [
+                  {
+                    text: JSON.stringify({
+                      summary: "Análise de teste",
+                      actions: [
+                        {
+                          title: "Validar",
+                          detail: "Entrevistar clientes",
+                          metric: "Cinco entrevistas",
+                        },
+                      ],
+                      missingInformation: [],
+                      limitations: "Teste simulado",
+                    }),
+                  },
+                ],
+              },
+            },
+          ],
+        }),
+      )) as typeof fetch;
     const success = await request(app)
       .post("/alia/analyze")
       .send({ ...input, useProfile: true })
