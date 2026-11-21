@@ -5,7 +5,7 @@ import {
   retrieve,
   tokenize,
   localAnalysis,
-  generateClaude,
+  generateGemini,
   Topic,
   VERSION,
 } from "../src/ai/core";
@@ -56,26 +56,26 @@ async function main() {
     acceptance: { targetTop1: 0.75, passed: rate("top1") >= 0.75 },
     cases: rows,
   };
-  if (process.argv.includes("--claude")) {
-    if (!process.env.ANTHROPIC_API_KEY)
+  if (process.argv.includes("--gemini")) {
+    if (!process.env.GEMINI_API_KEY)
       throw new Error(
-        "Configure ANTHROPIC_API_KEY no ambiente; não registre a chave no relatório.",
+        "Configure GEMINI_API_KEY no ambiente; não registre a chave no relatório.",
       );
-    report.claude = [];
+    report.gemini = [];
     for (const c of cases.filter(
       (_: unknown, index: number) => index < 12 && index % 2 === 0,
     )) {
       const start = Date.now();
       try {
-        const result = await generateClaude(c.question, c.topic as Topic, null);
-        report.claude.push({
+        const result = await generateGemini(c.question, c.topic as Topic, null);
+        report.gemini.push({
           id: c.id,
           ...result,
           durationMs: Date.now() - start,
           humanReview: "PENDENTE",
         });
       } catch {
-        report.claude.push({
+        report.gemini.push({
           id: c.id,
           error: "Falha na geração ou validação do JSON",
           humanReview: "PENDENTE",
@@ -84,8 +84,8 @@ async function main() {
     }
   }
   mkdirSync(resolve("evaluation/results"), { recursive: true });
-  const filename = process.argv.includes("--claude")
-    ? "claude.json"
+  const filename = process.argv.includes("--gemini")
+    ? "gemini.json"
     : "local.json";
   writeFileSync(
     resolve("evaluation/results", filename),

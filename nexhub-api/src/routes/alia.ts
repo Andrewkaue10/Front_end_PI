@@ -8,7 +8,7 @@ import {
   inputSchema,
   prepareProfile,
   localAnalysis,
-  generateClaude,
+  generateGemini,
   dayStart,
 } from "../ai/core";
 export const alia = Router();
@@ -24,7 +24,7 @@ alia.get("/alia/me", async (req, res) => {
     db.aiAnalysis.count({
       where: {
         userId,
-        mode: "claude",
+        mode: "gemini",
         createdAt: { gte: dayStart() },
         status: { not: "FAILED" },
       },
@@ -37,12 +37,12 @@ alia.get("/alia/me", async (req, res) => {
   ]);
   res.json({
     topics,
-    claudeConfigured: Boolean(process.env.ANTHROPIC_API_KEY),
+    geminiConfigured: Boolean(process.env.GEMINI_API_KEY),
     remainingToday: Math.max(0, limit - used),
     preference: preference || {
       enabled: false,
       profileAnalysisEnabled: false,
-      externalProviderConsent: false,
+      geminiConsent: false,
     },
     history,
   });
@@ -58,18 +58,18 @@ alia.post("/alia/analyze", async (req, res) => {
   const input = inputSchema.parse(req.body),
     userId = req.user!.userId;
   const preference = await db.aiPreference.findUnique({ where: { userId } });
-  if (input.mode === "claude" && !preference?.externalProviderConsent)
+  if (input.mode === "gemini" && !preference?.geminiConsent)
     throw new HttpError(
       403,
-      "Autorize o envio para a Anthropic antes de usar o Claude.",
+      "Autorize o envio para a Google antes de usar o Gemini.",
     );
   if (input.useProfile && !preference?.profileAnalysisEnabled)
     throw new HttpError(
       403,
       "Autorize a análise do perfil antes de incluí-lo.",
     );
-  if (input.mode === "claude" && !process.env.ANTHROPIC_API_KEY)
-    throw new HttpError(503, "Claude ainda não configurado. Use o modo local.");
+  if (input.mode === "gemini" && !process.env.GEMINI_API_KEY)
+    throw new HttpError(503, "Gemini ainda não configurado. Use o modo local.");
   const profile = input.useProfile
     ? prepareProfile(
         await db.startup.findUnique({ where: { ownerId: userId } }),
@@ -80,19 +80,19 @@ alia.post("/alia/analyze", async (req, res) => {
     // Serializa apenas a reserva curta; a chamada externa fica fora da transação.
     await tx.$executeRaw`SELECT pg_advisory_xact_lock(71920421)`;
     const where = { userId, createdAt: { gte: dayStart() } };
-    if (input.mode === "claude") {
+    if (input.mode === "gemini") {
       const [used, total] = await Promise.all([
         tx.aiAnalysis.count({
-          where: { ...where, mode: "claude", status: { not: "FAILED" } },
+          where: { ...where, mode: "gemini", status: { not: "FAILED" } },
         }),
         tx.aiAnalysis.count({
-          where: { mode: "claude", createdAt: { gte: dayStart() } },
+          where: { mode: "gemini", createdAt: { gte: dayStart() } },
         }),
       ]);
       if (used >= limit)
         throw new HttpError(
           429,
-          "Você atingiu as cinco análises Claude de hoje. O modo local continua disponível.",
+          "Você atingiu as cinco análises Gemini de hoje. O modo local continua disponível.",
         );
       if (total >= globalLimit())
         throw new HttpError(
@@ -120,7 +120,7 @@ alia.post("/alia/analyze", async (req, res) => {
     const result =
       input.mode === "local"
         ? localAnalysis(input.message, input.topic, profile)
-        : await generateClaude(input.message, input.topic, profile);
+        : await generateGemini(input.message, input.topic, profile);
     const saved = await db.aiAnalysis.update({
       where: { id: analysis.id, hidden: false },
       data: {

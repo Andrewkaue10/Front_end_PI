@@ -1,3 +1,5 @@
+> **Atualização:** Gemini substituiu Claude. As instruções atuais de provedor, chave, consentimento e avaliação estão em [GEMINI.md](GEMINI.md). As métricas locais abaixo permanecem válidas; referências ao Claude descrevem a primeira versão.
+
 # A.L.I.A — documentação técnica do PI, 2ª unidade
 
 Versão: alia-v1 · 20/11/2026. Leia também [a auditoria](AUDITORIA_ANDREW.md), [o roteiro](APRESENTACAO.md) e [a operação](HOSPEDAGEM.md).

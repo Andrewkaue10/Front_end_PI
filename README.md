@@ -62,7 +62,7 @@ Andrew Kauê e João Gabriel.
 
 ## A.L.I.A — entrega de IA do PI
 
-A A.L.I.A está integrada à API existente e à página autenticada `/alia`. O modo local usa TF-IDF; Claude é opcional e requer chave no backend. Não inicie um segundo backend a partir da pasta de referência.
+A A.L.I.A está integrada à API existente e à página autenticada `/alia`. O modo local usa TF-IDF; Gemini é o provedor generativo e requer chave no backend. Não inicie um segundo backend a partir da pasta de referência.
 
 - [Documentação técnica e resultados](docs/ia/DOCUMENTACAO_TECNICA.md)
 - [Roteiro de apresentação](docs/ia/APRESENTACAO.md)
@@ -71,3 +71,5 @@ A A.L.I.A está integrada à API existente e à página autenticada `/alia`. O m
 - [Casos de avaliação](nexhub-api/evaluation/cases.json) e [resultados locais](nexhub-api/evaluation/results/local.json)
 
 As pastas `alia-backend/` e `files/` preservam o material recebido como referência histórica. Seus SQLs e servidores independentes não são usados pelo deploy.
+
+- [Ativar Gemini na A.L.I.A](docs/ia/GEMINI.md)

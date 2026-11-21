@@ -1,3 +1,5 @@
+> **Atualização:** Gemini substituiu Claude. As instruções atuais de provedor, chave, consentimento e avaliação estão em [GEMINI.md](GEMINI.md). As métricas locais abaixo permanecem válidas; referências ao Claude descrevem a primeira versão.
+
 # Roteiro de apresentação — A.L.I.A no Nexhub
 
 Tempo sugerido: 6 a 8 minutos. Não depende de Claude para demonstrar a busca local. Antes de apresentar, confirme que frontend e backend receberam o mesmo commit e que as migrations foram aplicadas.

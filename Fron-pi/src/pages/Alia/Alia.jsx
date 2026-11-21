@@ -30,7 +30,7 @@ function Content({ me }) {
     [busy, setBusy] = useState(false),
     [saving, setSaving] = useState(false);
   const [topic, setTopic] = useState("diagnostico"),
-    [mode, setMode] = useState("local"),
+    [mode, setMode] = useState("gemini"),
     [message, setMessage] = useState(""),
     [useProfile, setUseProfile] = useState(false),
     [selected, setSelected] = useState(null);
@@ -117,7 +117,7 @@ function Content({ me }) {
         <span className="alia-badge">
           {mode === "local"
             ? "Busca local · sem API externa"
-            : "Claude · IA generativa"}
+            : "Gemini · IA generativa"}
         </span>
       </header>
       {error && (
@@ -135,6 +135,13 @@ function Content({ me }) {
         <div className="alia-layout">
           <div>
             <form className="alia-card" onSubmit={submit}>
+              {!data.geminiConfigured && (
+                <p role="status" className="alia-note">
+                  A geração com Gemini aguarda ativação. A biblioteca local
+                  contém orientações prontas e não substitui uma resposta
+                  gerada.
+                </p>
+              )}
               <h2>O que vamos trabalhar hoje?</h2>
               <div className="alia-topics">
                 {Object.entries(data.topics).map(([key, label]) => (
@@ -157,11 +164,11 @@ function Content({ me }) {
                   disabled={busy}
                 >
                   <option value="local">
-                    Local — orientações por similaridade de texto
+                    Biblioteca local — orientações prontas (não generativa)
                   </option>
-                  <option value="claude" disabled={!data.claudeConfigured}>
-                    Claude —{" "}
-                    {data.claudeConfigured
+                  <option value="gemini" disabled={!data.geminiConfigured}>
+                    Gemini —{" "}
+                    {data.geminiConfigured
                       ? `${data.remainingToday} análises disponíveis hoje`
                       : "aguardando configuração"}
                   </option>
@@ -207,8 +214,8 @@ function Content({ me }) {
                 Cada análise é independente. Não envie senhas, dados de clientes
                 ou informações confidenciais.{" "}
                 {mode === "local"
-                  ? "O modo local não envia dados à Anthropic."
-                  : "A pergunta e o perfil selecionado serão enviados à Anthropic."}
+                  ? "O modo local não envia dados ao Google."
+                  : "A pergunta e o perfil selecionado serão enviados ao Google."}
               </p>
               <button
                 className="alia-primary"
@@ -217,8 +224,9 @@ function Content({ me }) {
                   busy ||
                   saving ||
                   message.trim().length < 15 ||
-                  (mode === "claude" &&
-                    (!data.preference.externalProviderConsent ||
+                  (mode === "gemini" &&
+                    (!data.geminiConfigured ||
+                      !data.preference.geminiConsent ||
                       data.remainingToday === 0))
                 }
               >
@@ -238,10 +246,14 @@ function Content({ me }) {
                   <span className="alia-badge">
                     {selected.mode === "local"
                       ? "Busca TF-IDF"
-                      : "Gerado por Claude"}
+                      : selected.mode === "claude"
+                        ? "Claude (histórico)"
+                        : "Gerado por Gemini"}
                   </span>
                 </div>
-                <p className="alia-note"><strong>Sua pergunta:</strong> {selected.question}</p>
+                <p className="alia-note">
+                  <strong>Sua pergunta:</strong> {selected.question}
+                </p>
                 <p>{result.answer.summary}</p>
                 <div className="alia-actions">
                   {result.answer.actions.map((a, i) => (
@@ -296,20 +308,21 @@ function Content({ me }) {
               <BookOpen size={22} />
               <h2>Você no controle</h2>
               <p>
-                O modo local compara seu texto com 12 orientações curadas. O
-                Claude pode aprofundar a análise, se estiver configurado.
+                A biblioteca local possui 12 orientações prontas e pode repetir
+                respostas. O Gemini pode aprofundar a análise, se estiver
+                configurado.
               </p>
               <label className="alia-check">
                 <input
                   type="checkbox"
-                  checked={data.preference.externalProviderConsent}
+                  checked={data.preference.geminiConsent}
                   disabled={busy || saving}
                   onChange={(e) =>
-                    preference("externalProviderConsent", e.target.checked)
+                    preference("geminiConsent", e.target.checked)
                   }
                 />
-                Autorizo enviar minhas perguntas à Anthropic quando escolher
-                Claude.
+                Autorizo enviar minhas perguntas ao Google quando escolher
+                Gemini.
               </label>
               <label className="alia-check">
                 <input
@@ -348,7 +361,11 @@ function Content({ me }) {
                       <span>{a.question}</span>
                       <small>
                         {new Date(a.createdAt).toLocaleString("pt-BR")} ·{" "}
-                        {a.mode === "local" ? "Local" : "Claude"}
+                        {a.mode === "local"
+                          ? "Local"
+                          : a.mode === "claude"
+                            ? "Claude (histórico)"
+                            : "Gemini"}
                       </small>
                     </button>
                   ))}

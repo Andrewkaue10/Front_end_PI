@@ -1,3 +1,5 @@
+> **Atualização:** Gemini substituiu Claude. As instruções atuais de provedor, chave, consentimento e avaliação estão em [GEMINI.md](GEMINI.md). As métricas locais abaixo permanecem válidas; referências ao Claude descrevem a primeira versão.
+
 # A.L.I.A — execução, publicação e operação
 
 ## Mesmo repositório e mesmo Render

@@ -130,6 +130,7 @@ account.get("/preferences/ai", async (req, res) => {
       enabled: false,
       profileAnalysisEnabled: false,
       externalProviderConsent: false,
+      geminiConsent: false,
     },
   );
 });
@@ -140,6 +141,7 @@ account.patch("/preferences/ai", async (req, res) => {
       enabled: z.boolean(),
       profileAnalysisEnabled: z.boolean(),
       externalProviderConsent: z.boolean(),
+      geminiConsent: z.boolean(),
     })
     .partial()
     .strict()

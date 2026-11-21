@@ -465,6 +465,7 @@ model NotificationPreference {
 }
 
 model AiPreference {
+  geminiConsent Boolean @default(false)
   userId                 String   @id @db.Uuid
   user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   enabled                Boolean  @default(false)

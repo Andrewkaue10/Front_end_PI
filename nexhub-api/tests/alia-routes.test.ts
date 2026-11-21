@@ -24,11 +24,11 @@ test("rotas: consentimento, propriedade, cotas, persistência e falha externa", 
     update: db.aiAnalysis.update,
     updateMany: db.aiAnalysis.updateMany,
   };
-  const oldKey = process.env.ANTHROPIC_API_KEY,
+  const oldKey = process.env.GEMINI_API_KEY,
     oldFetch = global.fetch;
   let pref = {
       enabled: false,
-      externalProviderConsent: false,
+      geminiConsent: false,
       profileAnalysisEnabled: false,
     },
     used = 0,
@@ -85,18 +85,18 @@ test("rotas: consentimento, propriedade, cotas, persistência e falha externa", 
       .expect(403);
     await request(app)
       .post("/alia/analyze")
-      .send({ ...input, mode: "claude" })
+      .send({ ...input, mode: "gemini" })
       .expect(403);
     assert.equal(created, 0);
     pref = {
       enabled: true,
-      externalProviderConsent: true,
+      geminiConsent: true,
       profileAnalysisEnabled: true,
     };
-    delete process.env.ANTHROPIC_API_KEY;
+    delete process.env.GEMINI_API_KEY;
     await request(app)
       .post("/alia/analyze")
-      .send({ ...input, mode: "claude" })
+      .send({ ...input, mode: "gemini" })
       .expect(503);
     const success = await request(app)
       .post("/alia/analyze")
@@ -107,17 +107,17 @@ test("rotas: consentimento, propriedade, cotas, persistência e falha externa", 
     used = 100;
     await request(app).post("/alia/analyze").send(input).expect(429);
     used = 5;
-    process.env.ANTHROPIC_API_KEY = "mock";
+    process.env.GEMINI_API_KEY = "mock";
     await request(app)
       .post("/alia/analyze")
-      .send({ ...input, mode: "claude" })
+      .send({ ...input, mode: "gemini" })
       .expect(429);
     used = 0;
     global.fetch = (async () =>
       new Response("{}", { status: 503 })) as typeof fetch;
     await request(app)
       .post("/alia/analyze")
-      .send({ ...input, mode: "claude" })
+      .send({ ...input, mode: "gemini" })
       .expect(502);
     assert.equal(updated.data.status, "FAILED");
     assert.equal(updated.data.question, "");
@@ -135,8 +135,8 @@ test("rotas: consentimento, propriedade, cotas, persistência e falha externa", 
     db.aiAnalysis.update = original.update;
     db.aiAnalysis.updateMany = original.updateMany;
     global.fetch = oldFetch;
-    if (oldKey === undefined) delete process.env.ANTHROPIC_API_KEY;
-    else process.env.ANTHROPIC_API_KEY = oldKey;
+    if (oldKey === undefined) delete process.env.GEMINI_API_KEY;
+    else process.env.GEMINI_API_KEY = oldKey;
     await db.$disconnect();
   }
 });
