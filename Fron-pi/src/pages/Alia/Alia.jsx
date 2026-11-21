@@ -218,7 +218,7 @@ function Content({ me }) {
                   onClick={useExample}
                   disabled={busy}
                 >
-                  Outro exemplo do tema · sem gastar análise{" "}
+                  Exemplo do tema · sem gastar análise{" "}
                   <ArrowUpRight size={14} />
                 </button>
                 <small>{message.length}/4000</small>
