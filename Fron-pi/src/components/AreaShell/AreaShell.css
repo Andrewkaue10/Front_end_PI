@@ -84,6 +84,18 @@
   font-size: 11px;
   text-decoration: none;
 }
+.area-shell__sidebar nav .sidebar-disabled {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 7px;
+  color: #adb5c2;
+  padding: 0 12px;
+  font-size: 11px;
+  cursor: not-allowed;
+  opacity: 0.72;
+}
 .area-shell__sidebar nav a.active {
   background: var(--area-accent-soft);
   color: var(--area-accent);
@@ -249,6 +261,12 @@
     justify-content: space-around;
   }
   .area-shell__sidebar nav a {
+    min-width: 48px;
+    min-height: 46px;
+    justify-content: center;
+    padding: 4px;
+  }
+  .area-shell__sidebar nav .sidebar-disabled {
     min-width: 48px;
     min-height: 46px;
     justify-content: center;

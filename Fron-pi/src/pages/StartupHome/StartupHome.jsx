@@ -225,10 +225,10 @@ export default function StartupHome() {
               <b>{notifications.filter((item) => !item.read).length}</b>
             )}
           </Link>
-          <Link to="/startup/editais">
+          <div className="sidebar-disabled" aria-disabled="true">
             <CalendarDays size={16} />
             <span>Editais</span>
-          </Link>
+          </div>
           <Link to="/startup/mentores">
             <Sparkles size={16} />
             <span>Mentores</span>

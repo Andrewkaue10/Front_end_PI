@@ -4,9 +4,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Bell,
   BriefcaseBusiness,
+  CalendarDays,
   Heart,
   Home,
   Mail,
+  Newspaper,
   Settings,
   Sparkles,
   Users,
@@ -108,17 +110,62 @@ export default function AreaShell({ children }) {
           </Link>
           {startup ? (
             <>
-              <Link to="/startup/editais">
+              <Link
+                className={active("/startup/perfil") ? "active" : ""}
+                to="/startup/perfil"
+              >
                 <BriefcaseBusiness size={16} />
-                <span>Editais</span>
+                <span>Perfil da startup</span>
               </Link>
-              <Link to="/startup/mentores">
+              <Link
+                className={active("/startup/publicacoes") ? "active" : ""}
+                to="/startup/publicacoes"
+              >
+                <Newspaper size={16} />
+                <span>Publicações</span>
+              </Link>
+              <Link className={active("/alia") ? "active" : ""} to="/alia">
+                <Sparkles size={16} />
+                <span>A.L.I.A</span>
+              </Link>
+              <Link
+                className={active("/notificacoes") ? "active" : ""}
+                to="/notificacoes"
+              >
+                <Bell size={16} />
+                <span>Notificações</span>
+              </Link>
+              <div className="sidebar-disabled" aria-disabled="true">
+                <CalendarDays size={16} />
+                <span>Editais</span>
+              </div>
+              <Link
+                className={active("/startup/mentores") ? "active" : ""}
+                to="/startup/mentores"
+              >
                 <Sparkles size={16} />
                 <span>Mentores</span>
               </Link>
-              <Link to="/startup/investidores">
+              <Link
+                className={active("/startup/investidores") ? "active" : ""}
+                to="/startup/investidores"
+              >
                 <Users size={16} />
                 <span>Investidores</span>
+              </Link>
+              <Link
+                className={active("/mensagens") ? "active" : ""}
+                to="/mensagens"
+              >
+                <Mail size={16} />
+                <span>Mensagens</span>
+              </Link>
+              <Link
+                className={active("/configuracoes") ? "active" : ""}
+                to="/configuracoes"
+              >
+                <Settings size={16} />
+                <span>Configurações</span>
               </Link>
             </>
           ) : (
@@ -153,31 +200,35 @@ export default function AreaShell({ children }) {
               </Link>
             </>
           )}
-          <Link className={active("/alia") ? "active" : ""} to="/alia">
-            <Sparkles size={16} />
-            <span>A.L.I.A</span>
-          </Link>
-          <Link
-            className={active("/mensagens") ? "active" : ""}
-            to="/mensagens"
-          >
-            <Mail size={16} />
-            <span>Mensagens</span>
-          </Link>
-          <Link
-            className={active("/notificacoes") ? "active" : ""}
-            to="/notificacoes"
-          >
-            <Bell size={16} />
-            <span>Notificações</span>
-          </Link>
-          <Link
-            className={active("/configuracoes") ? "active" : ""}
-            to="/configuracoes"
-          >
-            <Settings size={16} />
-            <span>Configurações</span>
-          </Link>
+          {!startup && (
+            <>
+              <Link className={active("/alia") ? "active" : ""} to="/alia">
+                <Sparkles size={16} />
+                <span>A.L.I.A</span>
+              </Link>
+              <Link
+                className={active("/mensagens") ? "active" : ""}
+                to="/mensagens"
+              >
+                <Mail size={16} />
+                <span>Mensagens</span>
+              </Link>
+              <Link
+                className={active("/notificacoes") ? "active" : ""}
+                to="/notificacoes"
+              >
+                <Bell size={16} />
+                <span>Notificações</span>
+              </Link>
+              <Link
+                className={active("/configuracoes") ? "active" : ""}
+                to="/configuracoes"
+              >
+                <Settings size={16} />
+                <span>Configurações</span>
+              </Link>
+            </>
+          )}
         </nav>
         <div className="area-shell__account">
           <Link

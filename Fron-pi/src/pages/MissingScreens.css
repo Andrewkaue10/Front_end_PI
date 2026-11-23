@@ -121,6 +121,132 @@
   display: grid;
   gap: 10px;
 }
+.startup-shell .publications-layout {
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+}
+.startup-shell .missing-page__title h1 {
+  font-size: 28px;
+  line-height: 1.25;
+}
+.startup-shell .startup-page__lead {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.startup-shell .publications-layout .missing-tabs {
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.startup-shell .publications-layout .missing-tabs button {
+  min-height: 42px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+.startup-shell .post-composer,
+.startup-shell .post-card {
+  padding: 24px;
+  border-radius: 18px;
+  margin-bottom: 18px;
+}
+.startup-shell .post-composer label {
+  gap: 10px;
+  font-size: 13px;
+}
+.startup-shell .post-composer textarea {
+  min-height: 120px;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.startup-shell .post-composer__fields {
+  gap: 12px;
+  margin-top: 12px;
+}
+.startup-shell .post-composer__fields input,
+.startup-shell .post-composer__fields select,
+.startup-shell .post-tools input,
+.startup-shell .post-tools select {
+  height: 44px;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+.startup-shell .post-composer__actions {
+  gap: 12px;
+  margin-top: 12px;
+}
+.startup-shell .post-composer__actions button {
+  min-height: 44px;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 13px;
+}
+.startup-shell .post-tools {
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.startup-shell .post-tools input {
+  flex: 1;
+}
+.startup-shell .post-card header strong {
+  font-size: 14px;
+}
+.startup-shell .post-card header time {
+  font-size: 12px;
+}
+.startup-shell .post-card p {
+  margin: 18px 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.startup-shell .post-tags {
+  gap: 8px;
+}
+.startup-shell .post-tags span,
+.startup-shell .right-tag {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+.startup-shell .post-metric {
+  padding: 12px 14px;
+  gap: 5px;
+}
+.startup-shell .post-metric small {
+  font-size: 11px;
+}
+.startup-shell .post-metric strong {
+  font-size: 13px;
+}
+.startup-shell .post-card footer {
+  gap: 14px;
+  margin-top: 16px;
+  font-size: 12px;
+}
+.startup-shell .post-card footer button {
+  font-size: 12px;
+}
+.startup-shell .missing-aside {
+  gap: 16px;
+}
+.startup-shell .missing-aside .missing-card {
+  padding: 24px;
+  border-radius: 18px;
+}
+.startup-shell .missing-aside .missing-card h2 {
+  margin: 0 0 14px;
+  font-size: 18px;
+  line-height: 1.45;
+}
+.startup-shell .missing-aside .missing-card p,
+.startup-shell .missing-aside .missing-card small {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.startup-shell .missing-aside .right-tag {
+  margin: 6px 6px 6px 0;
+}
 .post-card {
   padding: 14px;
 }
@@ -427,6 +553,9 @@
   .missing-layout,
   .profile-layout,
   .investor-layout {
+    grid-template-columns: 1fr;
+  }
+  .startup-shell .publications-layout {
     grid-template-columns: 1fr;
   }
   .missing-aside {

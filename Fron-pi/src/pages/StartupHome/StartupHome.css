@@ -107,6 +107,18 @@
   font-size: 11px;
   text-decoration: none;
 }
+.startup-sidebar nav .sidebar-disabled {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 7px;
+  color: #adb5c2;
+  padding: 0 12px;
+  font-size: 11px;
+  cursor: not-allowed;
+  opacity: 0.72;
+}
 .startup-sidebar nav a:hover {
   background: #f7f9fc;
   color: var(--startup-ink);
@@ -526,6 +538,12 @@
     justify-content: space-around;
   }
   .startup-sidebar nav a {
+    min-width: 48px;
+    min-height: 46px;
+    justify-content: center;
+    padding: 4px;
+  }
+  .startup-sidebar nav .sidebar-disabled {
     min-width: 48px;
     min-height: 46px;
     justify-content: center;
