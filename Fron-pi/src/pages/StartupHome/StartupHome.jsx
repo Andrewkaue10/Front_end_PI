@@ -270,7 +270,7 @@ export default function StartupHome() {
         <section className="startup-greeting">
           <div>
             <h1>
-              Olá, {startup?.name || me.name} <span aria-hidden="true">👋</span>
+              Olá, {startup?.name || me.name}
             </h1>
             <p>Acompanhe oportunidades alinhadas ao seu perfil.</p>
           </div>

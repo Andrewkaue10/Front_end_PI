@@ -310,7 +310,7 @@ export default function Feed() {
         <section className="investor-greeting">
           <div>
             <h1>
-              Olá, {firstName(me?.name)} <span aria-hidden="true">👋</span>
+              Olá, {firstName(me?.name)}
             </h1>
             <p>Veja o que aconteceu desde sua última visita.</p>
           </div>
