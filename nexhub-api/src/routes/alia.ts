@@ -127,8 +127,8 @@ alia.post("/alia/analyze", async (req, res) => {
       data: { status: "FAILED", question: "", durationMs: Date.now() - start },
     });
     console.error(
-      "ALIA_FAILED",
-      error instanceof Error ? error.name : "unknown",
+      "ALIA_FAILED:",
+      error instanceof Error ? error.stack || error.message : error,
     );
     throw new HttpError(
       502,
