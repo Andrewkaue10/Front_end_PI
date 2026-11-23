@@ -198,7 +198,12 @@ export async function generateGemini(
       }),
     },
   );
-  if (!response.ok) throw new Error("PROVIDER_" + response.status);
+  if (!response.ok) {
+    const errorBody = await response.text();
+    console.error("DETALHE_GOOGLE:", response.status, errorBody);
+    throw new Error(`PROVIDER_${response.status}: ${errorBody}`);
+  }
+
   const body: any = await response.json();
   const candidate = body.candidates?.[0];
   if (candidate?.finishReason !== "STOP")
