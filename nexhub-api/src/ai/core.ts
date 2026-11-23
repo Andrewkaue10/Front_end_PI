@@ -160,48 +160,77 @@ export async function generateGemini(
       text: s.advice,
       score: Number(s.score.toFixed(4)),
     }));
-  const response = await fetcher(
-    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
-    {
-      method: "POST",
-      headers: { "content-type": "application/json", "x-goog-api-key": key },
-      signal: AbortSignal.timeout(45000),
-      body: JSON.stringify({
-        systemInstruction: {
-          parts: [
-            {
-              text:
-                systemPrompt(topic) +
-                " Responda especificamente ao desafio informado. As orientações editoriais são apoio opcional; não copie respostas genéricas nem trate perguntas diferentes como iguais.",
-            },
-          ],
-        },
-        contents: [
-          {
-            role: "user",
+
+  const maxAttempts = 3;
+  let response: Response | null = null;
+  let lastErrorText = "";
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    response = await fetcher(
+      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json", "x-goog-api-key": key },
+        signal: AbortSignal.timeout(45000),
+        body: JSON.stringify({
+          systemInstruction: {
             parts: [
               {
-                text: JSON.stringify({
-                  question: message,
-                  profile,
-                  editorialGuidance: sources,
-                }),
+                text:
+                  systemPrompt(topic) +
+                  " Responda especificamente ao desafio informado. As orientações editoriais são apoio opcional; não copie respostas genéricas nem trate perguntas diferentes como iguais.",
               },
             ],
           },
-        ],
-        generationConfig: {
-          maxOutputTokens: 4096,
-          responseMimeType: "application/json",
-          responseJsonSchema: z.toJSONSchema(answerSchema),
-        },
-      }),
-    },
-  );
-  if (!response.ok) {
-    const errorBody = await response.text();
-    console.error("DETALHE_GOOGLE:", response.status, errorBody);
-    throw new Error(`PROVIDER_${response.status}: ${errorBody}`);
+          contents: [
+            {
+              role: "user",
+              parts: [
+                {
+                  text: JSON.stringify({
+                    question: message,
+                    profile,
+                    editorialGuidance: sources,
+                  }),
+                },
+              ],
+            },
+          ],
+          generationConfig: {
+            maxOutputTokens: 4096,
+            responseMimeType: "application/json",
+            responseJsonSchema: z.toJSONSchema(answerSchema),
+          },
+        }),
+      },
+    );
+
+    if (response.ok) {
+      break;
+    }
+
+    lastErrorText = await response.text();
+    console.error(
+      `DETALHE_GOOGLE (tentativa ${attempt}/${maxAttempts}):`,
+      response.status,
+      lastErrorText,
+    );
+
+    // Se for 503 (serviço sobrecarregado) ou 429, aguarda e tenta de novo
+    if (
+      (response.status === 503 || response.status === 429) &&
+      attempt < maxAttempts
+    ) {
+      const waitMs = attempt * 1500; // 1.5s na 1ª, 3s na 2ª
+      await new Promise((resolve) => setTimeout(resolve, waitMs));
+      continue;
+    }
+
+    throw new Error(`PROVIDER_${response.status}: ${lastErrorText}`);
+  }
+
+  if (!response || !response.ok) {
+    throw new Error(`PROVIDER_${response?.status || 500}: ${lastErrorText}`);
   }
 
   const body: any = await response.json();
@@ -220,6 +249,7 @@ export async function generateGemini(
     outputTokens: body.usageMetadata?.candidatesTokenCount || 0,
   };
 }
+
 export function dayStart(now = new Date()) {
   const local = new Date(now.getTime() - 3 * 3600000);
   return new Date(local.toISOString().slice(0, 10) + "T03:00:00.000Z");
