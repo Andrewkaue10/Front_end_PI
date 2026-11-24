@@ -1,6 +1,6 @@
 import { api, saveSession } from "../../lib/api";
 import { useState } from "react";
-import { Check } from "lucide-react";
+import { ArrowRight, Check, LoaderCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/forms.css";
 import "./Login.css";
@@ -121,8 +121,19 @@ function Login() {
               disabled={loading}
               type="submit"
               className="auth-form__submit"
+              aria-busy={loading}
             >
-              Entrar →
+              {loading ? (
+                <>
+                  <LoaderCircle className="auth-form__submit-spinner" size={18} />
+                  Entrando...
+                </>
+              ) : (
+                <>
+                  Entrar
+                  <ArrowRight className="auth-form__submit-arrow" size={18} />
+                </>
+              )}
             </button>
 
             <div className="auth-form__divider">

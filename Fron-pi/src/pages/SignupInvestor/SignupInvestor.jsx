@@ -1,6 +1,6 @@
 import { api, saveSession } from "../../lib/api";
 import { useState } from "react";
-import { Check } from "lucide-react";
+import { ArrowRight, Check, LoaderCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { formatPhone } from "../../utils/formatPhone";
 import AuthLayout from "../../components/AuthLayout/AuthLayout";
@@ -315,8 +315,19 @@ function SignupInvestor() {
             disabled={loading}
             type="submit"
             className="auth-form__submit"
+            aria-busy={loading}
           >
-            Criar conta de investidor →
+            {loading ? (
+              <>
+                <LoaderCircle className="auth-form__submit-spinner" size={18} />
+                Criando conta...
+              </>
+            ) : (
+              <>
+                Criar conta de investidor
+                <ArrowRight className="auth-form__submit-arrow" size={18} />
+              </>
+            )}
           </button>
 
           <p className="auth-form__bottom-link">
