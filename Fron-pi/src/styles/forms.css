@@ -175,7 +175,10 @@
 }
 
 .auth-form__submit-spinner {
-  animation: auth-spin 800ms linear infinite;
+  animation: auth-spin 700ms linear infinite;
+  animation-timing-function: linear;
+  transform-origin: center;
+  will-change: transform;
 }
 
 .auth-form__divider {

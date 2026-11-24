@@ -13,10 +13,13 @@ export function saveSession(value, remember = false) {
   (remember ? localStorage : sessionStorage).setItem("nexhub.token", value);
 }
 export async function api(path, options = {}) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 15000);
   let response;
   try {
     response = await fetch(base + path, {
       ...options,
+      signal: controller.signal,
       headers: {
         "Content-Type": "application/json",
         ...(token() ? { Authorization: `Bearer ${token()}` } : {}),
@@ -26,10 +29,17 @@ export async function api(path, options = {}) {
         ? { body: JSON.stringify(options.body) }
         : {}),
     });
-  } catch {
+  } catch (err) {
+    if (err?.name === "AbortError") {
+      throw new Error(
+        "A API demorou demais para responder. Verifique se o backend está iniciado.",
+      );
+    }
     throw new Error(
       "Não foi possível acessar a API. Confira se o backend está iniciado.",
     );
+  } finally {
+    window.clearTimeout(timeout);
   }
   const data = response.status === 204 ? null : await response.json();
   if (!response.ok) {
