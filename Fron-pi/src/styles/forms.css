@@ -273,18 +273,21 @@
     transform: scale(0.5);
   }
 
-  @keyframes auth-spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
   70% {
     transform: scale(1.15);
   }
 
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes auth-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
