@@ -12,6 +12,54 @@
   color: var(--area-ink);
   font-family: var(--font-base);
 }
+.area-route-loading {
+  position: fixed;
+  top: 0;
+  left: 220px;
+  right: 0;
+  height: 3px;
+  z-index: 100;
+  overflow: hidden;
+  background: rgba(21, 94, 239, 0.12);
+  pointer-events: none;
+}
+.area-shell.startup-theme .area-route-loading {
+  background: rgba(239, 91, 63, 0.12);
+}
+.area-route-loading span {
+  display: block;
+  width: 38%;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--area-accent);
+  box-shadow: 0 0 10px rgba(21, 94, 239, 0.38);
+  animation: area-route-progress 850ms ease-in-out infinite;
+}
+.area-content-skeleton {
+  height: 180px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #f1f3f6 25%, #f8fafc 50%, #f1f3f6 75%);
+  background-size: 200% 100%;
+  animation: area-skeleton 1.2s ease-in-out infinite;
+}
+@keyframes area-route-progress {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(370%);
+  }
+}
+@keyframes area-skeleton {
+  to {
+    background-position: -200% 0;
+  }
+}
+@media (max-width: 900px) {
+  .area-route-loading {
+    left: 0;
+  }
+}
 .area-shell.startup-theme {
   --area-accent: #ef5b3f;
   --area-accent-soft: #fff1ed;
