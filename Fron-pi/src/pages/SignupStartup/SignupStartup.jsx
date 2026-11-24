@@ -1,6 +1,6 @@
 import { api, saveSession } from "../../lib/api";
 import { useState } from "react";
-import { ArrowRight, Check, LoaderCircle } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { formatPhone } from "../../utils/formatPhone";
 import AuthLayout from "../../components/AuthLayout/AuthLayout";
@@ -247,7 +247,7 @@ function SignupStartup() {
         >
           {loading ? (
             <>
-              <LoaderCircle className="auth-form__submit-spinner" size={18} />
+              <span className="auth-form__submit-spinner" aria-hidden="true" />
               Criando conta...
             </>
           ) : (

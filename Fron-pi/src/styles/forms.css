@@ -175,8 +175,14 @@
 }
 
 .auth-form__submit-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  border: 2px solid rgba(255, 255, 255, 0.38);
+  border-top-color: #ffffff;
+  border-radius: 50%;
   animation: auth-spin 700ms linear infinite;
-  animation-timing-function: linear;
   transform-origin: center;
   will-change: transform;
 }
