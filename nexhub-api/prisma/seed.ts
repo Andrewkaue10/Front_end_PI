@@ -202,6 +202,143 @@ async function main() {
         "Criação de perfis sintéticos aprovados para demonstração acadêmica.",
     },
   });
+  const programs = [
+    {
+      key: "govtech-innovacao",
+      sourceUrl: "https://gov.br",
+      title: "Edital GovTech de Inovação Pública",
+      organization: "Secretaria de Inovação",
+      modality: "Nacional",
+      region: "Brasil",
+      category: "GovTech",
+      stage: "MVP",
+      benefit: "R$ 150 mil + mentoria",
+      duration: "6 meses",
+      description:
+        "Apoio a startups que desenvolvem soluções digitais para modernizar serviços públicos e ampliar a participação cidadã.",
+      requirements: [
+        "Startup com CNPJ",
+        "Equipe técnica ativa",
+        "Solução em estágio MVP ou superior",
+      ],
+      openInDays: -20,
+      closeInDays: 45,
+    },
+    {
+      key: "ia-aplicada",
+      sourceUrl: "https://www.finep.gov.br",
+      title: "Programa IA Aplicada",
+      organization: "Agência de Desenvolvimento Tecnológico",
+      modality: "Presencial",
+      region: "Nordeste",
+      category: "IA",
+      stage: "Tração",
+      benefit: "Bolsa de R$ 200 mil",
+      duration: "9 meses",
+      description:
+        "Programa para startups de inteligência artificial que comprovem impacto em saúde, educação, indústria ou serviços.",
+      requirements: [
+        "Produto com usuários reais",
+        "Modelo de IA documentado",
+        "Plano de negócios validado",
+      ],
+      openInDays: -10,
+      closeInDays: 60,
+    },
+    {
+      key: "biotech-saude",
+      sourceUrl: "https://www.gov.br/cnpq",
+      title: "Edital BioTech Saúde 2026",
+      organization: "Rede Regional de Ciência e Saúde",
+      modality: "Híbrida",
+      region: "Pernambuco",
+      category: "BioTech",
+      stage: "Ideação",
+      benefit: "R$ 300 mil em recursos",
+      duration: "12 meses",
+      description:
+        "Seleção de iniciativas de biotecnologia voltadas à prevenção, diagnóstico e soluções sustentáveis em saúde.",
+      requirements: [
+        "Proposta alinhada à saúde",
+        "Equipe interdisciplinar",
+        "Plano de validação científica",
+      ],
+      openInDays: -5,
+      closeInDays: 30,
+    },
+    {
+      key: "desa-edtech",
+      sourceUrl: "https://www.gov.br/mec",
+      title: "Desafio EdTech da Aprendizagem",
+      organization: "Instituto Nacional de Educação",
+      modality: "Remoto",
+      region: "Brasil",
+      category: "Edtech",
+      stage: "Tração",
+      benefit: "Até R$ 120 mil",
+      duration: "8 meses",
+      description:
+        "Aceleração de plataformas educacionais com evidências de aprendizagem e capacidade de escalabilidade.",
+      requirements: [
+        "Ferramenta em operação",
+        "Dados de uso disponíveis",
+        "Equipe dedicada ao produto",
+      ],
+      openInDays: 15,
+      closeInDays: 75,
+    },
+    {
+      key: "clima-solucoes",
+      sourceUrl: "https://www.gov.br/meioambiente",
+      title: "Conecta Clima: Soluções Sustentáveis",
+      organization: "Programa Estadual de Sustentabilidade",
+      modality: "Presencial",
+      region: "Recife",
+      category: "ClimaTech",
+      stage: "Escala",
+      benefit: "R$ 250 mil em investimento",
+      duration: "12 meses",
+      description:
+        "Iniciativas com foco em economia circular, eficiência energética e redução de emissões em operação.",
+      requirements: [
+        "Modelo de impacto mensurável",
+        "Startup em operação",
+        "Plano de expansão regional",
+      ],
+      openInDays: -90,
+      closeInDays: -10,
+    },
+  ];
+
+  for (const program of programs) {
+    await db.program.upsert({
+      where: { id: id(`program:${program.key}`) },
+      update: {},
+      create: {
+        id: id(`program:${program.key}`),
+        creatorId: admin.id,
+        sourceUrl: program.sourceUrl,
+        title: program.title,
+        organization: program.organization,
+        modality: program.modality,
+        region: program.region,
+        category: program.category,
+        stage: program.stage,
+        benefit: program.benefit,
+        duration: program.duration,
+        description: program.description,
+        requirements: program.requirements,
+        applicationsOpenAt: new Date(
+          Date.now() + program.openInDays * 86400000,
+        ),
+        applicationsCloseAt: new Date(
+          Date.now() + program.closeInDays * 86400000,
+        ),
+        timezone: "America/Recife",
+        active: true,
+      },
+    });
+  }
   const startup = await db.startup.findUniqueOrThrow({
     where: { slug: "colheita-digital" },
   });
@@ -255,7 +392,7 @@ async function main() {
     },
   });
   console.log(
-    "Seed concluído: 4 startups, 3 profissionais e 1 administrador. Credenciais somente em .env.demo.",
+    "Seed concluído: 4 startups, 3 profissionais, 1 administrador e 5 editais. Credenciais somente em .env.demo.",
   );
 }
 main()

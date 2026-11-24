@@ -118,10 +118,13 @@ export default function StartupShell() {
             <Bell size={16} />
             <span>Notificações</span>
           </Link>
-          <div className="sidebar-disabled" aria-disabled="true">
+          <Link
+            className={active("/startup/editais") ? "active" : ""}
+            to="/startup/editais"
+          >
             <CalendarDays size={16} />
             <span>Editais</span>
-          </div>
+          </Link>
           <Link
             className={active("/startup/mentores") ? "active" : ""}
             to="/startup/mentores"
