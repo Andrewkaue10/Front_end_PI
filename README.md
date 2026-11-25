@@ -172,10 +172,13 @@ Contribuições conhecidas nesta entrega; nomes completos, composição final e 
 
 | Integrante | Contribuição identificada | Papel formal na entrega |
 | --- | --- | --- |
-| Andrew Kauê | Desenvolvimento; material inicial de IA e proposta de editais. | A confirmar. |
-| João Gabriel | Desenvolvimento; identificado como autor no README anterior. | A confirmar. |
-| José Fernando | Integração, configuração do ambiente e validação manual relatada; contato da equipe no aviso de privacidade. | A confirmar. |
+| Andrew Kauê | Desenvolvimento, front-end, material inicial de IA e proposta de editais. | A confirmar. |
+| João Gabriel | Desenvolvimento, front-end. | A confirmar. |
+| José Fernando | Integração, Desenvolvimento Backend, configuração do ambiente e validação manual;  contato da equpe. | A confirmar. |
 | Camilla | Preparação da documentação final, conforme organização informada pela equipe. | A confirmar. |
+| Victor Henrique | Desenvolvimento Back-end, atuação direta no ideação e desenvolvimento de slides | A confirmar. |
+| Dayanni Rodrigues | Ideação visual, responsável pelo desenvolvimento no Figma | A confirmar. |
+| Phelipe Leandro | Documentação geral, relatórios e ideação | A confirmar. |
 
 Não se atribuem automaticamente os papéis Tech Lead, Data & Strategy, Automation, Labor & Impact, Compliance, QA e PI Bridge sem confirmação. O histórico do Git documenta commits; não prova sozinho a distribuição de responsabilidades. Não reescrever o histórico para ocultar erros.
 
@@ -186,7 +189,7 @@ Não se atribuem automaticamente os papéis Tech Lead, Data & Strategy, Automati
 - **Gemini:** serviço de geração usado pelo produto; a equipe não treinou os pesos do modelo.
 - **Referência visual:** foi fornecido um exemplo gerado no Figma para orientar o layout.
 
-Fernando relatou testes manuais de cadastro, foto, recuperação por e-mail e IA. Código, fontes e testes selecionados foram conferidos com auxílio do agente; isso não representa revisão independente de cada linha por todos os integrantes. Antes da banca, a equipe deve revisar o conteúdo, explicar as decisões e validar as evidências. Não foram inventados resultados de avaliação, entrevistas ou dados de mercado para preencher lacunas.
+Testes manuais de cadastro, foto, recuperação por e-mail e IA. Código, fontes e testes selecionados foram conferidos com auxílio do agente; isso não representa revisão independente de cada linha por todos os integrantes. Antes da banca, a equipe deve revisar o conteúdo, explicar as decisões e validar as evidências. Não foram inventados resultados de avaliação, entrevistas ou dados de mercado para preencher lacunas.
 
 ## Organização e materiais complementares
 
@@ -205,9 +208,3 @@ docs/ia/                 Documentação e evolução da A.L.I.A
 
 As pastas `alia-backend/` e `files/` são referências históricas: não iniciar seus servidores nem aplicar seus SQLs no banco atual. Documentos antigos de IA podem mencionar Claude ou modo local; a descrição atual deste README e o código devem orientar a execução.
 
-### Pendências antes da entrega final
-
-- Confirmar equipe, papéis e vínculo com o Canvas da primeira entrega.
-- Executar o README em ambiente limpo e registrar o resultado.
-- Conferir acesso do professor, gravar demonstração de reserva e marcar a versão de entrega com uma tag após congelar o escopo.
-- Revisar se os documentos descrevem o mesmo commit apresentado na banca. Não foi criada tag de release automaticamente.
