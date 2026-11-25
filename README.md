@@ -173,7 +173,7 @@ Contribuições conhecidas nesta entrega; nomes completos, composição final e 
 | Integrante | Contribuição identificada | Papel formal na entrega |
 | --- | --- | --- |
 | Andrew Kauê | Desenvolvimento, front-end, material inicial de IA e proposta de editais. | A confirmar. |
-| João Gabriel | Desenvolvimento, front-end. | A confirmar. |
+| João Gabriel | Desenvolvimento, front-end, Implementação IA. | A confirmar. |
 | José Fernando | Integração, Desenvolvimento Backend, configuração do ambiente e validação manual;  contato da equpe. | A confirmar. |
 | Camilla | Preparação da documentação final, conforme organização informada pela equipe. | A confirmar. |
 | Victor Henrique | Desenvolvimento Back-end, atuação direta no ideação e desenvolvimento de slides | A confirmar. |
