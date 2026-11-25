@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import {
+  BadgeDollarSign,
+  CalendarDays,
+  Clock3,
+  CircleCheck,
+  MapPin,
+  Rocket,
+} from "lucide-react";
 import { api } from "../../lib/api";
 import "./StartupPrograms.css";
 
@@ -235,8 +243,11 @@ export default function StartupPrograms() {
                     {program.description}
                   </p>
                 )}
-                <dl>
+                <dl className="startup-program-card__details">
                   <div>
+                    <span className="startup-program-card__detail-icon" aria-hidden="true">
+                      <CalendarDays size={17} />
+                    </span>
                     <dt>Abertura</dt>
                     <dd>
                       {new Date(program.applicationsOpenAt).toLocaleString(
@@ -246,6 +257,9 @@ export default function StartupPrograms() {
                     </dd>
                   </div>
                   <div>
+                    <span className="startup-program-card__detail-icon" aria-hidden="true">
+                      <Clock3 size={17} />
+                    </span>
                     <dt>Encerramento</dt>
                     <dd>
                       {new Date(program.applicationsCloseAt).toLocaleString(
@@ -255,18 +269,30 @@ export default function StartupPrograms() {
                     </dd>
                   </div>
                   <div>
+                    <span className="startup-program-card__detail-icon" aria-hidden="true">
+                      <BadgeDollarSign size={17} />
+                    </span>
                     <dt>Benefício</dt>
                     <dd>{program.benefit || "Não informado"}</dd>
                   </div>
                   <div>
+                    <span className="startup-program-card__detail-icon" aria-hidden="true">
+                      <Clock3 size={17} />
+                    </span>
                     <dt>Duração</dt>
                     <dd>{program.duration || "Não informada"}</dd>
                   </div>
                   <div>
+                    <span className="startup-program-card__detail-icon" aria-hidden="true">
+                      <Rocket size={17} />
+                    </span>
                     <dt>Estágio</dt>
                     <dd>{program.stage || "Não informado"}</dd>
                   </div>
                   <div>
+                    <span className="startup-program-card__detail-icon" aria-hidden="true">
+                      <MapPin size={17} />
+                    </span>
                     <dt>Região</dt>
                     <dd>{program.region || "Não informada"}</dd>
                   </div>
@@ -277,7 +303,10 @@ export default function StartupPrograms() {
                       <strong>Requisitos</strong>
                       <ul>
                         {program.requirements.map((requirement) => (
-                          <li key={requirement}>{requirement}</li>
+                          <li key={requirement}>
+                            <CircleCheck size={16} aria-hidden="true" />
+                            <span>{requirement}</span>
+                          </li>
                         ))}
                       </ul>
                     </div>

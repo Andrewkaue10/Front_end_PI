@@ -19,6 +19,13 @@ export default function StartupShell() {
   const location = useLocation();
   const [me, setMe] = useState(null);
   const [error, setError] = useState("");
+  const [routeLoading, setRouteLoading] = useState(true);
+
+  useEffect(() => {
+    setRouteLoading(true);
+    const timer = window.setTimeout(() => setRouteLoading(false), 350);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (!token()) {
@@ -64,15 +71,13 @@ export default function StartupShell() {
     .join("")
     .toUpperCase();
 
-  if (!me)
-    return (
-      <main className="startup-page-loading" role="status">
-        {error || "Carregando sua área…"}
-      </main>
-    );
-
   return (
     <div className="startup-shell">
+      {(routeLoading || (!me && !error)) && (
+        <div className="startup-route-loading" role="status" aria-label="Carregando página">
+          <span />
+        </div>
+      )}
       <header className="startup-shell__header">
         <Link
           className="startup-shell__brand"
@@ -154,7 +159,7 @@ export default function StartupShell() {
             aria-label="Abrir meu perfil"
             to="/perfil"
           >
-            {me.avatarData ? (
+            {me?.avatarData ? (
               <img src={me.avatarData} alt="" />
             ) : (
               initials || "—"
@@ -162,7 +167,7 @@ export default function StartupShell() {
           </Link>
           <div>
             <Link className="account-name" to="/perfil">
-              <strong>{me.startup?.name || me.name}</strong>
+              <strong>{me?.startup?.name || me?.name || "Carregando perfil"}</strong>
             </Link>
             <small>Startup</small>
           </div>
@@ -171,7 +176,11 @@ export default function StartupShell() {
           </button>
         </div>
       </aside>
-      <Outlet context={{ me }} />
+      {me ? <Outlet context={{ me }} /> : (
+        <main className="startup-page" aria-label="Carregando conteúdo">
+          <div className="startup-content-skeleton" />
+        </main>
+      )}
     </div>
   );
 }

@@ -23,6 +23,13 @@ export default function AreaShell({ children }) {
   const location = useLocation();
   const [me, setMe] = useState(null);
   const [error, setError] = useState("");
+  const [routeLoading, setRouteLoading] = useState(true);
+
+  useEffect(() => {
+    setRouteLoading(true);
+    const timer = window.setTimeout(() => setRouteLoading(false), 350);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (!token()) {
@@ -62,16 +69,9 @@ export default function AreaShell({ children }) {
     }
   }
 
-  if (!me)
-    return (
-      <main className="area-shell__loading" role="status">
-        {error || "Carregando sua área…"}
-      </main>
-    );
-
-  const startup = me.role === "STARTUP";
+  const startup = me?.role === "STARTUP";
   const base = startup ? "/startup" : "/feed";
-  const initials = (me.startup?.name || me.investor?.name || me.name || "")
+  const initials = (me?.startup?.name || me?.investor?.name || me?.name || "")
     .trim()
     .split(/\s+/)
     .slice(0, 2)
@@ -84,6 +84,11 @@ export default function AreaShell({ children }) {
     <div
       className={`area-shell ${startup ? "startup-theme" : "investor-theme"}`}
     >
+      {(routeLoading || (!me && !error)) && (
+        <div className="area-route-loading" role="status" aria-label="Carregando página">
+          <span />
+        </div>
+      )}
       <header className="area-shell__header">
         <Link
           className="area-shell__brand"
@@ -239,7 +244,7 @@ export default function AreaShell({ children }) {
             aria-label="Abrir meu perfil"
             to="/perfil"
           >
-            {me.avatarData ? (
+            {me?.avatarData ? (
               <img src={me.avatarData} alt="" />
             ) : (
               initials || "—"
@@ -248,10 +253,10 @@ export default function AreaShell({ children }) {
           <div>
             <Link className="account-name" to="/perfil">
               <strong>
-                {me.startup?.name || me.investor?.name || me.name}
+                {me?.startup?.name || me?.investor?.name || me?.name || "Carregando perfil"}
               </strong>
             </Link>
-            <small>{roleLabel(me.role)}</small>
+            <small>{me ? roleLabel(me.role) : "Carregando"}</small>
           </div>
           <button onClick={logout} aria-label="Sair">
             <LogOut size={15} />
@@ -259,7 +264,11 @@ export default function AreaShell({ children }) {
         </div>
       </aside>
       <main className="area-shell__page">
-        {typeof children === "function" ? children(me) : children}
+        {me ? (
+          typeof children === "function" ? children(me) : children
+        ) : (
+          <div className="area-content-skeleton" aria-label="Carregando conteúdo" />
+        )}
       </main>
     </div>
   );
