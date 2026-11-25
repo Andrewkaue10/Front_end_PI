@@ -1,0 +1,12 @@
+flowchart TB
+  U[Startup ou profissional] -->|HTTPS| F[React e Vite - Vercel]
+  F -->|HTTPS JSON e JWT| B[Express e TypeScript - Render]
+  B --> A[Autenticacao e validacao Zod]
+  A --> R[Perfis - matches por regras - conexoes - posts - editais]
+  R <-->|Prisma e TLS| D[(PostgreSQL - Supabase - schema nexhub)]
+  A --> C[Consentimento - cota - contexto TF-IDF]
+  C -->|Pergunta e perfil autorizado| G[Gemini API - Google]
+  G -->|JSON validado| B
+  B -->|Historico e preferencias| D
+  B -->|Recuperacao de senha| E[Resend ou SMTP]
+  B -->|Resposta HTTP| F
