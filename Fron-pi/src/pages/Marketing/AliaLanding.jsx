@@ -90,12 +90,18 @@ export default function AliaLanding() {
             <Link className="alia-landing__button" to="/cadastro/startup">
               Cadastre-se grátis
             </Link>
-            <a className="alia-landing__button alia-landing__button--outline" href="#como-funciona">
+            <a
+              className="alia-landing__button alia-landing__button--outline"
+              href="#como-funciona"
+            >
               Ver como funciona
             </a>
           </div>
         </div>
-        <div className="alia-landing__preview" aria-label="Exemplo ilustrativo de sugestões compatíveis">
+        <div
+          className="alia-landing__preview"
+          aria-label="Exemplo ilustrativo de sugestões compatíveis"
+        >
           <div className="alia-landing__preview-orb" aria-hidden="true">
             ✦
           </div>
@@ -142,7 +148,10 @@ export default function AliaLanding() {
         </div>
       </Reveal>
 
-      <Reveal as="section" className="alia-landing__section alia-landing__section--muted">
+      <Reveal
+        as="section"
+        className="alia-landing__section alia-landing__section--muted"
+      >
         <SectionHeading
           eyebrow="LIMITES CLAROS"
           title="O que a A.L.I.A faz — e o que ela não faz"
@@ -152,14 +161,18 @@ export default function AliaLanding() {
             <h3>✓ O que ela faz</h3>
             <ul>
               <li>Organiza sugestões com base nos critérios disponíveis.</li>
-              <li>Apresenta os fatores que contribuíram para a compatibilidade.</li>
+              <li>
+                Apresenta os fatores que contribuíram para a compatibilidade.
+              </li>
               <li>Ajuda você a explorar conexões relevantes na plataforma.</li>
             </ul>
           </article>
           <article className="alia-landing__limit alia-landing__limit--no">
             <h3>× O que ela não faz</h3>
             <ul>
-              <li>Não prevê sucesso, retorno financeiro ou resultado de negócio.</li>
+              <li>
+                Não prevê sucesso, retorno financeiro ou resultado de negócio.
+              </li>
               <li>Não aprova cadastros nem escolhe quem pode conversar.</li>
               <li>Não envia convites ou toma decisões em seu nome.</li>
             </ul>
@@ -167,11 +180,7 @@ export default function AliaLanding() {
         </div>
       </Reveal>
 
-      <Reveal
-        as="section"
-        className="alia-landing__section"
-        id="como-funciona"
-      >
+      <Reveal as="section" className="alia-landing__section" id="como-funciona">
         <SectionHeading
           eyebrow="COMO A SUGESTÃO É FORMADA"
           title="Critérios claros, compatibilidade explicável"
@@ -190,8 +199,8 @@ export default function AliaLanding() {
             <span>ETAPA 2 · COMPATIBILIDADE</span>
             <h3>Uma nota com contexto</h3>
             <p>
-              A pontuação resume os critérios considerados e pode ser
-              consultada junto aos motivos da sugestão.
+              A pontuação resume os critérios considerados e pode ser consultada
+              junto aos motivos da sugestão.
             </p>
           </article>
         </div>
@@ -220,7 +229,10 @@ export default function AliaLanding() {
         </div>
       </Reveal>
 
-      <Reveal as="section" className="alia-landing__section alia-landing__section--muted">
+      <Reveal
+        as="section"
+        className="alia-landing__section alia-landing__section--muted"
+      >
         <SectionHeading
           eyebrow="MAIS CONTEXTO"
           title="Veja os motivos por trás das sugestões"
@@ -248,7 +260,10 @@ export default function AliaLanding() {
         </div>
       </Reveal>
 
-      <Reveal as="section" className="alia-landing__section alia-landing__section--dark">
+      <Reveal
+        as="section"
+        className="alia-landing__section alia-landing__section--dark"
+      >
         <SectionHeading
           eyebrow="TRANSPARÊNCIA E CONTROLE"
           title="Você decide se e quando avançar"
@@ -308,7 +323,10 @@ export default function AliaLanding() {
         </div>
       </Reveal>
 
-      <Reveal as="section" className="alia-landing__section alia-landing__section--muted">
+      <Reveal
+        as="section"
+        className="alia-landing__section alia-landing__section--muted"
+      >
         <SectionHeading
           eyebrow="CONTEXTO E RESPONSABILIDADE"
           title="Uma sugestão é só o começo"
@@ -336,7 +354,10 @@ export default function AliaLanding() {
         className="alia-landing__section alia-landing__section--faq"
         id="perguntas"
       >
-        <SectionHeading eyebrow="DÚVIDAS" title="Perguntas frequentes sobre a A.L.I.A" />
+        <SectionHeading
+          eyebrow="DÚVIDAS"
+          title="Perguntas frequentes sobre a A.L.I.A"
+        />
         <div className="alia-landing__faq">
           {questions.map(([question, answer]) => (
             <details key={question}>
