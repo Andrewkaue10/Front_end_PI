@@ -45,7 +45,7 @@ function App() {
       "/notificacoes",
       "/configuracoes",
       "/perfil",
-      "/alia",
+      "/alia/assistente",
     ].includes(location.pathname) ||
     location.pathname.startsWith("/startup/") ||
     location.pathname.startsWith("/investidor/");
@@ -61,7 +61,8 @@ function App() {
           path="/para-investidores"
           element={<Marketing page="investor" />}
         />
-        <Route path="/alia" element={<Alia />} />
+        <Route path="/alia" element={<Marketing page="alia" />} />
+        <Route path="/alia/assistente" element={<Alia />} />
         <Route path="/sobre" element={<Marketing page="about" />} />
         <Route path="/esqueci-senha" element={<ForgotPassword />} />
         <Route path="/redefinir-senha" element={<ResetPassword />} />

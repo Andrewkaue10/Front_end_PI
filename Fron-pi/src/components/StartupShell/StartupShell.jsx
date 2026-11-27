@@ -115,7 +115,7 @@ export default function StartupShell() {
             <Mail size={16} />
             <span>Publicações</span>
           </Link>
-          <Link to="/alia">
+          <Link to="/alia/assistente">
             <Sparkles size={16} />
             <span>A.L.I.A</span>
           </Link>

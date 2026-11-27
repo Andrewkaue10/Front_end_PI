@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Reveal from "../../components/Reveal/Reveal";
+import AliaLanding from "./AliaLanding";
 import "./Marketing.css";
 
 const pages = {
@@ -144,66 +145,6 @@ const pages = {
       },
     ],
   },
-  alia: {
-    eyebrow: "CONHEÇA A A.L.I.A",
-    title: (
-      <>
-        Compatibilidade explicável
-        <br />
-        <em>com limites claros</em>
-      </>
-    ),
-    lead: "A A.L.I.A organiza sugestões. O motor atual da NexHub usa regras de compatibilidade e explica os critérios que contribuíram para cada nota.",
-    sections: [
-      {
-        eyebrow: "O QUE ELA FAZ",
-        title: "Ajuda a encontrar quem combina",
-        cards: [
-          [
-            "✦",
-            "Ordena",
-            "Organiza as sugestões por compatibilidade calculada.",
-          ],
-          [
-            "⌕",
-            "Explica",
-            "Apresenta nota e motivos gerados a partir dos dados do perfil.",
-          ],
-          [
-            "◎",
-            "Apoia",
-            "A decisão de conversar ou investir continua com as pessoas.",
-          ],
-        ],
-      },
-      {
-        eyebrow: "LIMITES CLAROS",
-        title: "O que a A.L.I.A não faz",
-        cards: [
-          [
-            "✓",
-            "Critérios objetivos",
-            "Cruza setor, estágio, ticket e necessidades conforme as regras atuais.",
-          ],
-          [
-            "×",
-            "Não decide por você",
-            "Não aprova cadastros nem escolhe quem pode conversar.",
-          ],
-          [
-            "×",
-            "Sem conversa automática",
-            "Não escreve perfis nem conversa com usuários.",
-          ],
-        ],
-      },
-      {
-        eyebrow: "TRANSPARÊNCIA",
-        title: "A nota não é uma promessa",
-        text: "A pontuação indica compatibilidade entre perfis, não probabilidade de investimento ou sucesso. A recomendação atual é baseada em regras; análise semântica de textos e preferências de IA ainda não fazem parte do backend entregue.",
-      },
-    ],
-  },
   about: {
     eyebrow: "SOBRE A NEXHUB",
     title: (
@@ -238,6 +179,8 @@ const pages = {
 };
 
 export default function Marketing({ page }) {
+  if (page === "alia") return <AliaLanding />;
+
   const data = pages[page] || pages.how;
   return (
     <main className="marketing">

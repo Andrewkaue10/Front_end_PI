@@ -250,7 +250,7 @@ export default function Feed() {
             <Users size={18} />
             <span>Matches</span>
           </Link>
-          <Link to="/alia">
+          <Link to="/alia/assistente">
             <Star size={16} />
             <span>A.L.I.A</span>
           </Link>
